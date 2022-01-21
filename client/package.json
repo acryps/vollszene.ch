@@ -1,0 +1,9 @@
+{
+    "name": "client-acryps-events",
+    "dependencies": {
+        "systemjs": "^5.0.0",
+        "vldom": "^5.4.0",
+        "vldom-default-directives": "^1.0.2",
+        "vllayout": "^1.13.1"
+    }
+}

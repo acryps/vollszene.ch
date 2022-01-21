@@ -1,0 +1,7 @@
+{
+    "name": "server-acryps-events",
+    "dependencies": {
+        "vlquery": "^4.9.2",
+        "vlserver": "^4.0.2"
+    }
+}

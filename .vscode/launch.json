@@ -1,0 +1,25 @@
+{
+    "version": "0.2.0",
+	"configurations": [
+		{
+			"type": "node",
+			"request": "launch",
+			"name": "acryps-events (local)",
+			"preLaunchTask": "build",
+			"skipFiles": [
+				"<node_internals>/**"
+			],
+			"program": "${workspaceFolder}/server/dist/main.js",
+			"cwd": "${workspaceFolder}/server",
+			"outFiles": [
+				"${workspaceFolder}/**/*.js"
+			],
+			"env": {
+				"PGHOST": "data1.w6.cloud.acryps.com",
+				"PGUSER": "acryps_events",
+				"PGPASSWORD": "acryps_events",
+				"PGDATABASE": "acryps_events"
+			}
+		}
+	]
+}

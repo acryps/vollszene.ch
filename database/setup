@@ -1,0 +1,16 @@
+#!/bin/sh
+set -e
+
+NAME=acryps_events
+
+echo "creating $NAME role..."
+sudo -u postgres psql -c "create role $NAME login; alter role $NAME with password '$NAME'" 
+
+echo "creating $NAME database..."
+sudo -u postgres createdb $NAME -O $NAME
+
+echo "creating uuid extension for $NAME..."
+sudo -u postgres psql -c 'CREATE EXTENSION IF NOT EXISTS "uuid-ossp"' -d $NAME
+
+echo
+echo "done"
