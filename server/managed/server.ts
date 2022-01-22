@@ -2,8 +2,8 @@ import { BaseServer, ViewModel, Inject } from "vlserver";
 
 import { DbContext } from "././database";
 import { EventViewModel } from "././../areas/event.view";
+import { HostViewModel } from "././../areas/host.view";
 import { EventService } from "././../areas/event.service";
-import { HostViewModel } from "./../areas/host.view";
 import { Event } from "./../managed/database";
 import { Host } from "./../managed/database";
 
@@ -25,6 +25,15 @@ export class ManagedServer extends BaseServer {
 			{},
 			inject => inject.construct(EventService),
 			(controller, params) => controller.getEvents(
+				
+			)
+		);
+
+		this.expose(
+			"VtbnJmYTBkdXliYWE5aWI5NGczOGF5ZW",
+			{},
+			inject => inject.construct(EventService),
+			(controller, params) => controller.getHosts(
 				
 			)
 		)
@@ -88,14 +97,18 @@ ViewModel.mappings = {
 		async map() {
 			return {
 				id: this.model.id,
-				name: this.model.name
+				name: this.model.name,
+				online: this.model.online,
+				updatedAt: this.model.updatedAt
 			}
 		};
 
 		static get items() { 
 			return {
 				id: true,
-				name: true
+				name: true,
+				online: true,
+				updatedAt: true
 			};
 		}
 
@@ -103,6 +116,8 @@ ViewModel.mappings = {
 			const item = new HostViewModel(null);
 			"id" in data && (item.id = data.id === null ? null : `${data.id}`);
 			"name" in data && (item.name = data.name === null ? null : `${data.name}`);
+			"online" in data && (item.online = !!data.online);
+			"updatedAt" in data && (item.updatedAt = data.updatedAt === null ? null : new Date(data.updatedAt));
 
 			return item;
 		}
@@ -118,6 +133,8 @@ ViewModel.mappings = {
 			
 			"id" in viewModel && (model.id = viewModel.id === null ? null : `${viewModel.id}`);
 			"name" in viewModel && (model.name = viewModel.name === null ? null : `${viewModel.name}`);
+			"online" in viewModel && (model.online = !!viewModel.online);
+			"updatedAt" in viewModel && (model.updatedAt = viewModel.updatedAt === null ? null : new Date(viewModel.updatedAt));
 
 			return model;
 		}

@@ -2,7 +2,10 @@ CREATE TABLE host (
 	id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
 
 	name TEXT,
-    provider TEXT
+    provider TEXT,
+
+    online BOOLEAN,
+    updated_at TIMESTAMP
 );
 
 CREATE TABLE event (

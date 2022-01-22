@@ -9,8 +9,6 @@ export abstract class Provider {
     abstract fetch(): Promise<Event[]>;
 
     async dispatch(existingEvents: Event[], db: DbContext) {
-        console.log(`fetching '${this.name}'`);
-
         const host = await db.host.first(host => host.provider == this.name);
         const events = await this.fetch();
 
@@ -29,16 +27,31 @@ export abstract class Provider {
                 existingEvents.push(event);
             }
         }
-
-        console.log(`fetched '${this.name}'`);
     }
 
     static async update(db: DbContext) {
         const existingEvents = await db.event.toArray();
 
         for (let provider of this.findProviders()) {
-            await provider.dispatch(existingEvents, db);
+            const host = await db.host.first(host => host.provider == provider.name);
+
+            console.log(`fetching '${provider.name}' for '${host.name}'`);
+
+            provider.dispatch(existingEvents, db).then(() => {
+                host.updatedAt = new Date();
+                host.online = true;
+
+                console.log(`fetched '${provider.name}'`);
+            }).catch(error => {
+                host.online = false;
+
+                console.error(`failed '${provider.name}'`, error);
+            }).finally(async () => {
+                await host.update();
+            });
         }
+
+        setTimeout(() => this.update(db), 1000 * 60 * Math.random() * 30);
     }
 
     static findProviders(): Provider[] {

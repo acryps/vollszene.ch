@@ -1,3 +1,5 @@
+$danger: #902549;
+
 :root {
 	font: min(16px, 3.5vw) pt;
 }
@@ -49,6 +51,17 @@ ui-content {
 	display: flex;
 	flex-direction: column;
 
+	ui-issues {
+		display: block;
+
+		background: $danger;
+		color: #fff;
+
+		ui-issue {
+			display: block;
+		}
+	}
+
 	ui-month {
 		display: block;
 		padding: 0.5rem 1rem;
@@ -95,6 +108,27 @@ ui-content {
 			}
 		}
 	}
+
+	ui-about {
+		padding: 1rem;
+		padding-top: 5rem;
+
+		ui-host {
+			display: block;
+			padding: 0.5rem 0;
+
+			&:first-child {
+				margin-top: 3rem;
+			}
+
+			ui-name {
+				display: inline-block;
+				margin-right: 1rem;
+
+				font-weight: bold;
+			}
+		}
+	}
 }
 
 @media (min-width: 500px) {
@@ -103,6 +137,14 @@ ui-content {
 		overflow-y: auto;
 
 		min-height: calc(100vh - 3rem - 1px);
+
+		ui-issues {
+			display: flex;
+			padding: 1rem 0.25rem;
+			align-items: flex-start;
+
+			writing-mode: vertical-rl;
+		}
 
 		ui-month {
 			position: relative;
@@ -133,6 +175,11 @@ ui-content {
 		ui-month,
 		ui-day:not(:last-child) {
 			border-right: 1px solid #000;
+		}
+
+		ui-about {
+			width: 800px;
+			flex-shrink: 0;
 		}
 	}
 }

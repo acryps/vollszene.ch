@@ -17,44 +17,6 @@ import {
 	PrimaryReference
 } from "vlquery";
 
-export class HostQueryProxy extends QueryProxy {
-	get name(): Partial<QueryString> {
-		throw new Error("Invalid use of QueryModels. QueryModels cannot be used during runtime");
-	}
-					
-	get provider(): Partial<QueryString> {
-		throw new Error("Invalid use of QueryModels. QueryModels cannot be used during runtime");
-	}
-}
-
-export class Host extends Entity<HostQueryProxy> {
-	$$meta = {
-		tableName: "host",
-		columns: {"id":{"type":"uuid","name":"id"},"name":{"type":"text","name":"name"},"provider":{"type":"text","name":"provider"}},
-		get set(): DbSet<Host, HostQueryProxy> {
-			// returns unbound dbset
-			return new DbSet<Host, HostQueryProxy>(Host, null)
-		},
-		
-	};
-		
-	constructor() {
-		super();
-
-		this.events = new PrimaryReference<Event, EventQueryProxy>(
-			this,
-			"hostId",
-			Event
-		);
-	}
-
-	events: PrimaryReference<Event, EventQueryProxy>;
-					
-	id: string;
-	name: string;
-	provider: string;
-}
-			
 export class EventQueryProxy extends QueryProxy {
 	get host(): Partial<HostQueryProxy> {
 		throw new Error("Invalid use of QueryModels. QueryModels cannot be used during runtime");
@@ -128,6 +90,54 @@ export class Event extends Entity<EventQueryProxy> {
 	hostId: string;
 }
 			
+export class HostQueryProxy extends QueryProxy {
+	get name(): Partial<QueryString> {
+		throw new Error("Invalid use of QueryModels. QueryModels cannot be used during runtime");
+	}
+					
+	get provider(): Partial<QueryString> {
+		throw new Error("Invalid use of QueryModels. QueryModels cannot be used during runtime");
+	}
+					
+	get online(): Partial<QueryBoolean> {
+		throw new Error("Invalid use of QueryModels. QueryModels cannot be used during runtime");
+	}
+					
+	get updatedAt(): Partial<QueryTimeStamp> {
+		throw new Error("Invalid use of QueryModels. QueryModels cannot be used during runtime");
+	}
+}
+
+export class Host extends Entity<HostQueryProxy> {
+	$$meta = {
+		tableName: "host",
+		columns: {"id":{"type":"uuid","name":"id"},"name":{"type":"text","name":"name"},"provider":{"type":"text","name":"provider"},"online":{"type":"bool","name":"online"},"updatedAt":{"type":"timestamp","name":"updated_at"}},
+		get set(): DbSet<Host, HostQueryProxy> {
+			// returns unbound dbset
+			return new DbSet<Host, HostQueryProxy>(Host, null)
+		},
+		
+	};
+		
+	constructor() {
+		super();
+
+		this.events = new PrimaryReference<Event, EventQueryProxy>(
+			this,
+			"hostId",
+			Event
+		);
+	}
+
+	events: PrimaryReference<Event, EventQueryProxy>;
+					
+	id: string;
+	name: string;
+	provider: string;
+	online: boolean;
+	updatedAt: Date;
+}
+			
 
 export class DbContext {
 	constructor(private runContext: RunContext) {}
@@ -142,6 +152,6 @@ export class DbContext {
 		}
 	}
 
-	host: DbSet<Host, HostQueryProxy> = new DbSet<Host, HostQueryProxy>(Host, this.runContext);
 	event: DbSet<Event, EventQueryProxy> = new DbSet<Event, EventQueryProxy>(Event, this.runContext);
+	host: DbSet<Host, HostQueryProxy> = new DbSet<Host, HostQueryProxy>(Host, this.runContext);
 };
