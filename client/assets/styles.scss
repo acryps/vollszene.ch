@@ -59,6 +59,10 @@ ui-content {
 		background: $danger;
 		color: #fff;
 
+		&:empty {
+			display: none;
+		}
+
 		ui-issue {
 			display: block;
 		}
@@ -113,10 +117,6 @@ ui-content {
 
 	ui-about {
 		padding: 5rem 1rem;
-
-		&:empty {
-			display: none;
-		}
 
 		ui-host {
 			display: block;
