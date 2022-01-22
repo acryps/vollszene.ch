@@ -17,13 +17,17 @@ export abstract class Provider {
                 event.hash = Provider.hashEvent(event);
             }
 
-            if (!await db.event.first(item => item.hash == event.hash)) {
+            const existing = await db.event.first(item => item.hash == event.hash);
+
+            if (!existing) {
                 event.host = host;
 
                 await event.create();
 
                 console.log(`+++ ${this.name}: ${event.name}`);
             } else {
+                event.id = existing.id;
+
                 await event.update();
             }
         }
