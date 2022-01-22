@@ -9,7 +9,7 @@ import { Provider } from "./areas/provider";
 console.log("connecting to database...");
 DbClient.connectedClient = new DbClient({});
 
-DbClient.connectedClient.connect().then(async => {
+DbClient.connectedClient.connect().then(() => {
     console.log("connected to database!");
 
     const app = new ManagedServer();

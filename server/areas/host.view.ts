@@ -4,4 +4,7 @@ import { Host } from "../managed/database";
 export class HostViewModel extends ViewModel<Host> {
     id;
     name;
+
+    online;
+    updatedAt;
 }

@@ -1,3 +1,4 @@
+import { Application } from "main";
 import { EventService, EventViewModel } from "managed/services";
 import { Component } from "node_modules/vldom/component";
 
@@ -46,7 +47,24 @@ export class EventsComponent extends Component {
         }
 
         return <ui-content>
+            <ui-issues>
+                {Application.hosts.filter(host => !host.online).map(host => <ui-issue>
+                    {host.name} unavailable
+                </ui-issue>)}
+            </ui-issues>
+
             {days}
+
+            <ui-about>
+                we try to understand the clubs webpages to automatically figure out the details about upcomming events.
+                information on this page may not be accurate.
+
+                {Application.hosts.map(host => <ui-host>
+                    <ui-name>{host.name}</ui-name>
+
+                    updated {host.updatedAt.toISOString()}, {host.online ? 'online' : 'OFFLINE'}
+                </ui-host>)}
+            </ui-about>
         </ui-content>;
     }
 }
