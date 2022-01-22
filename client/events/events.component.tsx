@@ -17,8 +17,6 @@ export class EventsComponent extends Component {
 
         for (let event of this.events) {
             if (+event.date != +date) {
-                console.log(event.date);
-
                 days.push(<ui-day>
                     <ui-date>{date.toLocaleDateString('en', { weekday: 'short' }).toUpperCase()} {date.getUTCDate()} {date.getUTCMonth() + 1} {date.getUTCFullYear()}</ui-date>
 
