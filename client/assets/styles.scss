@@ -114,6 +114,10 @@ ui-content {
 	ui-about {
 		padding: 5rem 1rem;
 
+		&:empty {
+			display: none;
+		}
+
 		ui-host {
 			display: block;
 			padding: 0.5rem 0;
