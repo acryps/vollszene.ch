@@ -8,7 +8,7 @@ export abstract class Provider {
 
     abstract fetch(): Promise<Event[]>;
 
-    async dispatch(existingEvents: Event[], db: DbContext) {
+    async dispatch(db: DbContext) {
         const host = await db.host.first(host => host.provider == this.name);
         const events = await this.fetch();
 
@@ -17,27 +17,25 @@ export abstract class Provider {
                 event.hash = Provider.hashEvent(event);
             }
 
-            if (!existingEvents.find(item => item.hash == event.hash)) {
+            if (!await db.event.first(item => item.hash == event.hash)) {
                 event.host = host;
 
                 await event.create();
 
                 console.log(`+++ ${this.name}: ${event.name}`);
-
-                existingEvents.push(event);
+            } else {
+                await event.update();
             }
         }
     }
 
     static async update(db: DbContext) {
-        const existingEvents = await db.event.toArray();
-
         for (let provider of this.findProviders()) {
             const host = await db.host.first(host => host.provider == provider.name);
 
             console.log(`fetching '${provider.name}' for '${host.name}'`);
 
-            provider.dispatch(existingEvents, db).then(() => {
+            provider.dispatch(db).then(() => {
                 host.updatedAt = new Date();
                 host.online = true;
 
@@ -51,7 +49,7 @@ export abstract class Provider {
             });
         }
 
-        setTimeout(() => this.update(db), 1000 * 60 * Math.random() * 30);
+        setTimeout(() => this.update(db), 1000 * 60 * Math.random() * 30 + 30);
     }
 
     static findProviders(): Provider[] {
