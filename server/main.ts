@@ -4,6 +4,7 @@ import { ManagedServer } from "./managed/server";
 import { DbContext } from "./managed/database";
 
 import * as path from "path";
+import { Provider } from "./areas/provider";
 
 console.log("connecting to database...");
 DbClient.connectedClient = new DbClient({});
@@ -13,6 +14,8 @@ DbClient.connectedClient.connect().then(async => {
 
     const app = new ManagedServer();
     const db = new DbContext(new RunContext());
+
+    Provider.update(db);
 
     app.createInjector = context => new Inject({
         Context: context,
@@ -24,5 +27,5 @@ DbClient.connectedClient.connect().then(async => {
     app.use(new StaticFileRoute("/node_modules", path.join(__dirname, "..", "..", "client", "node_modules")));
     app.use(new StaticFileRoute("/", path.join(__dirname, "..", "..", "client", "assets")));
 
-    app.start(+process.env.PORT || 80);
+    app.start(+process.env.PORT || 8019);
 });

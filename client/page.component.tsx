@@ -2,16 +2,12 @@ import { Component } from "node_modules/vldom/component";
 
 export class PageComponent extends Component {
 	render(child?: Node) {
-		return <ui-page ui-menu-detail>
-			<ui-menu>
-				<ui-menu-item ui-href="/home">
-					Home
-				</ui-menu-item>
-			</ui-menu>
+		return <ui-page>
+			<ui-nav>
+				<ui-logo>acryps</ui-logo>events
+			</ui-nav>
 
-			<ui-detail>
-				{child}
-			</ui-detail>
+			{child}
 		</ui-page>;
     }
 }

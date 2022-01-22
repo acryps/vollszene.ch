@@ -1,19 +1,138 @@
-@use "../node_modules/vllayout/main" with (
-	$page-color: #000,
-	$page-background: #fff,
-	$page-border-color: #ccc,
-	$page-hover-background: #ddd,
+:root {
+	font: min(16px, 3.5vw) pt;
+}
 
-	$page-accent-background: #007afa,
-	$page-accent-color: #fff,
-	$page-accent-active-background: #007afa,
-	$page-accent-active-color: #fff,
-	$page-accent-hover-background: #466079,
-	$page-accent-hover-color: #fff,
+@font-face {
+	font-family: pt;
+	font-weight: normal;
+	src: url("https://acryps.com/fonts/pt/regular");
+}
 
-	$nav-background: #eee,
-	$nav-color: #000,
+@font-face {
+	font-family: pt;
+	font-weight: bold;
+	src: url("https://acryps.com/fonts/pt/bold");
+}
 
-	$page-dim-background: #eee,
-	$page-dim-color: #000
-);
+body {
+	padding: 0;
+	margin: 0;
+}
+
+ui-nav {
+	display: block;
+	padding: 1rem;
+
+	position: sticky;
+	top: 0;
+	left: 0;
+	right: 0;
+	z-index: 100;
+
+	line-height: 1;
+	background: linear-gradient(0, #fff0, #fff);
+	border-bottom: 1px solid #000;
+
+	backdrop-filter: blur(20px);
+	-webkit-backdrop-filter: blur(20px);
+
+	ui-logo {
+		display: inline-block;
+		margin-right: 0.7em;
+  
+		font-weight: bold;	
+		color: #0f05a2;
+	}
+}
+
+ui-content {
+	display: flex;
+	flex-direction: column;
+
+	ui-month {
+		display: block;
+		padding: 0.5rem 1rem;
+
+		background: #000;
+		color: #fff;
+	}
+
+	ui-day {
+		padding: 0.5rem 0;
+		border-bottom: 1px solid #000;
+
+		ui-date {
+			display: block;
+			padding: 0.5rem 1rem;
+
+			font-weight: bold;
+		}
+
+		ui-event {
+			display: block;
+			padding: 0.5rem 1rem;
+
+			ui-host {
+				display: block;
+				margin-bottom: 0.25rem;
+
+				font-weight: bold;
+				font-size: 0.75rem;
+			}
+
+			ui-name {
+				display: block;
+				margin-bottom: 0.5rem;
+			}
+
+			ui-link {
+				display: block;
+				font-size: 0.75rem;
+
+				white-space: nowrap;
+				overflow: hidden;
+				text-overflow: ellipsis;
+			}
+		}
+	}
+}
+
+@media (min-width: 500px) {
+	ui-content {
+		flex-direction: row;
+		overflow-y: auto;
+
+		min-height: calc(100vh - 3rem - 1px);
+
+		ui-month {
+			position: relative;
+
+			ui-name {
+				display: flex;
+				height: 100vh;
+				width: 2rem;
+				align-items: center;
+				justify-content: center;
+				
+				position: absolute;
+				top: 0;
+				left: 0;
+				right: 0;
+
+				writing-mode: vertical-rl;
+			}
+		}
+
+		ui-day {
+			width: 400px;
+			flex-shrink: 0;
+			
+			border-bottom: none;
+		}
+
+		ui-month,
+		ui-day:not(:last-child) {
+			border-right: 1px solid #000;
+		}
+	}
+}

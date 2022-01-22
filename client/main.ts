@@ -1,18 +1,19 @@
-import { HomeComponent } from "home/home.component";
+import { EventsComponent } from "events/events.component";
 import { Router } from "node_modules/vldom/router";
 import { registerDirectives } from "node_modules/vldom-default-directives/index";
 import { PageComponent } from "page.component";
+import { Component } from "node_modules/vldom/component";
 
 export class Application {
     static router: Router;
 
     static async main() {
         if (!location.hash) {
-            location.hash = `#/home`;
+            location.hash = `#/events`;
         }
 
         this.router = new Router(PageComponent, {
-            "/home": HomeComponent
+            "/events": EventsComponent
         });
 
         registerDirectives(Component, this.router);

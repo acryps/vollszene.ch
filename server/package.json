@@ -1,6 +1,9 @@
 {
     "name": "server-acryps-events",
     "dependencies": {
+        "js-sha512": "^0.8.0",
+        "jsdom": "^19.0.0",
+        "node-fetch": "^2.6.7",
         "vlquery": "^4.9.2",
         "vlserver": "^4.0.2"
     }
