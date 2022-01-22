@@ -75,6 +75,6 @@ export abstract class Provider {
     }
 
     static hashEvent(event: Event) {
-        return sha512([event.name, event.date, event.link].join('.'.repeat(0xff)));
+        return sha512([event.name, event.date.toISOString().split('T')[0], event.link].join('.'.repeat(0xff)));
     }
 }
