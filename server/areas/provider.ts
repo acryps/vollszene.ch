@@ -37,20 +37,24 @@ export abstract class Provider {
         for (let provider of this.findProviders()) {
             const host = await db.host.first(host => host.provider == provider.name);
 
-            console.log(`fetching '${provider.name}' for '${host.name}'`);
+            if (host) {
+                console.log(`fetching '${provider.name}' for '${host.name}'`);
 
-            provider.dispatch(db).then(() => {
-                host.updatedAt = new Date();
-                host.online = true;
-
-                console.log(`fetched '${provider.name}'`);
-            }).catch(error => {
-                host.online = false;
-
-                console.error(`failed '${provider.name}'`, error);
-            }).finally(async () => {
-                await host.update();
-            });
+                provider.dispatch(db).then(() => {
+                    host.updatedAt = new Date();
+                    host.online = true;
+    
+                    console.log(`fetched '${provider.name}'`);
+                }).catch(error => {
+                    host.online = false;
+    
+                    console.error(`failed '${provider.name}'`, error);
+                }).finally(async () => {
+                    await host.update();
+                });
+            } else {
+                console.log(`skipped '${provider.name}' - missing host`);
+            }
         }
 
         setTimeout(() => this.update(db), 1000 * 60 * Math.random() * 30 + 30);

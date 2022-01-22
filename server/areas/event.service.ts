@@ -11,10 +11,14 @@ export class EventService extends Service {
     }
 
     async getEvents() {
+        const yesterday = new Date(new Date().toDateString());
+        yesterday.setUTCHours(0);
+
         return EventViewModel.from(
             await this.db.event
                 .orderByAscending(event => event.date)
                 .orderByAscending(event => event.name)
+                .where(event => event.date.isAfter(yesterday))
         );
     }
 

@@ -156,7 +156,7 @@ ui-content {
 
 			ui-name {
 				display: flex;
-				height: 100vh;
+				height: calc(100vh - 3rem - 1px);
 				width: 2rem;
 				align-items: center;
 				justify-content: center;
