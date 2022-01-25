@@ -10,15 +10,20 @@ export class EventService extends Service {
         super();
     }
 
-    async getEvents() {
+    async getEvents(location: string) {
         const yesterday = new Date(new Date().toDateString());
         yesterday.setUTCHours(-24);
 
+        const query = this.db.event.where(event => event.date.isAfter(yesterday));
+
+        if (location) {
+            query.where(event => event.host.locationId == location);
+        }
+        
         return EventViewModel.from(
-            await this.db.event
+            await query
                 .orderByAscending(event => event.date)
                 .orderByAscending(event => event.name)
-                .where(event => event.date.isAfter(yesterday))
         );
     }
 

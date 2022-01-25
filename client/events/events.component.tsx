@@ -12,25 +12,25 @@ export class EventsComponent extends Component {
 	filterStorageKey = 'filters';
 
 	async onload() {
-		this.events = await new EventService().getEvents();
-	   
 		if (this.filterStorageKey in localStorage) {
 			this.filters = JSON.parse(localStorage[this.filterStorageKey]);
 		} else {
 			this.filters = {};
 		}
+
+		this.events = await new EventService().getEvents(
+			this.filters.location?.id || null
+		);
 	}
 
 	render() {
 		const days = [];
 
-		const filteredEvents = this.getFilteredEvents();
-
-		if (filteredEvents.length) {
-			let date = filteredEvents[0].date;
+		if (this.events.length) {
+			let date = this.events[0].date;
 			let day = [];
 
-			for (let event of filteredEvents) {
+			for (let event of this.events) {
 				if (+event.date != +date) {
 					days.push(<ui-day>
 						<ui-date>
@@ -73,7 +73,7 @@ export class EventsComponent extends Component {
 		return <ui-events>
 			<ui-filters>
 				<ui-filter ui-active={this.filters.location || null}>
-					<select $ui-value={this.filters.location} ui-change={() => (this.saveFilters(), this.update())}>
+					<select $ui-value={this.filters.location} ui-change={() => (this.saveFilters(), this.reload())}>
 						<option>All Locations</option>
 
 						{this.extractOptions(Application.hosts, host => host.location).map(location => <option ui-value={location}>
@@ -124,15 +124,5 @@ export class EventsComponent extends Component {
 		}
 
 		localStorage[this.filterStorageKey] = JSON.stringify(this.filters);
-	}
-
-	getFilteredEvents() {
-		let events = this.events;
-
-		if (this.filters.location) {
-			events = events.filter(event => event.host.location.id == this.filters.location.id);
-		}
-
-		return events;
 	}
 }

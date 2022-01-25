@@ -55,13 +55,13 @@ ui-filters {
 	overflow-y: hidden;
 
 	ui-filter {
-		display: inline-block;
 		position: relative;
 		border-right: 1px solid #000;
+		line-height: 1;
 
 		&[ui-active] {
-			background: #000;
-			color: #fff;
+			font-weight: bold;
+			font-style: italic;
 		}
 
 		select {
@@ -190,7 +190,7 @@ ui-content {
 		flex-direction: row;
 		overflow-y: auto;
 
-		min-height: calc(100vh - 3rem - 1px);
+		height: calc(100vh - 5.5rem - 2px);
 
 		ui-issues {
 			display: flex;
@@ -205,7 +205,7 @@ ui-content {
 
 			ui-name {
 				display: flex;
-				height: calc(100vh - 3rem - 1px);
+				height: calc(100vh - 5.5rem - 2px);
 				width: 2rem;
 				align-items: center;
 				justify-content: center;
@@ -222,6 +222,9 @@ ui-content {
 		ui-day {
 			width: 400px;
 			flex-shrink: 0;
+
+			overflow-x: hidden;
+			overflow-y: auto;
 			
 			border-bottom: none;
 		}

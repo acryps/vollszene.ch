@@ -58,11 +58,11 @@ export class Service {
 }
 
 export class EventService {
-	async getEvents(): Promise<Array<EventViewModel>> {
+	async getEvents(location: string): Promise<Array<EventViewModel>> {
 		const data = new FormData();
-		
+		data.append("1tdDpvdTFidDJhMDM5Zjl5dWUxeD01MD", JSON.stringify(location))
 
-		return await fetch(Service.toURL("g4NnQxcGowazFtano1bWo3MnRkemJ3c2"), {
+		return await fetch(Service.toURL("80YThweDRlbTdtbTs2NTc2OXpyeXx0d3"), {
 			method: "post",
 			credentials: "include",
 			body: data

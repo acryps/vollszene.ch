@@ -23,6 +23,7 @@ CREATE TABLE event (
 	name TEXT,
     link TEXT,
     hash TEXT,
+    image_url TEXT,
 
     host_id UUID CONSTRAINT host__events REFERENCES host (id)
 );
