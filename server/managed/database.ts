@@ -91,6 +91,10 @@ export class Event extends Entity<EventQueryProxy> {
 }
 			
 export class HostQueryProxy extends QueryProxy {
+	get location(): Partial<LocationQueryProxy> {
+		throw new Error("Invalid use of QueryModels. QueryModels cannot be used during runtime");
+	}
+					
 	get name(): Partial<QueryString> {
 		throw new Error("Invalid use of QueryModels. QueryModels cannot be used during runtime");
 	}
@@ -106,12 +110,16 @@ export class HostQueryProxy extends QueryProxy {
 	get updatedAt(): Partial<QueryTimeStamp> {
 		throw new Error("Invalid use of QueryModels. QueryModels cannot be used during runtime");
 	}
+					
+	get locationId(): Partial<QueryUUID> {
+		throw new Error("Invalid use of QueryModels. QueryModels cannot be used during runtime");
+	}
 }
 
 export class Host extends Entity<HostQueryProxy> {
 	$$meta = {
 		tableName: "host",
-		columns: {"id":{"type":"uuid","name":"id"},"name":{"type":"text","name":"name"},"provider":{"type":"text","name":"provider"},"online":{"type":"bool","name":"online"},"updatedAt":{"type":"timestamp","name":"updated_at"}},
+		columns: {"id":{"type":"uuid","name":"id"},"name":{"type":"text","name":"name"},"provider":{"type":"text","name":"provider"},"online":{"type":"bool","name":"online"},"updatedAt":{"type":"timestamp","name":"updated_at"},"locationId":{"type":"uuid","name":"location_id"}},
 		get set(): DbSet<Host, HostQueryProxy> {
 			// returns unbound dbset
 			return new DbSet<Host, HostQueryProxy>(Host, null)
@@ -127,15 +135,73 @@ export class Host extends Entity<HostQueryProxy> {
 			"hostId",
 			Event
 		);
+					
+		this.$location = new ForeignReference<Location>(
+			this,
+			"locationId",
+			Location
+		);
 	}
 
 	events: PrimaryReference<Event, EventQueryProxy>;
+					
+	private $location: ForeignReference<Location>;
+
+	get location(): Partial<ForeignReference<Location>> {
+		return this.$location;
+	}
+
+	set location(value: Partial<ForeignReference<Location>>) {
+		if (value) {
+			if (!value.id) {
+				throw new Error("Invalid null id. Save the referenced model prior to creating a reference to it.");
+			}
+
+			this.locationId = value.id as string;
+		} else {
+			this.locationId = null;
+		}
+	}
 					
 	id: string;
 	name: string;
 	provider: string;
 	online: boolean;
 	updatedAt: Date;
+	locationId: string;
+}
+			
+export class LocationQueryProxy extends QueryProxy {
+	get name(): Partial<QueryString> {
+		throw new Error("Invalid use of QueryModels. QueryModels cannot be used during runtime");
+	}
+}
+
+export class Location extends Entity<LocationQueryProxy> {
+	$$meta = {
+		tableName: "location",
+		columns: {"id":{"type":"uuid","name":"id"},"name":{"type":"text","name":"name"}},
+		get set(): DbSet<Location, LocationQueryProxy> {
+			// returns unbound dbset
+			return new DbSet<Location, LocationQueryProxy>(Location, null)
+		},
+		
+	};
+		
+	constructor() {
+		super();
+
+		this.hosts = new PrimaryReference<Host, HostQueryProxy>(
+			this,
+			"locationId",
+			Host
+		);
+	}
+
+	hosts: PrimaryReference<Host, HostQueryProxy>;
+					
+	id: string;
+	name: string;
 }
 			
 
@@ -154,4 +220,5 @@ export class DbContext {
 
 	event: DbSet<Event, EventQueryProxy> = new DbSet<Event, EventQueryProxy>(Event, this.runContext);
 	host: DbSet<Host, HostQueryProxy> = new DbSet<Host, HostQueryProxy>(Host, this.runContext);
+	location: DbSet<Location, LocationQueryProxy> = new DbSet<Location, LocationQueryProxy>(Location, this.runContext);
 };

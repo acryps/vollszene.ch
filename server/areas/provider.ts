@@ -67,6 +67,8 @@ export abstract class Provider {
             if (path[0] != '.' && path.endsWith('.js')) {
                 const provider = require(join(__dirname, 'providers', path)).default;
 
+                console.log(path, typeof provider);
+
                 providers.push(new provider());
             }
         }

@@ -14,8 +14,6 @@ export class EventService extends Service {
         const yesterday = new Date(new Date().toDateString());
         yesterday.setUTCHours(-24);
 
-        console.log(yesterday);
-
         return EventViewModel.from(
             await this.db.event
                 .orderByAscending(event => event.date)

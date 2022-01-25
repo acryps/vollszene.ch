@@ -1,3 +1,9 @@
+CREATE TABLE location (
+	id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+
+	name TEXT
+);
+
 CREATE TABLE host (
 	id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
 
@@ -5,7 +11,9 @@ CREATE TABLE host (
     provider TEXT,
 
     online BOOLEAN,
-    updated_at TIMESTAMP
+    updated_at TIMESTAMP,
+
+    location_id UUID CONSTRAINT location__hosts REFERENCES location (id)
 );
 
 CREATE TABLE event (

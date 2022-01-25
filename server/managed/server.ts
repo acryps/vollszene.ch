@@ -4,8 +4,10 @@ import { DbContext } from "././database";
 import { EventViewModel } from "././../areas/event.view";
 import { HostViewModel } from "././../areas/host.view";
 import { EventService } from "././../areas/event.service";
+import { LocationViewModel } from "./../areas/location.view";
 import { Event } from "./../managed/database";
 import { Host } from "./../managed/database";
+import { Location } from "./../managed/database";
 
 Inject.mappings = {
 	"EventService": {
@@ -96,6 +98,7 @@ ViewModel.mappings = {
 	HostViewModel: class ComposedHostViewModel extends HostViewModel {
 		async map() {
 			return {
+				location: new LocationViewModel(await BaseServer.unwrap(this.model.location)),
 				id: this.model.id,
 				name: this.model.name,
 				online: this.model.online,
@@ -105,6 +108,9 @@ ViewModel.mappings = {
 
 		static get items() { 
 			return {
+				get location() { 
+					return ViewModel.mappings.LocationViewModel.items;
+				},
 				id: true,
 				name: true,
 				online: true,
@@ -114,6 +120,7 @@ ViewModel.mappings = {
 
 		static toViewModel(data) {
 			const item = new HostViewModel(null);
+			"location" in data && (item.location = data.location && ViewModel.mappings.LocationViewModel.toViewModel(data.location));
 			"id" in data && (item.id = data.id === null ? null : `${data.id}`);
 			"name" in data && (item.name = data.name === null ? null : `${data.name}`);
 			"online" in data && (item.online = !!data.online);
@@ -131,10 +138,49 @@ ViewModel.mappings = {
 				model = new Host();
 			}
 			
+			"location" in viewModel && (model.location.id = viewModel.location ? viewModel.location.id : null);
 			"id" in viewModel && (model.id = viewModel.id === null ? null : `${viewModel.id}`);
 			"name" in viewModel && (model.name = viewModel.name === null ? null : `${viewModel.name}`);
 			"online" in viewModel && (model.online = !!viewModel.online);
 			"updatedAt" in viewModel && (model.updatedAt = viewModel.updatedAt === null ? null : new Date(viewModel.updatedAt));
+
+			return model;
+		}
+	},
+	LocationViewModel: class ComposedLocationViewModel extends LocationViewModel {
+		async map() {
+			return {
+				id: this.model.id,
+				name: this.model.name
+			}
+		};
+
+		static get items() { 
+			return {
+				id: true,
+				name: true
+			};
+		}
+
+		static toViewModel(data) {
+			const item = new LocationViewModel(null);
+			"id" in data && (item.id = data.id === null ? null : `${data.id}`);
+			"name" in data && (item.name = data.name === null ? null : `${data.name}`);
+
+			return item;
+		}
+
+		static async toModel(viewModel: LocationViewModel) {
+			let model: Location;
+			
+			if (viewModel.id) {
+				model = await ViewModel.globalFetchingContext.findSet(Location).find(viewModel.id)
+			} else {
+				model = new Location();
+			}
+			
+			"id" in viewModel && (model.id = viewModel.id === null ? null : `${viewModel.id}`);
+			"name" in viewModel && (model.name = viewModel.name === null ? null : `${viewModel.name}`);
 
 			return model;
 		}

@@ -18,6 +18,7 @@ export class EventViewModel {
 }
 
 export class HostViewModel {
+	location: LocationViewModel;
 	id: string;
 	name: string;
 	online: boolean;
@@ -25,10 +26,24 @@ export class HostViewModel {
 
 	private static $build(raw) {
 		const item = new HostViewModel();
+		item.location = raw.location ? LocationViewModel["$build"](raw.location) : null
 		item.id = raw.id === null ? null : `${raw.id}`
 		item.name = raw.name === null ? null : `${raw.name}`
 		item.online = !!raw.online
 		item.updatedAt = raw.updatedAt ? new Date(raw.updatedAt) : null
+		
+		return item;
+	}
+}
+
+export class LocationViewModel {
+	id: string;
+	name: string;
+
+	private static $build(raw) {
+		const item = new LocationViewModel();
+		item.id = raw.id === null ? null : `${raw.id}`
+		item.name = raw.name === null ? null : `${raw.name}`
 		
 		return item;
 	}

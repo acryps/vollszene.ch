@@ -15,7 +15,6 @@ export default class AmbossRampeProvider extends Provider {
         for (let eventElement of page.window.document.querySelectorAll('.ai1ec-event')) {
             const event = new Event();
 
-            
             event.name = (
                 eventElement.querySelector('.ai1ec-event-title')?.textContent.trim() || eventElement.querySelector('.ai1ec-event-summary .ai1ec-event-description [style]')?.textContent.trim()
             ).replace(/\s+/g, ' ');
@@ -24,6 +23,8 @@ export default class AmbossRampeProvider extends Provider {
 
             event.date = new Date(Date.UTC(+dateComponents[2], +dateComponents[1] - 1, +dateComponents[0]));
             event.link = eventElement.querySelector('.ai1ec-load-event').href;
+
+            event.hash = Provider.hashEvent(event);
 
             if (!event.name.startsWith('Sonntag ist Ruhetag')) {
                 events.push(event);

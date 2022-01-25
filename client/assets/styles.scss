@@ -47,6 +47,37 @@ ui-nav {
 	}
 }
 
+ui-filters {
+	display: block;
+	border-bottom: 1px solid #000;
+
+	overflow-x: auto;
+	overflow-y: hidden;
+
+	ui-filter {
+		display: inline-block;
+		position: relative;
+		border-right: 1px solid #000;
+
+		&[ui-active] {
+			background: #000;
+			color: #fff;
+		}
+
+		select {
+			padding: 0.75rem 1rem;
+			appearance: none;
+			-webkit-appearance: none;
+
+			outline: none;
+			font: inherit;
+			color: inherit;
+			border: none;
+			background: transparent;
+		}
+	}
+}
+
 ui-content {
 	display: flex;
 	flex-direction: column;
@@ -85,6 +116,13 @@ ui-content {
 			padding: 0.5rem 1rem;
 
 			font-weight: bold;
+
+			ui-today {
+				margin-right: 0.75rem;
+
+				background: #000;
+				color: #fff;
+			}
 		}
 
 		ui-event {
@@ -95,11 +133,14 @@ ui-content {
 				display: block;
 				margin-bottom: 0.25rem;
 
-				font-weight: bold;
 				font-size: 0.75rem;
+
+				ui-name {
+					font-weight: bold;
+				}
 			}
 
-			ui-name {
+			> ui-name {
 				display: block;
 				margin-bottom: 0.5rem;
 			}
@@ -115,6 +156,13 @@ ui-content {
 		}
 	}
 
+	ui-none {
+		display: block;
+		padding: 3rem 1rem;
+		background: $danger;
+		color: #fff;
+	}
+
 	ui-about {
 		padding: 5rem 1rem;
 
@@ -126,10 +174,11 @@ ui-content {
 				margin-top: 3rem;
 			}
 
-			ui-name {
-				display: inline-block;
-				margin-right: 1rem;
+			&[ui-offline] {
+				color: $danger;
+			}
 
+			ui-name {
 				font-weight: bold;
 			}
 		}
@@ -178,8 +227,15 @@ ui-content {
 		}
 
 		ui-month,
-		ui-day:not(:last-child) {
+		ui-day:not(:last-child),
+		ui-none {
 			border-right: 1px solid #000;
+		}
+
+		ui-none {
+			width: 600px;
+			flex-shrink: 0;
+			padding: 3rem;
 		}
 
 		ui-about {
