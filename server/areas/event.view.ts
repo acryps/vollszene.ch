@@ -8,6 +8,7 @@ export class EventViewModel extends ViewModel<Event> {
     name;
     date;
     link;
+    imageUrl;
 
     host: HostViewModel;
 }

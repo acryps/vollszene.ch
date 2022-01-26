@@ -23,6 +23,7 @@ export default class AmbossRampeProvider extends Provider {
 
             event.date = new Date(Date.UTC(+dateComponents[2], +dateComponents[1] - 1, +dateComponents[0]));
             event.link = eventElement.querySelector('.ai1ec-load-event').href;
+            event.imageUrl = eventElement.querySelector('img:not([width="16"])')?.src;
 
             event.hash = Provider.hashEvent(event);
 

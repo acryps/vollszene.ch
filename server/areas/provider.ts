@@ -24,7 +24,7 @@ export abstract class Provider {
 
                 await event.create();
 
-                console.log(`+++ ${this.name}: ${event.name}`);
+                console.log(`+++ ${this.name}: ${event.date.toDateString()} ${event.name} [${event.link}]`);
             } else {
                 event.id = existing.id;
 

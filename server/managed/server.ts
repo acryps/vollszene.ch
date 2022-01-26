@@ -55,7 +55,8 @@ ViewModel.mappings = {
 				id: this.model.id,
 				date: this.model.date,
 				name: this.model.name,
-				link: this.model.link
+				link: this.model.link,
+				imageUrl: this.model.imageUrl
 			}
 		};
 
@@ -67,7 +68,8 @@ ViewModel.mappings = {
 				id: true,
 				date: true,
 				name: true,
-				link: true
+				link: true,
+				imageUrl: true
 			};
 		}
 
@@ -78,6 +80,7 @@ ViewModel.mappings = {
 			"date" in data && (item.date = data.date === null ? null : new Date(data.date));
 			"name" in data && (item.name = data.name === null ? null : `${data.name}`);
 			"link" in data && (item.link = data.link === null ? null : `${data.link}`);
+			"imageUrl" in data && (item.imageUrl = data.imageUrl === null ? null : `${data.imageUrl}`);
 
 			return item;
 		}
@@ -96,6 +99,7 @@ ViewModel.mappings = {
 			"date" in viewModel && (model.date = viewModel.date === null ? null : new Date(viewModel.date));
 			"name" in viewModel && (model.name = viewModel.name === null ? null : `${viewModel.name}`);
 			"link" in viewModel && (model.link = viewModel.link === null ? null : `${viewModel.link}`);
+			"imageUrl" in viewModel && (model.imageUrl = viewModel.imageUrl === null ? null : `${viewModel.imageUrl}`);
 
 			return model;
 		}

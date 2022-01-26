@@ -13,19 +13,27 @@ export default class ExilProvider extends Provider {
         const html = await fetch('https://exil.cl/').then(res => res.text());
         const page = new JSDOM(html);
 
-        for (let eventElement of page.window.document.querySelectorAll('.show-detail[data-event]:not(.cancelled')) {
+        const treshold = new Date();
+        treshold.setMonth(treshold.getMonth() - 1);
+
+        for (let article of page.window.document.querySelectorAll('article[id]:not(.cancelled')) {
             const event = new Event();
 
-            event.hash = eventElement.attributes['data-event'].value;
-            event.name = eventElement.querySelector('.title')?.textContent;
+            const id = article.id.split('-')[1];
+
+            event.hash = id;
+            event.name = article.querySelector('h1')?.textContent.trim();
 
             if (event.name && event.name.toLocaleLowerCase() != 'geschlossene gesellschaft') {
-                const dateComponents = eventElement.querySelector('.date').textContent.split(/\s+/);
+                const dateComponents = article.querySelector('time').attributes['datetime'].value.split(/-|T/g);
 
-                event.date = new Date(Date.UTC(2000 + +dateComponents[3], +dateComponents[2] - 1, +dateComponents[1]));
-                event.link = `https://exil.cl/programm/detail/${event.hash}`;
+                event.date = new Date(Date.UTC(+dateComponents[0], +dateComponents[1] - 1, +dateComponents[2]));
+                event.link = `https://exil.cl/programm/detail/${id}`;
+                event.imageUrl = article.querySelector('img[data-mfp-src], img[data-src]')?.attributes['data-src']?.value;
 
-                events.push(event);
+                if (event.date > treshold) {
+                    events.push(event);
+                }
             }
         }
 

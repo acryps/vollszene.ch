@@ -17,79 +17,6 @@ import {
 	PrimaryReference
 } from "vlquery";
 
-export class EventQueryProxy extends QueryProxy {
-	get host(): Partial<HostQueryProxy> {
-		throw new Error("Invalid use of QueryModels. QueryModels cannot be used during runtime");
-	}
-					
-	get date(): Partial<QueryDate> {
-		throw new Error("Invalid use of QueryModels. QueryModels cannot be used during runtime");
-	}
-					
-	get name(): Partial<QueryString> {
-		throw new Error("Invalid use of QueryModels. QueryModels cannot be used during runtime");
-	}
-					
-	get link(): Partial<QueryString> {
-		throw new Error("Invalid use of QueryModels. QueryModels cannot be used during runtime");
-	}
-					
-	get hash(): Partial<QueryString> {
-		throw new Error("Invalid use of QueryModels. QueryModels cannot be used during runtime");
-	}
-					
-	get hostId(): Partial<QueryUUID> {
-		throw new Error("Invalid use of QueryModels. QueryModels cannot be used during runtime");
-	}
-}
-
-export class Event extends Entity<EventQueryProxy> {
-	$$meta = {
-		tableName: "event",
-		columns: {"id":{"type":"uuid","name":"id"},"date":{"type":"date","name":"date"},"name":{"type":"text","name":"name"},"link":{"type":"text","name":"link"},"hash":{"type":"text","name":"hash"},"hostId":{"type":"uuid","name":"host_id"}},
-		get set(): DbSet<Event, EventQueryProxy> {
-			// returns unbound dbset
-			return new DbSet<Event, EventQueryProxy>(Event, null)
-		},
-		
-	};
-		
-	constructor() {
-		super();
-
-		this.$host = new ForeignReference<Host>(
-			this,
-			"hostId",
-			Host
-		);
-	}
-
-	private $host: ForeignReference<Host>;
-
-	get host(): Partial<ForeignReference<Host>> {
-		return this.$host;
-	}
-
-	set host(value: Partial<ForeignReference<Host>>) {
-		if (value) {
-			if (!value.id) {
-				throw new Error("Invalid null id. Save the referenced model prior to creating a reference to it.");
-			}
-
-			this.hostId = value.id as string;
-		} else {
-			this.hostId = null;
-		}
-	}
-					
-	id: string;
-	date: Date;
-	name: string;
-	link: string;
-	hash: string;
-	hostId: string;
-}
-			
 export class HostQueryProxy extends QueryProxy {
 	get location(): Partial<LocationQueryProxy> {
 		throw new Error("Invalid use of QueryModels. QueryModels cannot be used during runtime");
@@ -204,6 +131,84 @@ export class Location extends Entity<LocationQueryProxy> {
 	name: string;
 }
 			
+export class EventQueryProxy extends QueryProxy {
+	get host(): Partial<HostQueryProxy> {
+		throw new Error("Invalid use of QueryModels. QueryModels cannot be used during runtime");
+	}
+					
+	get date(): Partial<QueryDate> {
+		throw new Error("Invalid use of QueryModels. QueryModels cannot be used during runtime");
+	}
+					
+	get name(): Partial<QueryString> {
+		throw new Error("Invalid use of QueryModels. QueryModels cannot be used during runtime");
+	}
+					
+	get link(): Partial<QueryString> {
+		throw new Error("Invalid use of QueryModels. QueryModels cannot be used during runtime");
+	}
+					
+	get hash(): Partial<QueryString> {
+		throw new Error("Invalid use of QueryModels. QueryModels cannot be used during runtime");
+	}
+					
+	get hostId(): Partial<QueryUUID> {
+		throw new Error("Invalid use of QueryModels. QueryModels cannot be used during runtime");
+	}
+					
+	get imageUrl(): Partial<QueryString> {
+		throw new Error("Invalid use of QueryModels. QueryModels cannot be used during runtime");
+	}
+}
+
+export class Event extends Entity<EventQueryProxy> {
+	$$meta = {
+		tableName: "event",
+		columns: {"id":{"type":"uuid","name":"id"},"date":{"type":"date","name":"date"},"name":{"type":"text","name":"name"},"link":{"type":"text","name":"link"},"hash":{"type":"text","name":"hash"},"hostId":{"type":"uuid","name":"host_id"},"imageUrl":{"type":"text","name":"image_url"}},
+		get set(): DbSet<Event, EventQueryProxy> {
+			// returns unbound dbset
+			return new DbSet<Event, EventQueryProxy>(Event, null)
+		},
+		
+	};
+		
+	constructor() {
+		super();
+
+		this.$host = new ForeignReference<Host>(
+			this,
+			"hostId",
+			Host
+		);
+	}
+
+	private $host: ForeignReference<Host>;
+
+	get host(): Partial<ForeignReference<Host>> {
+		return this.$host;
+	}
+
+	set host(value: Partial<ForeignReference<Host>>) {
+		if (value) {
+			if (!value.id) {
+				throw new Error("Invalid null id. Save the referenced model prior to creating a reference to it.");
+			}
+
+			this.hostId = value.id as string;
+		} else {
+			this.hostId = null;
+		}
+	}
+					
+	id: string;
+	date: Date;
+	name: string;
+	link: string;
+	hash: string;
+	hostId: string;
+	imageUrl: string;
+}
+			
 
 export class DbContext {
 	constructor(private runContext: RunContext) {}
@@ -218,7 +223,7 @@ export class DbContext {
 		}
 	}
 
-	event: DbSet<Event, EventQueryProxy> = new DbSet<Event, EventQueryProxy>(Event, this.runContext);
 	host: DbSet<Host, HostQueryProxy> = new DbSet<Host, HostQueryProxy>(Host, this.runContext);
 	location: DbSet<Location, LocationQueryProxy> = new DbSet<Location, LocationQueryProxy>(Location, this.runContext);
+	event: DbSet<Event, EventQueryProxy> = new DbSet<Event, EventQueryProxy>(Event, this.runContext);
 };

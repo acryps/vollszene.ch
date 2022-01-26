@@ -55,10 +55,14 @@ export class EventsComponent extends Component {
 				}
 
 				day.push(<ui-event>
+					{event.imageUrl && <img src={event.imageUrl} />}
+
 					<ui-host>
 						<ui-name>{event.host.name}</ui-name> {this.filters.location ? '' : event.host.location.name}
 					</ui-host>
+
 					<ui-name>{event.name}</ui-name>
+
 					<ui-link>
 						<a href={event.link} target="_blank">→ {event.link}</a>
 					</ui-link>

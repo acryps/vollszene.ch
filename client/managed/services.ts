@@ -4,6 +4,7 @@ export class EventViewModel {
 	date: Date;
 	name: string;
 	link: string;
+	imageUrl: string;
 
 	private static $build(raw) {
 		const item = new EventViewModel();
@@ -12,6 +13,7 @@ export class EventViewModel {
 		item.date = raw.date ? new Date(raw.date) : null
 		item.name = raw.name === null ? null : `${raw.name}`
 		item.link = raw.link === null ? null : `${raw.link}`
+		item.imageUrl = raw.imageUrl === null ? null : `${raw.imageUrl}`
 		
 		return item;
 	}

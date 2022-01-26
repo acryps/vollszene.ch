@@ -128,6 +128,15 @@ ui-content {
 		ui-event {
 			display: block;
 			padding: 0.5rem 1rem;
+			clear: both;
+
+			img {
+				float: left;
+
+				max-width: 6rem;
+				max-height: 4rem;
+				margin-right: 1rem;
+			}
 
 			ui-host {
 				display: block;
