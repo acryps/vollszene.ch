@@ -32,19 +32,13 @@ ui-nav {
 	z-index: 100;
 
 	line-height: 1;
-	background: linear-gradient(0, #fff0, #fff);
+	font-weight: bold;
+	color: #0f05a2;
+	background: #fff;
 	border-bottom: 1px solid #000;
 
 	backdrop-filter: blur(20px);
 	-webkit-backdrop-filter: blur(20px);
-
-	ui-logo {
-		display: inline-block;
-		margin-right: 0.7em;
-  
-		font-weight: bold;	
-		color: #0f05a2;
-	}
 }
 
 ui-filters {
