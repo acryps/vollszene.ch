@@ -128,7 +128,7 @@ ui-content {
 				float: left;
 
 				max-width: 6rem;
-				max-height: 4rem;
+				max-height: 3.5rem;
 				margin-right: 1rem;
 			}
 
@@ -225,6 +225,17 @@ ui-content {
 		ui-day {
 			width: 400px;
 			flex-shrink: 0;
+
+			&[ui-day='1'],
+			&[ui-day='2'],
+			&[ui-day='3'],
+			&[ui-day='4'] {
+				width: 300px;
+			}
+
+			&[ui-day='5'] {
+				width: 350px;
+			}
 
 			overflow-x: hidden;
 			overflow-y: auto;

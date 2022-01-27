@@ -32,7 +32,7 @@ export class EventsComponent extends Component {
 
 			for (let event of this.events) {
 				if (+event.date != +date) {
-					days.push(<ui-day>
+					days.push(<ui-day ui-day={date.getUTCDay()}>
 						<ui-date>
 							{date.toDateString() == new Date().toDateString() && <ui-today>today</ui-today>}
 

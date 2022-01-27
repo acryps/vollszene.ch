@@ -28,6 +28,10 @@ export abstract class Provider {
             } else {
                 event.id = existing.id;
 
+                if (event.imageUrl != existing.imageUrl) {
+                    console.log(`>>> ${this.name}: ${event.date.toDateString()} ${event.name} [${event.link}]`)
+                } 
+
                 await event.update();
             }
         }
@@ -38,13 +42,9 @@ export abstract class Provider {
             const host = await db.host.first(host => host.provider == provider.name);
 
             if (host) {
-                console.log(`fetching '${provider.name}' for '${host.name}'`);
-
                 provider.dispatch(db).then(() => {
                     host.updatedAt = new Date();
                     host.online = true;
-    
-                    console.log(`fetched '${provider.name}'`);
                 }).catch(error => {
                     host.online = false;
     
@@ -66,8 +66,6 @@ export abstract class Provider {
         for (let path of readdirSync(join(__dirname, 'providers'))) {
             if (path[0] != '.' && path.endsWith('.js')) {
                 const provider = require(join(__dirname, 'providers', path)).default;
-
-                console.log(path, typeof provider);
 
                 providers.push(new provider());
             }

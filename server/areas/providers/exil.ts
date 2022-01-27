@@ -18,7 +18,6 @@ export default class ExilProvider extends Provider {
 
         for (let article of page.window.document.querySelectorAll('article[id]:not(.cancelled')) {
             const event = new Event();
-
             const id = article.id.split('-')[1];
 
             event.hash = id;
@@ -29,7 +28,10 @@ export default class ExilProvider extends Provider {
 
                 event.date = new Date(Date.UTC(+dateComponents[0], +dateComponents[1] - 1, +dateComponents[2]));
                 event.link = `https://exil.cl/programm/detail/${id}`;
-                event.imageUrl = article.querySelector('img[data-mfp-src], img[data-src]')?.attributes['data-src']?.value;
+                event.imageUrl = (
+                    article.querySelector('img.hauptbild, .event-gallery img[data-src]') || 
+                    article.querySelector('img[data-mfp-src], img[data-src]')
+                )?.attributes['data-src']?.value;
 
                 if (event.date > treshold) {
                     events.push(event);
