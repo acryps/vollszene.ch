@@ -4,7 +4,7 @@ import { JSDOM } from "jsdom";
 import { Event } from "../../managed/database";
 
 
-export default class ZukiProvider extends Provider {
+export default class KauzProvider extends Provider {
     name = 'kauz';
 
     async fetch() {
@@ -18,22 +18,28 @@ export default class ZukiProvider extends Provider {
 
         for (let eventElement of page.window.document.querySelectorAll('h2 .party_link')) {
             const event = new Event();
-
-            const date = +eventElement.parentElement.previousSibling.previousSibling.textContent.match(/[0-9]+/)[0];
-
-            if (topDate.getUTCDate() > date) {
-                topDate.setUTCDate(1);
-                topDate.setUTCMonth(topDate.getUTCMonth() + 1);
-            }
-
-            topDate.setUTCDate(date);
+            let date;
             
-            event.hash = eventElement.href.match(/[0-9]+/)[0];
-            event.date = new Date(topDate);
-            event.name = eventElement.textContent;
-            event.link = eventElement.href;
+            const dateElement = eventElement.parentElement.previousSibling?.previousSibling;
 
-            events.push(event);
+            // skip events that are today, we should already have them in the list!
+            if (dateElement.textContent != 'TONIGHT') {
+                date = +dateElement.textContent.match(/[0-9]+/)[0];
+
+                if (topDate.getUTCDate() > date) {
+                    topDate.setUTCDate(1);
+                    topDate.setUTCMonth(topDate.getUTCMonth() + 1);
+                }
+    
+                topDate.setUTCDate(date);
+
+                event.date = new Date(topDate);
+                event.hash = eventElement.href.match(/[0-9]+/)[0];
+                event.name = eventElement.textContent;
+                event.link = eventElement.href;
+
+                events.push(event);
+            }
         }
         
         return events;

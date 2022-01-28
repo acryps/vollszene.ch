@@ -4,7 +4,7 @@ import { JSDOM } from "jsdom";
 import { Event } from "../../managed/database";
 
 
-export default class ZukiProvider extends Provider {
+export default class HelsinkiProvider extends Provider {
     name = 'helsinki';
 
     async fetch() {
@@ -36,11 +36,13 @@ export default class ZukiProvider extends Provider {
                         petzi = new JSDOM(await fetch(`https://www.petzi.ch/${movedTitle.href}`).then(res => res.text()));
                     }
 
-                    const dateComponents = petzi.window.document.querySelector('title').textContent.match(/[0-9]{2}\.[0-9]{2}\.[0-9]{4}/)[0].split('.');
+                    const dateComponents = (petzi.window.document.querySelector('title').textContent.match(/[0-9]{2}\.[0-9]{2}\.[0-9]{4}/) || '.')[0].split('.');
 
-                    event.date = new Date(Date.UTC(+dateComponents[2], +dateComponents[1] - 1, +dateComponents[0]));
+                    if (dateComponents.length == 3) {
+                        event.date = new Date(Date.UTC(+dateComponents[2], +dateComponents[1] - 1, +dateComponents[0]));
 
-                    events.push(event);
+                        events.push(event);
+                    }
                 }
             }
         }
