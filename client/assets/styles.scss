@@ -50,6 +50,43 @@ ui-covid {
 	font-size: 0.65rem;
 }
 
+ui-events-container {
+	display: flex;
+
+	ui-index {
+		position: fixed;
+		right: 0;
+		width: 1.5rem;
+	
+		border: 1px solid #000;
+		border-right: none;
+		background: #fff;
+
+		white-space: nowrap;
+		writing-mode: vertical-lr;
+
+		ui-week {
+			display: inline-block;
+			padding: 0.25em;
+		}
+	}
+
+	ui-events {
+		flex-grow: 1;
+		padding-right: 1.5rem;
+		
+		ui-index {
+			display: block;
+			background: yellow;
+
+			position: absolute;
+			top: 0;
+			right: 0;
+			bottom: 0;
+		}
+	}
+}
+
 ui-filters {
 	display: block;
 	border-bottom: 1px solid #000;
@@ -223,6 +260,7 @@ ui-content {
 					&:hover {
 						background: #000;
 						color: #fff;
+						text-shadow: none;
 					}
 				}
 			}
@@ -273,79 +311,86 @@ ui-content {
 			flex-shrink: 0;
 		}
 
-		ui-events {
-			flex-grow: 1;
-			height: 100%;
-			overflow: hidden;
-
-			display: flex;
-			flex-direction: column;
-
-			ui-filters {
-				flex-shrink: 0;
+		ui-events-container {
+			ui-index {
+				display: none;
 			}
 
-			ui-content {
+			ui-events {
 				flex-grow: 1;
 				height: 100%;
+				overflow: hidden;
+				padding-right: 0;
 
-				flex-direction: row;
-				overflow-y: auto;
-		
-				ui-issues {
-					display: flex;
-					padding: 1rem 0.25rem;
-					align-items: flex-start;
-		
-					writing-mode: vertical-rl;
-				}
-		
-				ui-month {
-					padding: 1rem 0.5rem;
-		
-					writing-mode: vertical-rl;
-				}
-		
-				ui-day {
-					width: 400px;
-					height: calc(100% - 1rem);
-					flex-shrink: 0;
+				display: flex;
+				flex-direction: column;
 
-					overflow-x: hidden;
-					overflow-y: auto;
-		
-					&[ui-day='1'],
-					&[ui-day='2'],
-					&[ui-day='3'],
-					&[ui-day='4'] {
-						width: 300px;
-					}
-		
-					&[ui-day='5'] {
-						width: 350px;
-					}
-		
-					overflow-x: hidden;
-					overflow-y: auto;
-					
-					border-bottom: none;
-				}
-		
-				ui-month,
-				ui-day:not(:last-child),
-				ui-none {
-					border-right: 1px solid #000;
-				}
-		
-				ui-none {
-					width: 600px;
+				ui-filters {
 					flex-shrink: 0;
-					padding: 3rem;
 				}
-		
-				ui-about {
-					width: 800px;
-					flex-shrink: 0;
+
+				ui-content {
+					flex-grow: 1;
+					height: 100%;
+
+					flex-direction: row;
+					overflow-y: auto;
+			
+					ui-issues {
+						display: flex;
+						padding: 1rem 0.25rem;
+						align-items: flex-start;
+			
+						writing-mode: vertical-rl;
+					}
+			
+					ui-month {
+						padding: 1rem 0.5rem;
+			
+						writing-mode: vertical-rl;
+					}
+			
+					ui-day {
+						width: 400px;
+						height: calc(100% - 1rem);
+						flex-shrink: 0;
+
+						overflow-x: hidden;
+						overflow-y: auto;
+			
+						&[ui-day='1'],
+						&[ui-day='2'],
+						&[ui-day='3'],
+						&[ui-day='4'] {
+							width: 300px;
+						}
+			
+						&[ui-day='5'] {
+							width: 350px;
+						}
+			
+						overflow-x: hidden;
+						overflow-y: auto;
+						
+						border-bottom: none;
+					}
+			
+					ui-month,
+					ui-day:not(:last-child),
+					ui-none {
+						border-right: 1px solid #000;
+					}
+			
+					ui-none {
+						width: 600px;
+						flex-shrink: 0;
+						padding: 3rem;
+					}
+			
+					ui-about {
+						width: 800px;
+						flex-shrink: 0;
+					}
 				}
 			}
 		}

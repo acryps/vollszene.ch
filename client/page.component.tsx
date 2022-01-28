@@ -2,6 +2,7 @@ import { Component } from "node_modules/vldom/component";
 
 export class PageComponent extends Component {
 	logo: HTMLElement;
+	rootNode: HTMLElement;
 
 	render(child?: Node) {
 		requestAnimationFrame(() => {

@@ -25,8 +25,6 @@ export class EventComponent extends Component {
             slots.push(`#000 100%`);
 
             this.rootNode.style.setProperty('--gradient', `linear-gradient(90deg, ${slots})`);
-
-            console.log(slots.join())
         })
 
         return <ui-event ui-sold-out={this.event.ticketLink && !this.event.ticketAvailable ? '' : null} ui-highlight={this.event.highlight ? '' : null} ui-id={this.event.id}>
