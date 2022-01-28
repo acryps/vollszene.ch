@@ -2,6 +2,8 @@ import { Provider } from "../provider";
 import fetch from "node-fetch";
 import { JSDOM } from "jsdom";
 import { Event } from "../../managed/database";
+import { EventFrog } from "../tickets/eventfrog";
+import { Tickets } from "../tickets/parser";
 
 
 export default class ExilProvider extends Provider {
@@ -32,6 +34,10 @@ export default class ExilProvider extends Provider {
                     article.querySelector('img.hauptbild, .event-gallery img[data-src]') || 
                     article.querySelector('img[data-mfp-src], img[data-src]')
                 )?.attributes['data-src']?.value;
+
+                for (let link of article.querySelectorAll('.event-tickets a')) {
+                    await new Tickets().findTickets(event, link.href);
+                }
 
                 if (event.date > treshold) {
                     events.push(event);

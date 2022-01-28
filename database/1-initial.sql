@@ -25,5 +25,11 @@ CREATE TABLE event (
     hash TEXT,
     image_url TEXT,
 
+    ticket_link TEXT,
+    ticket_available BOOLEAN,
+    ticket_price REAL,
+
+    highlight BOOLEAN,
+
     host_id UUID CONSTRAINT host__events REFERENCES host (id)
 );

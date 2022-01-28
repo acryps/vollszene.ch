@@ -56,7 +56,11 @@ ViewModel.mappings = {
 				date: this.model.date,
 				name: this.model.name,
 				link: this.model.link,
-				imageUrl: this.model.imageUrl
+				imageUrl: this.model.imageUrl,
+				ticketLink: this.model.ticketLink,
+				ticketAvailable: this.model.ticketAvailable,
+				ticketPrice: this.model.ticketPrice,
+				highlight: this.model.highlight
 			}
 		};
 
@@ -69,7 +73,11 @@ ViewModel.mappings = {
 				date: true,
 				name: true,
 				link: true,
-				imageUrl: true
+				imageUrl: true,
+				ticketLink: true,
+				ticketAvailable: true,
+				ticketPrice: true,
+				highlight: true
 			};
 		}
 
@@ -81,6 +89,10 @@ ViewModel.mappings = {
 			"name" in data && (item.name = data.name === null ? null : `${data.name}`);
 			"link" in data && (item.link = data.link === null ? null : `${data.link}`);
 			"imageUrl" in data && (item.imageUrl = data.imageUrl === null ? null : `${data.imageUrl}`);
+			"ticketLink" in data && (item.ticketLink = data.ticketLink === null ? null : `${data.ticketLink}`);
+			"ticketAvailable" in data && (item.ticketAvailable = !!data.ticketAvailable);
+			"ticketPrice" in data && (item.ticketPrice = data.ticketPrice === null ? null : +data.ticketPrice);
+			"highlight" in data && (item.highlight = !!data.highlight);
 
 			return item;
 		}
@@ -100,6 +112,10 @@ ViewModel.mappings = {
 			"name" in viewModel && (model.name = viewModel.name === null ? null : `${viewModel.name}`);
 			"link" in viewModel && (model.link = viewModel.link === null ? null : `${viewModel.link}`);
 			"imageUrl" in viewModel && (model.imageUrl = viewModel.imageUrl === null ? null : `${viewModel.imageUrl}`);
+			"ticketLink" in viewModel && (model.ticketLink = viewModel.ticketLink === null ? null : `${viewModel.ticketLink}`);
+			"ticketAvailable" in viewModel && (model.ticketAvailable = !!viewModel.ticketAvailable);
+			"ticketPrice" in viewModel && (model.ticketPrice = viewModel.ticketPrice === null ? null : +viewModel.ticketPrice);
+			"highlight" in viewModel && (model.highlight = !!viewModel.highlight);
 
 			return model;
 		}

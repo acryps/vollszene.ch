@@ -1,3 +1,4 @@
+$primary: #0f05a2;
 $danger: #902549;
 
 :root {
@@ -33,12 +34,20 @@ ui-nav {
 
 	line-height: 1;
 	font-weight: bold;
-	color: #0f05a2;
+	color: $primary;
 	background: #fff;
 	border-bottom: 1px solid #000;
 
-	backdrop-filter: blur(20px);
-	-webkit-backdrop-filter: blur(20px);
+	image-rendering: pixelated;
+}
+
+ui-covid {
+	display: block;
+	padding: 0.5rem 1rem;
+
+	background: $primary;
+	color: #fff;
+	font-size: 0.65rem;
 }
 
 ui-filters {
@@ -103,7 +112,9 @@ ui-content {
 
 	ui-day {
 		padding: 0.5rem 0;
-		border-bottom: 1px solid #000;
+		border-bottom: 2px solid #000;
+		width: 100%;
+		overflow: hidden;
 
 		ui-date {
 			display: block;
@@ -121,9 +132,27 @@ ui-content {
 
 		ui-event {
 			display: block;
-			padding: 0.5rem 1rem;
+			padding: 1rem;
 			clear: both;
 
+			background: #fff;
+
+			&:not(:first-of-type) {
+				background-image: var(--gradient);
+				background-size: 1rem 1px;
+				background-repeat: repeat-x;
+			}
+
+			&[ui-sold-out] {
+				color: #666;
+			}
+
+			&[ui-highlight] {
+				padding: 0.5rem;
+
+				border: 0.5rem solid yellow;
+			}
+			
 			img {
 				float: left;
 
@@ -132,14 +161,29 @@ ui-content {
 				margin-right: 1rem;
 			}
 
-			ui-host {
-				display: block;
+			ui-tagline {
+				display: flex;
 				margin-bottom: 0.25rem;
 
 				font-size: 0.75rem;
 
-				ui-name {
-					font-weight: bold;
+				ui-host {
+					flex-grow: 1;
+
+					ui-name {
+						display: inline-block;
+
+						font-weight: bold;
+						margin-right: 0.5rem;
+					}
+				}
+
+				ui-ticket-details {
+					flex-shrink: 0;
+
+					ui-sold-out {
+						font-style: italic;
+					}
 				}
 			}
 
@@ -148,13 +192,26 @@ ui-content {
 				margin-bottom: 0.5rem;
 			}
 
-			ui-link {
+			ui-links {
 				display: block;
 				font-size: 0.75rem;
 
-				white-space: nowrap;
-				overflow: hidden;
-				text-overflow: ellipsis;
+				a {
+					display: inline-block;
+					padding: 0.125rem 0.5rem;
+
+					color: inherit;
+					border: 1px solid currentColor;
+
+					&:not(:last-child) {
+						margin-right: 0.5rem;
+					}
+
+					&:hover {
+						background: #000;
+						color: #fff;
+					}
+				}
 			}
 		}
 	}
@@ -189,75 +246,95 @@ ui-content {
 }
 
 @media (min-width: 500px) {
-	ui-content {
-		flex-direction: row;
-		overflow-y: auto;
+	ui-page {
+		position: fixed;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
 
-		height: calc(100vh - 5.5rem - 2px);
+		display: flex;
+		flex-direction: column;
 
-		ui-issues {
+		ui-nav {
+			flex-shrink: 0;
+		}
+
+		ui-events {
+			flex-grow: 1;
+			height: 100%;
+			overflow: hidden;
+
 			display: flex;
-			padding: 1rem 0.25rem;
-			align-items: flex-start;
+			flex-direction: column;
 
-			writing-mode: vertical-rl;
-		}
-
-		ui-month {
-			position: relative;
-
-			ui-name {
-				display: flex;
-				height: calc(100vh - 5.5rem - 2px);
-				width: 2rem;
-				align-items: center;
-				justify-content: center;
-				
-				position: absolute;
-				top: 0;
-				left: 0;
-				right: 0;
-
-				writing-mode: vertical-rl;
-			}
-		}
-
-		ui-day {
-			width: 400px;
-			flex-shrink: 0;
-
-			&[ui-day='1'],
-			&[ui-day='2'],
-			&[ui-day='3'],
-			&[ui-day='4'] {
-				width: 300px;
+			ui-filters {
+				flex-shrink: 0;
 			}
 
-			&[ui-day='5'] {
-				width: 350px;
+			ui-content {
+				flex-grow: 1;
+				height: 100%;
+
+				flex-direction: row;
+				overflow-y: auto;
+		
+				ui-issues {
+					display: flex;
+					padding: 1rem 0.25rem;
+					align-items: flex-start;
+		
+					writing-mode: vertical-rl;
+				}
+		
+				ui-month {
+					padding: 1rem 0.5rem;
+		
+					writing-mode: vertical-rl;
+				}
+		
+				ui-day {
+					width: 400px;
+					height: calc(100% - 1rem);
+					flex-shrink: 0;
+
+					overflow-x: hidden;
+					overflow-y: auto;
+		
+					&[ui-day='1'],
+					&[ui-day='2'],
+					&[ui-day='3'],
+					&[ui-day='4'] {
+						width: 300px;
+					}
+		
+					&[ui-day='5'] {
+						width: 350px;
+					}
+		
+					overflow-x: hidden;
+					overflow-y: auto;
+					
+					border-bottom: none;
+				}
+		
+				ui-month,
+				ui-day:not(:last-child),
+				ui-none {
+					border-right: 1px solid #000;
+				}
+		
+				ui-none {
+					width: 600px;
+					flex-shrink: 0;
+					padding: 3rem;
+				}
+		
+				ui-about {
+					width: 800px;
+					flex-shrink: 0;
+				}
 			}
-
-			overflow-x: hidden;
-			overflow-y: auto;
-			
-			border-bottom: none;
-		}
-
-		ui-month,
-		ui-day:not(:last-child),
-		ui-none {
-			border-right: 1px solid #000;
-		}
-
-		ui-none {
-			width: 600px;
-			flex-shrink: 0;
-			padding: 3rem;
-		}
-
-		ui-about {
-			width: 800px;
-			flex-shrink: 0;
 		}
 	}
 }

@@ -159,12 +159,28 @@ export class EventQueryProxy extends QueryProxy {
 	get imageUrl(): Partial<QueryString> {
 		throw new Error("Invalid use of QueryModels. QueryModels cannot be used during runtime");
 	}
+					
+	get ticketLink(): Partial<QueryString> {
+		throw new Error("Invalid use of QueryModels. QueryModels cannot be used during runtime");
+	}
+					
+	get ticketAvailable(): Partial<QueryBoolean> {
+		throw new Error("Invalid use of QueryModels. QueryModels cannot be used during runtime");
+	}
+					
+	get ticketPrice(): Partial<QueryNumber> {
+		throw new Error("Invalid use of QueryModels. QueryModels cannot be used during runtime");
+	}
+					
+	get highlight(): Partial<QueryBoolean> {
+		throw new Error("Invalid use of QueryModels. QueryModels cannot be used during runtime");
+	}
 }
 
 export class Event extends Entity<EventQueryProxy> {
 	$$meta = {
 		tableName: "event",
-		columns: {"id":{"type":"uuid","name":"id"},"date":{"type":"date","name":"date"},"name":{"type":"text","name":"name"},"link":{"type":"text","name":"link"},"hash":{"type":"text","name":"hash"},"hostId":{"type":"uuid","name":"host_id"},"imageUrl":{"type":"text","name":"image_url"}},
+		columns: {"id":{"type":"uuid","name":"id"},"date":{"type":"date","name":"date"},"name":{"type":"text","name":"name"},"link":{"type":"text","name":"link"},"hash":{"type":"text","name":"hash"},"hostId":{"type":"uuid","name":"host_id"},"imageUrl":{"type":"text","name":"image_url"},"ticketLink":{"type":"text","name":"ticket_link"},"ticketAvailable":{"type":"bool","name":"ticket_available"},"ticketPrice":{"type":"float4","name":"ticket_price"},"highlight":{"type":"bool","name":"highlight"}},
 		get set(): DbSet<Event, EventQueryProxy> {
 			// returns unbound dbset
 			return new DbSet<Event, EventQueryProxy>(Event, null)
@@ -207,6 +223,10 @@ export class Event extends Entity<EventQueryProxy> {
 	hash: string;
 	hostId: string;
 	imageUrl: string;
+	ticketLink: string;
+	ticketAvailable: boolean;
+	ticketPrice: number;
+	highlight: boolean;
 }
 			
 

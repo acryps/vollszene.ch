@@ -10,5 +10,11 @@ export class EventViewModel extends ViewModel<Event> {
     link;
     imageUrl;
 
+    ticketLink;
+    ticketPrice;
+    ticketAvailable;
+
+    highlight;
+
     host: HostViewModel;
 }

@@ -5,6 +5,10 @@ export class EventViewModel {
 	name: string;
 	link: string;
 	imageUrl: string;
+	ticketLink: string;
+	ticketAvailable: boolean;
+	ticketPrice: number;
+	highlight: boolean;
 
 	private static $build(raw) {
 		const item = new EventViewModel();
@@ -14,6 +18,10 @@ export class EventViewModel {
 		item.name = raw.name === null ? null : `${raw.name}`
 		item.link = raw.link === null ? null : `${raw.link}`
 		item.imageUrl = raw.imageUrl === null ? null : `${raw.imageUrl}`
+		item.ticketLink = raw.ticketLink === null ? null : `${raw.ticketLink}`
+		item.ticketAvailable = !!raw.ticketAvailable
+		item.ticketPrice = raw.ticketPrice === null ? null : +raw.ticketPrice
+		item.highlight = !!raw.highlight
 		
 		return item;
 	}

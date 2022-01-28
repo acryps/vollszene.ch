@@ -2,6 +2,8 @@ import { Provider } from "../provider";
 import fetch from "node-fetch";
 import { JSDOM } from "jsdom";
 import { Event } from "../../managed/database";
+import { EventFrog } from "../tickets/eventfrog";
+import { Tickets } from "../tickets/parser";
 
 export default class AmbossRampeProvider extends Provider {
     name = 'amboss-rampe';
@@ -26,6 +28,10 @@ export default class AmbossRampeProvider extends Provider {
             event.imageUrl = eventElement.querySelector('img:not([width="16"])')?.src;
 
             event.hash = Provider.hashEvent(event);
+
+            for (let link of eventElement.parentElement.querySelectorAll('a')) {
+                await new Tickets().findTickets(event, link.href);
+            }
 
             if (!event.name.startsWith('Sonntag ist Ruhetag')) {
                 events.push(event);

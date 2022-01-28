@@ -1,6 +1,7 @@
 import { Application } from "main";
 import { EventService, EventViewModel, LocationViewModel } from "managed/services";
 import { Component } from "node_modules/vldom/component";
+import { EventComponent } from "./event.component";
 
 export class EventsComponent extends Component {
 	events: EventViewModel[];
@@ -54,19 +55,7 @@ export class EventsComponent extends Component {
 					day = [];
 				}
 
-				day.push(<ui-event>
-					{event.imageUrl && <img src={event.imageUrl} />}
-
-					<ui-host>
-						<ui-name>{event.host.name}</ui-name> {this.filters.location ? '' : event.host.location.name}
-					</ui-host>
-
-					<ui-name>{event.name}</ui-name>
-
-					<ui-link>
-						<a href={event.link} target="_blank">→ {event.link}</a>
-					</ui-link>
-				</ui-event>)
+				day.push(new EventComponent(event))
 			}
 		} else {
 			days.push(<ui-none>
@@ -99,6 +88,8 @@ export class EventsComponent extends Component {
 				<ui-about>
 					we try to understand the clubs webpages to automatically figure out the details about upcomming events.
 					information on this page may not be accurate.
+
+					brought to you by inter allied crypsis (acryps) &lt;3
 
 					{Application.hosts.map(host => <ui-host ui-offline={host.online ? null : ''}>
 						{host.location.name} <ui-name>{host.name}</ui-name> updated {host.updatedAt.toISOString()}, {host.online ? 'online' : 'OFFLINE'}
