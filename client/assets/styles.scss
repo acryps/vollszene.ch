@@ -3,6 +3,7 @@ $danger: #902549;
 
 :root {
 	font: min(16px, 3.5vw) pt;
+	scroll-behavior: smooth;
 }
 
 @font-face {
@@ -48,43 +49,6 @@ ui-covid {
 	background: $primary;
 	color: #fff;
 	font-size: 0.65rem;
-}
-
-ui-events-container {
-	display: flex;
-
-	ui-index {
-		position: fixed;
-		right: 0;
-		width: 1.5rem;
-	
-		border: 1px solid #000;
-		border-right: none;
-		background: #fff;
-
-		white-space: nowrap;
-		writing-mode: vertical-lr;
-
-		ui-week {
-			display: inline-block;
-			padding: 0.25em;
-		}
-	}
-
-	ui-events {
-		flex-grow: 1;
-		padding-right: 1.5rem;
-		
-		ui-index {
-			display: block;
-			background: yellow;
-
-			position: absolute;
-			top: 0;
-			right: 0;
-			bottom: 0;
-		}
-	}
 }
 
 ui-filters {
@@ -169,12 +133,9 @@ ui-content {
 
 		ui-event {
 			display: block;
-			position: relative;
 			padding: 1rem;
 
 			background: #fff;
-
-			text-shadow: 0 0 4px #fff, -1px -1px #fff, -1px 0 #fff, 0 -1px #fff, 1px 0 #fff, 0 1px #fff, -1px 1px #fff, 1px -1px #fff, 1px 1px #fff;
 
 			&:not(:first-of-type) {
 				background-image: var(--gradient);
@@ -197,15 +158,13 @@ ui-content {
 			}
 			
 			img {
-				position: absolute;
-				top: 0;
-				left: 0;
-				right: 0;
-				bottom: 0;
-				z-index: -1;
+				float: left;
 
-				width: 100%;
-				height: 100%;
+				width: 4rem;
+				max-height: 3rem;
+
+				margin-right: 0.5rem;
+				margin-bottom: 0.5rem;
 
 				object-fit: cover;
 			}
@@ -260,7 +219,6 @@ ui-content {
 					&:hover {
 						background: #000;
 						color: #fff;
-						text-shadow: none;
 					}
 				}
 			}

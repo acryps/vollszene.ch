@@ -28,7 +28,6 @@ export class EventsComponent extends Component {
 
 	render() {
 		const days = [];
-		const index = [];
 
 		if (this.events.length) {
 			let date = this.events[0].date;
@@ -47,17 +46,6 @@ export class EventsComponent extends Component {
 					</ui-day> as HTMLElement;
 
 					days.push(dayElement);
-
-					if (date.getUTCDay() > event.date.getUTCDay()) {
-						index.push(<ui-week ui-click={() => {
-							const position = dayElement.getBoundingClientRect();
-							const header = this.parent.rootNode.children[0].getBoundingClientRect();
-
-							scrollTo(position.x, position.y - header.height);
-						}}>
-							+{Math.floor((+event.date - +new Date()) / (1000 * 60 * 60 * 24 * 7))}
-						</ui-week>);
-					}
 
 					if (date.getUTCMonth() != event.date.getUTCMonth()) {
 						days.push(<ui-month>
@@ -79,44 +67,40 @@ export class EventsComponent extends Component {
 			</ui-none>);
 		}
 
-		return <ui-events-container>
-			<ui-events>
-				<ui-filters>
-					<ui-filter ui-active={this.filters.location || null}>
-						<select $ui-value={this.filters.location} ui-change={() => (this.saveFilters(), this.reload())}>
-							<option>All Locations</option>
+		return <ui-events>
+			<ui-filters>
+				<ui-filter ui-active={this.filters.location || null}>
+					<select $ui-value={this.filters.location} ui-change={() => (this.saveFilters(), this.reload())}>
+						<option>All Locations</option>
 
-							{this.extractOptions(Application.hosts, host => host.location).map(location => <option ui-value={location}>
-								{location.name}
-							</option>)}
-						</select>
-					</ui-filter>
-				</ui-filters>
-				
-				<ui-content>
-					<ui-issues>
-						{Application.hosts.filter(host => !host.online).map(host => <ui-issue>
-							{host.name} unavailable
-						</ui-issue>)}
-					</ui-issues>
+						{this.extractOptions(Application.hosts, host => host.location).map(location => <option ui-value={location}>
+							{location.name}
+						</option>)}
+					</select>
+				</ui-filter>
+			</ui-filters>
+			
+			<ui-content>
+				<ui-issues>
+					{Application.hosts.filter(host => !host.online).map(host => <ui-issue>
+						{host.name} unavailable
+					</ui-issue>)}
+				</ui-issues>
 
-					{days}
+				{days}
 
-					<ui-about>
-						we try to understand the clubs webpages to automatically figure out the details about upcomming events.
-						information on this page may not be accurate.
+				<ui-about>
+					we try to understand the clubs webpages to automatically figure out the details about upcomming events.
+					information on this page may not be accurate.
 
-						brought to you by inter allied crypsis (acryps) &lt;3
+					brought to you by inter allied crypsis (acryps) &lt;3
 
-						{Application.hosts.map(host => <ui-host ui-offline={host.online ? null : ''}>
-							{host.location.name} <ui-name>{host.name}</ui-name> updated {host.updatedAt.toISOString()}, {host.online ? 'online' : 'OFFLINE'}
-						</ui-host>)}
-					</ui-about>
-				</ui-content>
-			</ui-events>
-
-			<ui-index>{index}</ui-index>
-		</ui-events-container>;
+					{Application.hosts.map(host => <ui-host ui-offline={host.online ? null : ''}>
+						{host.location.name} <ui-name>{host.name}</ui-name> updated {host.updatedAt.toISOString()}, {host.online ? 'online' : 'OFFLINE'}
+					</ui-host>)}
+				</ui-about>
+			</ui-content>
+		</ui-events>;
 	}
 
 	extractOptions<T extends { id: string }, TR extends { id: string }>(items: T[], mapper: (event: T) => TR) {

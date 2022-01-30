@@ -24,21 +24,23 @@ export default class KauzProvider extends Provider {
 
             // skip events that are today, we should already have them in the list!
             if (dateElement.textContent != 'TONIGHT') {
-                date = +dateElement.textContent.match(/[0-9]+/)[0];
+                date = (+dateElement.textContent.match(/[0-9]+/) || '')[0];
 
-                if (topDate.getUTCDate() > date) {
-                    topDate.setUTCDate(1);
-                    topDate.setUTCMonth(topDate.getUTCMonth() + 1);
+                if (date) {
+                    if (topDate.getUTCDate() > date) {
+                        topDate.setUTCDate(1);
+                        topDate.setUTCMonth(topDate.getUTCMonth() + 1);
+                    }
+        
+                    topDate.setUTCDate(date);
+
+                    event.date = new Date(topDate);
+                    event.hash = eventElement.href.match(/[0-9]+/)[0];
+                    event.name = eventElement.textContent;
+                    event.link = eventElement.href;
+
+                    events.push(event);
                 }
-    
-                topDate.setUTCDate(date);
-
-                event.date = new Date(topDate);
-                event.hash = eventElement.href.match(/[0-9]+/)[0];
-                event.name = eventElement.textContent;
-                event.link = eventElement.href;
-
-                events.push(event);
             }
         }
         
