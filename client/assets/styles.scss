@@ -269,86 +269,80 @@ ui-content {
 			flex-shrink: 0;
 		}
 
-		ui-events-container {
-			ui-index {
-				display: none;
+		ui-events {
+			flex-grow: 1;
+			height: 100%;
+			overflow: hidden;
+			padding-right: 0;
+
+			display: flex;
+			flex-direction: column;
+
+			ui-filters {
+				flex-shrink: 0;
 			}
 
-			ui-events {
+			ui-content {
 				flex-grow: 1;
 				height: 100%;
-				overflow: hidden;
-				padding-right: 0;
 
-				display: flex;
-				flex-direction: column;
-
-				ui-filters {
-					flex-shrink: 0;
+				flex-direction: row;
+				overflow-y: auto;
+		
+				ui-issues {
+					display: flex;
+					padding: 1rem 0.25rem;
+					align-items: flex-start;
+		
+					writing-mode: vertical-rl;
 				}
+		
+				ui-month {
+					padding: 1rem 0.5rem;
+		
+					writing-mode: vertical-rl;
+				}
+		
+				ui-day {
+					width: 400px;
+					height: calc(100% - 1rem);
+					flex-shrink: 0;
 
-				ui-content {
-					flex-grow: 1;
-					height: 100%;
-
-					flex-direction: row;
+					overflow-x: hidden;
 					overflow-y: auto;
-			
-					ui-issues {
-						display: flex;
-						padding: 1rem 0.25rem;
-						align-items: flex-start;
-			
-						writing-mode: vertical-rl;
+		
+					&[ui-day='1'],
+					&[ui-day='2'],
+					&[ui-day='3'],
+					&[ui-day='4'] {
+						width: 300px;
 					}
-			
-					ui-month {
-						padding: 1rem 0.5rem;
-			
-						writing-mode: vertical-rl;
+		
+					&[ui-day='5'] {
+						width: 350px;
 					}
-			
-					ui-day {
-						width: 400px;
-						height: calc(100% - 1rem);
-						flex-shrink: 0;
-
-						overflow-x: hidden;
-						overflow-y: auto;
-			
-						&[ui-day='1'],
-						&[ui-day='2'],
-						&[ui-day='3'],
-						&[ui-day='4'] {
-							width: 300px;
-						}
-			
-						&[ui-day='5'] {
-							width: 350px;
-						}
-			
-						overflow-x: hidden;
-						overflow-y: auto;
-						
-						border-bottom: none;
-					}
-			
-					ui-month,
-					ui-day:not(:last-child),
-					ui-none {
-						border-right: 1px solid #000;
-					}
-			
-					ui-none {
-						width: 600px;
-						flex-shrink: 0;
-						padding: 3rem;
-					}
-			
-					ui-about {
-						width: 800px;
-						flex-shrink: 0;
-					}
+		
+					overflow-x: hidden;
+					overflow-y: auto;
+					
+					border-bottom: none;
+				}
+		
+				ui-month,
+				ui-day:not(:last-child),
+				ui-none {
+					border-right: 1px solid #000;
+				}
+		
+				ui-none {
+					width: 600px;
+					flex-shrink: 0;
+					padding: 3rem;
+				}
+		
+				ui-about {
+					width: 800px;
+					flex-shrink: 0;
 				}
 			}
 		}
