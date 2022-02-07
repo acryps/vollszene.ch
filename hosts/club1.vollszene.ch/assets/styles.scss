@@ -1,0 +1,72 @@
+body {
+    padding: 0;
+    margin: 0;
+}
+
+ui-page {
+    display: block;
+    padding: 2rem;
+
+    ui-logo {
+        display: inline-flex;
+        align-items: flex-start;
+        
+        font-size: 3rem;
+
+        ui-char {
+            display: inline-block;
+            position: relative;
+            margin: 0 0.125rem;
+            padding: 0.25rem;
+            margin-top: var(--offset);
+
+            border: 1px solid #000;
+            background: yellow;
+
+            &:not(:last-child) {
+                transform: rotate(180deg);
+
+                &::after {
+                    content: '';
+                    position: absolute;
+                    top: calc(var(--offset) - 0.125rem);
+                    left: 0;
+                    right: 0;
+                    border-bottom: 2px solid red;
+                }
+            }
+
+            &:nth-child(1) { --offset: 1rem; }
+            &:nth-child(2) { --offset: 0.5rem; }
+            &:nth-child(3) { --offset: 1.25rem; }
+            &:nth-child(4) { --offset: 1.25rem; }
+            &:nth-child(5) { --offset: 0.75rem; }
+        }
+    }
+
+    ui-events {
+        display: block;
+        margin-top: 2rem;
+
+        ui-header {
+            display: block;
+
+            font-style: italic;
+        }
+
+        ui-event {
+            display: block;
+            margin-top: 1rem;
+
+            ui-date {
+                display: block;
+                font-size: 0.8em;
+                margin-bottom: 0.25rem;
+
+                ui-day {
+                    font-weight: bold;
+                }
+            }
+        }
+    }
+}
