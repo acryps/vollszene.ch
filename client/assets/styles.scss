@@ -97,6 +97,7 @@ ui-content {
 	ui-month {
 		display: block;
 		padding: 0.5rem 1rem;
+		height: 100%;
 
 		background: #000;
 		color: #fff;
@@ -275,9 +276,15 @@ ui-content {
 
 			ui-content {
 				flex-grow: 1;
+				padding: 0.5rem;
 				height: 100%;
 
-				flex-direction: row;
+				background-image: linear-gradient(45deg, #fff 75%, #000 100%);
+				background-size: 0.25rem 0.25rem;
+				background-position: 0.125rem 0.125rem;
+
+				flex-direction: column;
+				flex-wrap: wrap;
 				overflow-y: auto;
 		
 				ui-issues {
@@ -287,42 +294,35 @@ ui-content {
 		
 					writing-mode: vertical-rl;
 				}
+
+				ui-month,
+				ui-day:not(:last-child),
+				ui-none {
+					border: 1px solid #000;
+					margin: 0.5rem;
+				}
 		
 				ui-month {
 					padding: 1rem 0.5rem;
 		
 					writing-mode: vertical-rl;
 				}
-		
+
 				ui-day {
 					width: 400px;
-					height: calc(100% - 1rem);
+					min-height: calc(100% / 3 - 1rem - 1px);
+					max-height: calc(100% - 2rem);
 					flex-shrink: 0;
 
 					overflow-x: hidden;
 					overflow-y: auto;
-		
-					&[ui-day='1'],
-					&[ui-day='2'],
-					&[ui-day='3'],
-					&[ui-day='4'] {
-						width: 300px;
+
+					background: #fff;
+
+					&[ui-today] {
+						margin: 0.25rem;
+						border-width: calc(0.25rem + 1px);
 					}
-		
-					&[ui-day='5'] {
-						width: 350px;
-					}
-		
-					overflow-x: hidden;
-					overflow-y: auto;
-					
-					border-bottom: none;
-				}
-		
-				ui-month,
-				ui-day:not(:last-child),
-				ui-none {
-					border-right: 1px solid #000;
 				}
 		
 				ui-none {
