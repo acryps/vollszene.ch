@@ -13,9 +13,6 @@ export default class SedelProvider extends Provider {
         const html = await fetch('https://sedel.ch').then(res => res.text());
         const page = new JSDOM(html);
 
-        let topDate = new Date(new Date().toDateString());
-        topDate.setUTCHours(0);
-
         for (let eventElement of page.window.document.querySelectorAll('.month-list li')) {
             const event = new Event();
             
@@ -27,7 +24,6 @@ export default class SedelProvider extends Provider {
             event.name = link.textContent;
             event.link = `https://sedel.ch${link.href}`;
 
-            // skip events that are today, we should already have them in the list!
             if (!event.name.includes('ABGESAGT')) {
                 events.push(event);
             }

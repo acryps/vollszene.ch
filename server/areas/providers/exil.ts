@@ -36,7 +36,7 @@ export default class ExilProvider extends Provider {
                 )?.attributes['data-src']?.value;
 
                 for (let link of article.querySelectorAll('.event-tickets a')) {
-                    await new Tickets().findTickets(event, link.href);
+                    await Tickets.findTickets(event, link.href);
                 }
 
                 if (event.date > treshold) {

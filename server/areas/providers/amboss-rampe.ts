@@ -31,7 +31,7 @@ export default class AmbossRampeProvider extends Provider {
                 event.hash = Provider.hashEvent(event);
 
                 for (let link of eventElement.parentElement.querySelectorAll('a')) {
-                    await new Tickets().findTickets(event, link.href);
+                    await Tickets.findTickets(event, link.href);
                 }
 
                 if (!event.name.startsWith('Sonntag ist Ruhetag')) {
