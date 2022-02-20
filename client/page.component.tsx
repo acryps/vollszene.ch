@@ -16,10 +16,6 @@ export class PageComponent extends Component {
 				vollszene
 			</ui-nav>}
 
-			<ui-covid>
-				please get tested for covid19 before going out. say safe &lt;3
-			</ui-covid>
-
 			{child}
 		</ui-page>;
     }
