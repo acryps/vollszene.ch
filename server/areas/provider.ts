@@ -29,7 +29,7 @@ export abstract class Provider {
                 event.id = existing.id;
 
                 if (event.imageUrl != existing.imageUrl) {
-                    console.log(`>>> ${this.name}: ${event.date.toDateString()} ${event.name} [${event.link}]`)
+                    console.log(`>>> ${this.name} #${event.hash}: ${event.date.toDateString()} ${event.name} [${event.link}]`)
                 } 
 
                 await event.update();

@@ -227,6 +227,8 @@ ui-content {
 	ui-about {
 		padding: 5rem 1rem;
 
+		background: #fff;
+
 		ui-host {
 			display: block;
 			padding: 0.5rem 0;
@@ -297,9 +299,15 @@ ui-content {
 
 				ui-month,
 				ui-day:not(:last-child),
-				ui-none {
+				ui-none,
+				ui-issues,
+				ui-about {
 					border: 1px solid #000;
 					margin: 0.5rem;
+				}
+
+				ui-issues {
+					height: 100%;
 				}
 		
 				ui-month {
