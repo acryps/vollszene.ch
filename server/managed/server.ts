@@ -4,6 +4,9 @@ import { DbContext } from "././database";
 import { EventViewModel } from "././../areas/event.view";
 import { HostViewModel } from "././../areas/host.view";
 import { EventService } from "././../areas/event.service";
+import { Context } from "././../context";
+import { Session } from "././database";
+import { SessionService } from "././../areas/session.service";
 import { LocationViewModel } from "./../areas/location.view";
 import { Event } from "./../managed/database";
 import { Host } from "./../managed/database";
@@ -17,6 +20,10 @@ Inject.mappings = {
 	"DbContext": {
 		objectConstructor: DbContext,
 		parameters: ["RunContext"]
+	},
+	"SessionService": {
+		objectConstructor: SessionService,
+		parameters: ["DbContext"]
 	}
 };
 
@@ -42,6 +49,24 @@ export class ManagedServer extends BaseServer {
 			inject => inject.construct(EventService),
 			(controller, params) => controller.getHosts(
 				
+			)
+		);
+
+		this.expose(
+			"F6bGgzc2g0am1tdDJ5dmc4bj80OXJiMm",
+			{
+				"gwMXUzY3Ric2t2bjQ0aTR4eDV0dGk4em": {
+					isArray: false,
+					type: "number"
+				},"h0bDFjOG1xYXhlbnFldjY3czE4eGtyam": {
+					isArray: false,
+					type: "number"
+				}
+			},
+			inject => inject.construct(SessionService),
+			(controller, params) => controller.createSession(
+				params["gwMXUzY3Ric2t2bjQ0aTR4eDV0dGk4em"],
+				params["h0bDFjOG1xYXhlbnFldjY3czE4eGtyam"]
 			)
 		)
 	}

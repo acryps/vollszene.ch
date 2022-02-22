@@ -33,3 +33,14 @@ CREATE TABLE event (
 
     host_id UUID CONSTRAINT host__events REFERENCES host (id)
 );
+
+CREATE TABLE session (
+	id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    created_at TIMESTAMP,
+
+    height REAL,
+    width REAL,
+    
+    headers TEXT,
+    ip TEXT
+);

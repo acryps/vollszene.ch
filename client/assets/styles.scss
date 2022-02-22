@@ -128,6 +128,10 @@ ui-content {
 		&[ui-today] {
 			margin: 0.25rem;
 			border-width: calc(0.25rem + 1px);
+
+			ui-event:not(:last-of-type) {
+				border-bottom-width: 2px;
+			}
 		}
 
 		ui-date {
@@ -150,10 +154,8 @@ ui-content {
 
 			background: #fff;
 
-			&:not(:first-of-type) {
-				background-image: var(--gradient);
-				background-size: 1rem 1px;
-				background-repeat: repeat-x;
+			&:not(:last-of-type) {
+				border-bottom: 1px dashed #000;
 			}
 
 			&[ui-sold-out] {

@@ -110,3 +110,27 @@ export class EventService {
 		});
 	}
 }
+
+export class SessionService {
+	async createSession(width: number, height: number): Promise<string> {
+		const data = new FormData();
+		data.append("gwMXUzY3Ric2t2bjQ0aTR4eDV0dGk4em", JSON.stringify(width))
+		data.append("h0bDFjOG1xYXhlbnFldjY3czE4eGtyam", JSON.stringify(height))
+
+		return await fetch(Service.toURL("F6bGgzc2g0am1tdDJ5dmc4bj80OXJiMm"), {
+			method: "post",
+			credentials: "include",
+			body: data
+		}).then(res => res.json()).then(r => {
+			if ("data" in r) {
+				const d = r.data;
+
+				return d === null ? null : `${d}`;
+			} else if ("aborted" in r) {
+				throw new Error("request aborted by server");
+			} else if ("error" in r) {
+				throw new Error(r.error);
+			}
+		});
+	}
+}

@@ -18,7 +18,6 @@ DbClient.connectedClient.connect().then(() => {
     Provider.update(db);
 
     app.createInjector = context => new Inject({
-        Context: context,
         DbContext: db
     });
 

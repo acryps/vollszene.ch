@@ -3,7 +3,7 @@ import { Router } from "node_modules/vldom/router";
 import { registerDirectives } from "node_modules/vldom-default-directives/index";
 import { PageComponent } from "page.component";
 import { Component } from "node_modules/vldom/component";
-import { EventService, HostViewModel } from "managed/services";
+import { EventService, HostViewModel, SessionService } from "managed/services";
 
 export class Application {
     static router: Router;
@@ -11,6 +11,8 @@ export class Application {
     static hosts: HostViewModel[];
 
     static async main() {
+        new SessionService().createSession(innerWidth, innerHeight);
+
         if (!location.hash) {
             location.hash = `#/events`;
         }
