@@ -32,8 +32,11 @@ export class EventComponent extends Component {
 
             <ui-tagline>
                 <ui-host>
-                    <ui-name>{this.event.host.name}</ui-name> 
-                    <ui-location>{this.parent.filters.location ? '' : this.event.host.location.name}</ui-location>
+                    <ui-location>
+                        {this.parent.filters.location ? '' : this.event.host.location.name}
+                    </ui-location> <ui-name>
+                        {this.event.host.name}
+                    </ui-name>
                 </ui-host>
                 
                 <ui-ticket-details>

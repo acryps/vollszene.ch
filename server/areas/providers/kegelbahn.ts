@@ -12,7 +12,7 @@ export default class KegelbahnProvider extends Provider {
         const events = await FacebookParser.fetch('258739154274392');
 
         for (let event of events) {
-            if (event.ticketLink != 'http://klubkegelbahn.ch/') {
+            if (event.ticketLink == 'http://klubkegelbahn.ch/') {
                 delete event.ticketLink;
             }
         }
