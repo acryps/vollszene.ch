@@ -25,6 +25,7 @@ export default class HelsinkiProvider extends Provider {
                 ].join(' ').trim();
 
                 event.link = eventElement.querySelector('a')?.href;
+                event.imageUrl = eventElement.querySelector('img')?.src;
 
                 if (event.name && event.link) {
                     let petzi = new JSDOM(await fetch(event.link).then(res => res.text()));
