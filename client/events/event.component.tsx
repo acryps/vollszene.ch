@@ -14,7 +14,7 @@ export class EventComponent extends Component {
 
     render() {
         return <ui-event ui-sold-out={this.event.ticketLink && !this.event.ticketAvailable ? '' : null} ui-highlight={this.event.highlight ? '' : null} ui-id={this.event.id}>
-            {this.event.imageUrl && <img src={this.event.imageUrl} />}
+            {this.event.imageUrl && <img src={this.event.imageUrl} ui-href={this.event.imageUrl} ui-href-target="blank" />}
 
             <ui-tagline>
                 <ui-host>
