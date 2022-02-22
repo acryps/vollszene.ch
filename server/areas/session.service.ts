@@ -20,7 +20,7 @@ export class SessionService extends Service {
         session.width = width;
         session.height = height;
         session.headers = JSON.stringify(this.request.headers);
-        session.ip = this.request.headers['x-forwarded-for'] || this.request.connection.remoteAddress;
+        session.ip = this.request.headers['gateway-source-address'] || this.request.connection.remoteAddress;
         session.createdAt = new Date();
         
         await session.create();
