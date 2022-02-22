@@ -1,4 +1,4 @@
-import { EventViewModel } from "managed/services";
+import { EventService, EventViewModel } from "managed/services";
 import { Component } from "node_modules/vldom/component";
 import { EventsComponent } from "./events.component";
 
@@ -13,8 +13,20 @@ export class EventComponent extends Component {
     }
 
     render() {
+        let image: HTMLImageElement;
+
+        requestAnimationFrame(() => {
+            if (image) {
+                image.onerror = async () => {
+                    image.remove();
+                };
+
+                image.src = this.event.imageUrl;
+            }
+        });
+
         return <ui-event ui-sold-out={this.event.ticketLink && !this.event.ticketAvailable ? '' : null} ui-highlight={this.event.highlight ? '' : null} ui-id={this.event.id}>
-            {this.event.imageUrl && <img src={this.event.imageUrl} ui-click={() => open(this.event.imageUrl)} />}
+            {this.event.imageUrl && (image = <img ui-click={() => open(this.event.imageUrl)} />)}
 
             <ui-tagline>
                 <ui-host>
