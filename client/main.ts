@@ -11,7 +11,7 @@ export class Application {
     static hosts: HostViewModel[];
 
     static async main() {
-        new SessionService().createSession(innerWidth, innerHeight);
+        new SessionService().createSession((localStorage.session = localStorage.session || Math.random().toString(36).substr(2)), innerWidth, innerHeight);
 
         if (!location.hash) {
             location.hash = `#/events`;

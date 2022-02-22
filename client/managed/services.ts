@@ -112,12 +112,13 @@ export class EventService {
 }
 
 export class SessionService {
-	async createSession(width: number, height: number): Promise<string> {
+	async createSession(key: string, width: number, height: number): Promise<string> {
 		const data = new FormData();
-		data.append("gwMXUzY3Ric2t2bjQ0aTR4eDV0dGk4em", JSON.stringify(width))
-		data.append("h0bDFjOG1xYXhlbnFldjY3czE4eGtyam", JSON.stringify(height))
+		data.append("k5bnhqMWd4OW1iZmt2dmMxeDlsYWdyN3", JSON.stringify(key))
+		data.append("RtcHI5M3c1YWcwbDxia2J2cGZ4aGlmMj", JSON.stringify(width))
+		data.append("hvZ2FqNXgwcTlsNjJpcmZiYTNlemJpZn", JSON.stringify(height))
 
-		return await fetch(Service.toURL("F6bGgzc2g0am1tdDJ5dmc4bj80OXJiMm"), {
+		return await fetch(Service.toURL("4yZHZpanI3ZnB0aj00d2R2NDFqNHQwa2"), {
 			method: "post",
 			credentials: "include",
 			body: data

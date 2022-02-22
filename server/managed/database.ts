@@ -37,12 +37,16 @@ export class SessionQueryProxy extends QueryProxy {
 	get ip(): Partial<QueryString> {
 		throw new Error("Invalid use of QueryModels. QueryModels cannot be used during runtime");
 	}
+					
+	get key(): Partial<QueryString> {
+		throw new Error("Invalid use of QueryModels. QueryModels cannot be used during runtime");
+	}
 }
 
 export class Session extends Entity<SessionQueryProxy> {
 	$$meta = {
 		tableName: "session",
-		columns: {"id":{"type":"uuid","name":"id"},"createdAt":{"type":"timestamp","name":"created_at"},"height":{"type":"float4","name":"height"},"width":{"type":"float4","name":"width"},"headers":{"type":"text","name":"headers"},"ip":{"type":"text","name":"ip"}},
+		columns: {"id":{"type":"uuid","name":"id"},"createdAt":{"type":"timestamp","name":"created_at"},"height":{"type":"float4","name":"height"},"width":{"type":"float4","name":"width"},"headers":{"type":"text","name":"headers"},"ip":{"type":"text","name":"ip"},"key":{"type":"text","name":"key"}},
 		get set(): DbSet<Session, SessionQueryProxy> {
 			// returns unbound dbset
 			return new DbSet<Session, SessionQueryProxy>(Session, null)
@@ -62,6 +66,7 @@ export class Session extends Entity<SessionQueryProxy> {
 	width: number;
 	headers: string;
 	ip: string;
+	key: string;
 }
 			
 export class LocationQueryProxy extends QueryProxy {

@@ -14,8 +14,9 @@ export class SessionService extends Service {
         this.request = request.req;
     }
 
-    async createSession(width: number, height: number) {
+    async createSession(key: string, width: number, height: number) {
         const session = new Session();
+        session.key = key;
         session.width = width;
         session.height = height;
         session.headers = JSON.stringify(this.request.headers);

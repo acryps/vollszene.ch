@@ -36,6 +36,7 @@ CREATE TABLE event (
 
 CREATE TABLE session (
 	id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    key TEXT,
     created_at TIMESTAMP,
 
     height REAL,
