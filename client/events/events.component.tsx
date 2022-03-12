@@ -31,7 +31,7 @@ export class EventsComponent extends Component {
 
 		if (this.events.length) {
 			let date = this.events[0].date;
-			let day = [];
+			let day: EventComponent[] = [];
 
 			for (let event of this.events) {
 				if (+event.date != +date) {
@@ -44,7 +44,9 @@ export class EventsComponent extends Component {
 							{date.toLocaleDateString('en', { weekday: 'short' }).toUpperCase()} {date.getUTCDate()} {date.getUTCMonth() + 1} {date.getUTCFullYear()}
 						</ui-date>
 
-						{day}
+						<ui-event-list>
+							{day.sort((a, b) => a.event.highlight ? -1 : 1)}
+						</ui-event-list>
 					</ui-day> as HTMLElement;
 
 					days.push(dayElement);

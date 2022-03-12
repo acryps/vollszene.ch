@@ -7,7 +7,7 @@ export class EventComponent extends Component {
     rootNode: HTMLElement;
 
     constructor(
-        private event: EventViewModel
+        public event: EventViewModel
     ) {
         super();
     }
