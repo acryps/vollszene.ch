@@ -6,5 +6,9 @@
         "node-fetch": "^2.6.7",
         "vlquery": "^4.9.2",
         "vlserver": "^4.0.2"
+    },
+    "scripts": {
+        "start": "node dist/main.js",
+        "build": "npx vlserver compile; tsc; npx vlquery compile"
     }
 }

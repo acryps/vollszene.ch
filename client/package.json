@@ -4,5 +4,9 @@
         "systemjs": "^5.0.0",
         "vldom": "^5.4.0",
         "vldom-default-directives": "^1.0.2"
+    },
+    "scripts": {
+        "start": "",
+        "build": "tsc; npx vldom compile; sass assets/styles.scss /dist/styles.css"
     }
 }

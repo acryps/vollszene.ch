@@ -1,6 +1,6 @@
 FROM node:12-slim
 
-WORKDIR /usr/src/app
+WORKDIR /app
 COPY . .
 
-CMD [ "node", "server/dist/main.js" ]
+CMD [ "npm", "start" ]

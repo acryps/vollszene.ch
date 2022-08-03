@@ -1,4 +1,15 @@
 {
     "name": "acryps-events",
-    "version": "1.14.4"
+    "version": "1.14.4",
+    "environment": {
+        "PGHOST": "",
+        "PGUSER": "",
+        "PGPASSWORD": "",
+        "PGDATABASE": ""
+    },
+    "scripts": {
+        "start": "npm run start:server; npm run start:client",
+        "start:server": "cd server; npm start",
+        "start:client": "cd client; npm start"
+    }
 }
