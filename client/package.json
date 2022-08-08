@@ -7,7 +7,7 @@
     },
     "scripts": {
         "start": "",
-        "build": "npx tsc; npx vldom compile; npx sass assets/styles.scss /dist/styles.css"
+        "build": "npx tsc; npx vldom compile; npx sass assets/styles.scss dist/styles.css"
     },
     "devDependencies": {
         "sass": "^1.54.3",
