@@ -9,7 +9,11 @@
     },
     "scripts": {
         "start": "npm run start:server; npm run start:client",
-        "start:server": "cd server; npm start",
-        "start:client": "cd client; npm start"
+        "start:server": "cd server; npm run start",
+        "start:client": "cd client; npm run start",
+
+        "build": "npm run start:server; npm run start:client",
+        "build:server": "cd server; npm run build",
+        "build:client": "cd client; npm run build"
     }
 }

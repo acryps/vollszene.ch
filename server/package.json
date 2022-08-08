@@ -9,6 +9,9 @@
     },
     "scripts": {
         "start": "node dist/main.js",
-        "build": "npx vlserver compile; tsc; npx vlquery compile"
+        "build": "npx vlserver compile; npx tsc; npx vlquery compile"
+    },
+    "devDependencies": {
+        "typescript": "^4.7.4"
     }
 }
