@@ -40,6 +40,13 @@ ui-nav {
 	border-bottom: 1px solid #000;
 
 	image-rendering: pixelated;
+
+	ui-logo {
+		display: block;
+		
+		color: #666;
+		font-size: 0.5rem;
+	}
 }
 
 ui-filters {
