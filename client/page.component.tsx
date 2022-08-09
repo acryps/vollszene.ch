@@ -13,7 +13,7 @@ export class PageComponent extends Component {
 
 		return <ui-page>
 			{this.logo = <ui-nav>
-				acryps vollszene
+				→ vollszene
 			</ui-nav>}
 
 			{child}
