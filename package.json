@@ -1,18 +1,12 @@
 {
     "name": "acryps-events",
     "version": "1.14.4",
-    "environment": {
-        "PGHOST": "",
-        "PGUSER": "",
-        "PGPASSWORD": "",
-        "PGDATABASE": ""
-    },
     "scripts": {
         "install": "npm run install:server; npm run install:client",
         "install:server": "cd server; npm install --production=false",
         "install:client": "cd client; npm install --production=false",
 
-        "start": "npm run start:server; npm run start:client",
+        "start": "$(cat .env); npm run start:server; npm run start:client",
         "start:server": "cd server; npm run start",
         "start:client": "cd client; npm run start",
 
