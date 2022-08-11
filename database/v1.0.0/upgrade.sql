@@ -61,91 +61,91 @@ VALUES ('Basel');
 
 -- Add clubs entries
 INSERT INTO host (name, provider, online, updated_at, location_id)
-VALUES ('Club Zukunft', 'zuki', true, NOW, (
+VALUES ('Club Zukunft', 'zuki', true, NOW(), (
     SELECT id FROM location WHERE name = 'Zürich'
 ));
 
 INSERT INTO host (name, provider, online, updated_at, location_id)
-VALUES ('Nordstern', 'nordstern', true, NOW, (
+VALUES ('Nordstern', 'nordstern', true, NOW(), (
     SELECT id FROM location WHERE name = 'Basel'
 ));
 
 INSERT INTO host (name, provider, online, updated_at, location_id)
-VALUES ('MOLO Bar', 'molobar', false, NOW, (
+VALUES ('MOLO Bar', 'molobar', false, NOW(), (
     SELECT id FROM location WHERE name = 'Luzern'
 ));
 
 INSERT INTO host (name, provider, online, updated_at, location_id)
-VALUES ('ZentralWaescherei', 'zentralwaescherei', false, NOW, (
+VALUES ('ZentralWaescherei', 'zentralwaescherei', false, NOW(), (
     SELECT id FROM location WHERE name = 'Zürich'
 ));
 
 INSERT INTO host (name, provider, online, updated_at, location_id)
-VALUES ('Hive', 'hive', true, NOW, (
+VALUES ('Hive', 'hive', true, NOW(), (
     SELECT id FROM location WHERE name = 'Zürich'
 ));
 
 INSERT INTO host (name, provider, online, updated_at, location_id)
-VALUES ('Südpol', 'südpol', true, NOW, (
+VALUES ('Südpol', 'südpol', true, NOW(), (
     SELECT id FROM location WHERE name = 'Luzern'
 ));
 
 INSERT INTO host (name, provider, online, updated_at, location_id)
-VALUES ('Helsinkiklub', 'helsinki', true, NOW, (
+VALUES ('Helsinkiklub', 'helsinki', true, NOW(), (
     SELECT id FROM location WHERE name = 'Zürich'
 ));
 
 INSERT INTO host (name, provider, online, updated_at, location_id)
-VALUES ('Kauz', 'kauz', true, NOW, (
+VALUES ('Kauz', 'kauz', true, NOW(), (
     SELECT id FROM location WHERE name = 'Zürich'
 ));
 
 INSERT INTO host (name, provider, online, updated_at, location_id)
-VALUES ('Sedel', 'sedel', true, NOW, (
+VALUES ('Sedel', 'sedel', true, NOW(), (
     SELECT id FROM location WHERE name = 'Luzern'
 ));
 
 INSERT INTO host (name, provider, online, updated_at, location_id)
-VALUES ('Friedas Büxe', 'friedasbuexe', false, NOW, (
+VALUES ('Friedas Büxe', 'friedasbuexe', false, NOW(), (
     SELECT id FROM location WHERE name = 'Zürich'
 ));
 
 INSERT INTO host (name, provider, online, updated_at, location_id)
-VALUES ('Kegelbahn', 'kegelbahn', false, NOW, (
+VALUES ('Kegelbahn', 'kegelbahn', false, NOW(), (
     SELECT id FROM location WHERE name = 'Luzern'
 ));
 
 INSERT INTO host (name, provider, online, updated_at, location_id)
-VALUES ('Supermarket', 'supermarket', true, NOW, (
+VALUES ('Supermarket', 'supermarket', true, NOW(), (
     SELECT id FROM location WHERE name = 'Zürich'
 ));
 
 INSERT INTO host (name, provider, online, updated_at, location_id)
-VALUES ('Dachstock', 'dachstock', true, NOW, (
+VALUES ('Dachstock', 'dachstock', true, NOW(), (
     SELECT id FROM location WHERE name = 'Bern'
 ));
 
 INSERT INTO host (name, provider, online, updated_at, location_id)
-VALUES ('Amboss Rampe', 'ambos rampe', false, NOW, (
+VALUES ('Amboss Rampe', 'ambos rampe', false, NOW(), (
     SELECT id FROM location WHERE name = 'Zürich'
 ));
 
 INSERT INTO host (name, provider, online, updated_at, location_id)
-VALUES ('Gwärbi', 'gwärbi', false, NOW, (
+VALUES ('Gwärbi', 'gwärbi', false, NOW(), (
     SELECT id FROM location WHERE name = 'Luzern'
 ));
 
 INSERT INTO host (name, provider, online, updated_at, location_id)
-VALUES ('Grosse Halle', 'grosse-halle', false, NOW, (
+VALUES ('Grosse Halle', 'grosse-halle', false, NOW(), (
     SELECT id FROM location WHERE name = 'Bern'
 ));
 
 INSERT INTO host (name, provider, online, updated_at, location_id)
-VALUES ('Rote Fabrik', 'rotefabrik', true, NOW, (
+VALUES ('Rote Fabrik', 'rotefabrik', true, NOW(), (
     SELECT id FROM location WHERE name = 'Zürich'
 ));
 
 INSERT INTO host (name, provider, online, updated_at, location_id)
-VALUES ('Exil', 'exil', true, NOW, (
+VALUES ('Exil', 'exil', true, NOW(), (
     SELECT id FROM location WHERE name = 'Zürich'
 ));
