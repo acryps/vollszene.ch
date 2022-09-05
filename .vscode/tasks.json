@@ -8,10 +8,10 @@
 			"options": {
 				"cwd": "server/",
 				"env": {
-					"PGHOST": "data1.w6.cloud.acryps.com",
-					"PGUSER": "acryps_events",
-					"PGPASSWORD": "acryps_events",
-					"PGDATABASE": "acryps_events"
+					"PGHOST": "10.22.0.1",
+					"PGUSER": "acryps_events_setup_infrastructure",
+					"PGPASSWORD": "acryps_events_setup_infrastructure",
+					"PGDATABASE": "acryps_events_setup_infrastructure"
 				}
 			},
 			"problemMatcher": []

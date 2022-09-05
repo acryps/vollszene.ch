@@ -15,7 +15,7 @@
 				"${workspaceFolder}/**/*.js"
 			],
 			"env": {
-				"PGHOST": "data1.w6.cloud.acryps.com",
+				"PGHOST": "10.22.0.1",
 				"PGUSER": "acryps_events",
 				"PGPASSWORD": "acryps_events",
 				"PGDATABASE": "acryps_events"
