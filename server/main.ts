@@ -26,5 +26,6 @@ DbClient.connectedClient.connect().then(() => {
     app.use(new StaticFileRoute("/node_modules", path.join(__dirname, "..", "..", "client", "node_modules")));
     app.use(new StaticFileRoute("/", path.join(__dirname, "..", "..", "client", "assets")));
 
-    app.start(+process.env.PORT || 8019);
+    console.log(`server started on ${+process.env.PORT || 8019}`);
+    app.start(+process.env.PORT || 8019);
 });
