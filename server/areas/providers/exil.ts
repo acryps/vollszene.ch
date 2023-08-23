@@ -7,44 +7,44 @@ import { Tickets } from "../tickets/parser";
 
 
 export default class ExilProvider extends Provider {
-    name = 'exil';
+	name = 'exil';
 
-    async fetch() {
-        const events = [];
+	async fetch() {
+		const events = [];
 
-        const html = await fetch('https://exil.cl/').then(res => res.text());
-        const page = new JSDOM(html);
+		const html = await fetch('https://exil.cl/').then(res => res.text());
+		const page = new JSDOM(html);
 
-        const treshold = new Date();
-        treshold.setMonth(treshold.getMonth() - 1);
+		const treshold = new Date();
+		treshold.setMonth(treshold.getMonth() - 1);
 
-        for (let article of page.window.document.querySelectorAll('article[id]:not(.cancelled')) {
-            const event = new Event();
-            const id = article.id.split('-')[1];
+		for (let article of page.window.document.querySelectorAll('article[id]:not(.cancelled')) {
+			const event = new Event();
+			const id = article.id.split('-')[1];
 
-            event.hash = id;
-            event.name = article.querySelector('h1')?.textContent.trim();
+			event.hash = id;
+			event.name = article.querySelector('h1')?.textContent.trim();
 
-            if (event.name && event.name.toLocaleLowerCase() != 'geschlossene gesellschaft') {
-                const dateComponents = article.querySelector('time').attributes['datetime'].value.split(/-|T/g);
+			if (event.name && event.name.toLocaleLowerCase() != 'geschlossene gesellschaft') {
+				const dateComponents = article.querySelector('time').attributes['datetime'].value.split(/-|T/g);
 
-                event.date = new Date(Date.UTC(+dateComponents[0], +dateComponents[1] - 1, +dateComponents[2]));
-                event.link = `https://exil.cl/programm/detail/${id}`;
-                event.imageUrl = (
-                    article.querySelector('img.hauptbild, .event-gallery img[data-src]') || 
-                    article.querySelector('img[data-mfp-src], img[data-src]')
-                )?.attributes['data-src']?.value;
+				event.date = new Date(Date.UTC(+dateComponents[0], +dateComponents[1] - 1, +dateComponents[2]));
+				event.link = `https://exil.cl/programm/detail/${id}`;
+				event.imageUrl = (
+					article.querySelector('img.hauptbild, .event-gallery img[data-src]') || 
+					article.querySelector('img[data-mfp-src], img[data-src]')
+				)?.attributes['data-src']?.value;
 
-                for (let link of article.querySelectorAll('.event-tickets a')) {
-                    await Tickets.findTickets(event, link.href);
-                }
+				for (let link of article.querySelectorAll('.event-tickets a')) {
+					await Tickets.findTickets(event, link.href);
+				}
 
-                if (event.date > treshold) {
-                    events.push(event);
-                }
-            }
-        }
+				if (event.date > treshold) {
+					events.push(event);
+				}
+			}
+		}
 
-        return events;
-    }
+		return events;
+	}
 }

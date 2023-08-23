@@ -1,16 +1,16 @@
 {
-    "name": "client-acryps-events",
-    "dependencies": {
-        "systemjs": "^5.0.0",
-        "vldom": "^5.4.0",
-        "vldom-default-directives": "^1.0.2"
-    },
-    "scripts": {
-        "start": "",
-        "build": "npx tsc; npx vldom compile; npx sass assets/styles.scss dist/styles.css"
-    },
-    "devDependencies": {
-        "sass": "^1.54.3",
-        "typescript": "^4.7.4"
-    }
+	"name": "client-acryps-events",
+	"dependencies": {
+		"systemjs": "^5.0.0",
+		"vldom": "^5.4.0",
+		"vldom-default-directives": "^1.0.2"
+	},
+	"scripts": {
+		"start": "",
+		"build": "npx tsc; npx vldom compile; npx sass assets/styles.scss dist/styles.css"
+	},
+	"devDependencies": {
+		"sass": "^1.54.3",
+		"typescript": "^4.7.4"
+	}
 }

@@ -1,17 +1,17 @@
 {
-    "compilerOptions": {
-        "module": "CommonJS",
-        "outDir": "dist",
-        "target": "es6",
-        "types": [
-            "node"
-        ],
-        "lib": [
-            "ESNext"
-        ]
-    },
-    "exclude": [
-        "dist",
-        "node_modules"
-    ]
+	"compilerOptions": {
+		"module": "CommonJS",
+		"outDir": "dist",
+		"target": "es6",
+		"types": [
+			"node"
+		],
+		"lib": [
+			"ESNext"
+		]
+	},
+	"exclude": [
+		"dist",
+		"node_modules"
+	]
 }

@@ -1,17 +1,17 @@
 {
-    "name": "server-acryps-events",
-    "dependencies": {
-        "js-sha512": "^0.8.0",
-        "jsdom": "^19.0.0",
-        "node-fetch": "^2.6.7",
-        "vlquery": "^4.9.2",
-        "vlserver": "^4.0.2"
-    },
-    "scripts": {
-        "start": "node dist/main.js",
-        "build": "npx vlserver compile; npx tsc; npx vlquery compile"
-    },
-    "devDependencies": {
-        "typescript": "^4.7.4"
-    }
+	"name": "server-acryps-events",
+	"dependencies": {
+		"js-sha512": "^0.8.0",
+		"jsdom": "^19.0.0",
+		"node-fetch": "^2.6.7",
+		"vlquery": "^4.9.2",
+		"vlserver": "^4.0.2"
+	},
+	"scripts": {
+		"start": "node dist/main.js",
+		"build": "npx vlserver compile; npx tsc; npx vlquery compile"
+	},
+	"devDependencies": {
+		"typescript": "^4.7.4"
+	}
 }

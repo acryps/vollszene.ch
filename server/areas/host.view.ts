@@ -3,11 +3,11 @@ import { Host } from "../managed/database";
 import { LocationViewModel } from "./location.view";
 
 export class HostViewModel extends ViewModel<Host> {
-    id;
-    name;
+	id;
+	name;
 
-    online;
-    updatedAt;
+	online;
+	updatedAt;
 
-    location: LocationViewModel;
+	location: LocationViewModel;
 }

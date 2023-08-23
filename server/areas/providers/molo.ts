@@ -6,9 +6,9 @@ import { FacebookParser } from "../parsers/facebook";
 
 
 export default class MolobarProvider extends Provider {
-    name = 'molobar';
+	name = 'molobar';
 
-    async fetch() {
-        return await FacebookParser.fetch('1508818609194066');
-    }
+	async fetch() {
+		return await FacebookParser.fetch('1508818609194066');
+	}
 }

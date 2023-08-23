@@ -3,18 +3,18 @@ import { Event } from "../managed/database";
 import { HostViewModel } from "./host.view";
 
 export class EventViewModel extends ViewModel<Event> {
-    id;
+	id;
 
-    name;
-    date;
-    link;
-    imageUrl;
+	name;
+	date;
+	link;
+	imageUrl;
 
-    ticketLink;
-    ticketPrice;
-    ticketAvailable;
+	ticketLink;
+	ticketPrice;
+	ticketAvailable;
 
-    highlight;
+	highlight;
 
-    host: HostViewModel;
+	host: HostViewModel;
 }
