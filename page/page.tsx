@@ -2,19 +2,14 @@ import { Component } from '@acryps/page';
 
 export class PageComponent extends Component {
 	declare rootNode: HTMLElement;
-	logo: HTMLElement;
 
 	render(child?: Node) {
-		requestAnimationFrame(() => {
-			this.logo.oncontextmenu = () => {
-				this.logo.textContent = 'фолзене';
-			}
-		});
-
 		return <ui-page>
-			{this.logo = <ui-nav>
-				vollszene
-			</ui-nav>}
+			<ui-navigation>
+				<ui-logo>
+					{'vollszene'.split('').map((character, index, word) => <ui-character style={`--animation-offset: ${1 / word.length * index}`}>{character}</ui-character>)}
+				</ui-logo>
+			</ui-navigation>
 
 			{child}
 		</ui-page>;

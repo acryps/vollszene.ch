@@ -28,7 +28,7 @@ body {
 	background: var(--page-color);
 }
 
-ui-nav {
+ui-navigation {
 	display: block;
 	padding: 1rem;
 
@@ -45,6 +45,27 @@ ui-nav {
 	background: var(--primary-contrast-color);
 
 	image-rendering: pixelated;
+
+	ui-logo {
+		position: relative;
+
+		ui-character {
+			position: relative;
+
+			animation: 3s alternate infinite logo-bounce;
+			animation-delay: calc(5s * var(--animation-offset));
+
+			@keyframes logo-bounce {
+				from {
+					top: -0.25em;
+				}
+
+				to {
+					top: 0.25em;
+				}
+			}
+		}
+	}
 }
 
 ui-filters {
@@ -288,7 +309,7 @@ ui-content {
 		display: flex;
 		flex-direction: column;
 
-		ui-nav {
+		ui-navigation {
 			flex-shrink: 0;
 		}
 
