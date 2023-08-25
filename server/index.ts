@@ -3,15 +3,12 @@ import { ManagedServer } from "./managed/server";
 import { DbContext } from "./managed/database";
 import { join } from "path";
 import { DbClient, RunContext } from "vlquery";
-import { Provider } from "./provider";
 
 DbClient.connectedClient = new DbClient({});
 
 DbClient.connectedClient.connect().then(async () => {
 	const app = new ManagedServer();
 	const database = new DbContext(new RunContext());
-
-	Provider.update(database);
 	
 	app.createInjector = context => new Inject({
 		Context: context,
