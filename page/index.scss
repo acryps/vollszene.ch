@@ -2,25 +2,30 @@ $primary: #0f05a2;
 $danger: #902549;
 
 :root {
-	font: min(16px, 3.5vw) pt;
+	--primary-color: #d0ff44;
+	--primary-contrast-color: #000;
+
+	--error-color: #444;
+	--error-contrast-color: #fff;
+
+	--page-color: #000;
+	--page-constrast-color: #fff;
+
+	font: min(16px, 3.5vw) wide;
 	scroll-behavior: smooth;
 }
 
 @font-face {
-	font-family: pt;
-	font-weight: normal;
-	src: url("/assets/w95fa.woff2");
-}
-
-@font-face {
-	font-family: pt;
-	font-weight: bold;
-	src: url("/assets/w95fa.woff2");
+	font-family: wide;
+	src: url("/assets/stretch-pro.ttf");
 }
 
 body {
 	padding: 0;
 	margin: 0;
+
+	color: var(--page-constrast-color);
+	background: var(--page-color);
 }
 
 ui-nav {
@@ -34,10 +39,10 @@ ui-nav {
 	z-index: 100;
 
 	line-height: 1;
+	font-size: 2rem;
 	font-weight: bold;
-	color: $primary;
-	background: #fff;
-	border-bottom: 1px solid #000;
+	color: var(--primary-color);
+	background: var(--primary-contrast-color);
 
 	image-rendering: pixelated;
 }
@@ -45,18 +50,21 @@ ui-nav {
 ui-filters {
 	display: block;
 	border-bottom: 1px solid #000;
+	margin-bottom: 1rem;
 
 	overflow-x: auto;
 	overflow-y: hidden;
 
 	ui-filter {
 		position: relative;
-		border-right: 1px solid #000;
 		line-height: 1;
+		margin-left: 1rem;
 
 		&[ui-active] {
-			font-weight: bold;
-			font-style: italic;
+			select {
+				color: var(--primary-contrast-color);
+				background: var(--primary-color);
+			}
 		}
 
 		select {
@@ -68,7 +76,10 @@ ui-filters {
 			font: inherit;
 			color: inherit;
 			border: none;
-			background: transparent;
+			
+			color: var(--page-color);
+			background: var(--page-constrast-color);
+			border-radius: 1.5rem;
 		}
 	}
 }
@@ -78,17 +89,11 @@ ui-content {
 	flex-direction: column;
 	padding: 0.5rem;
 
-	background-image: linear-gradient(45deg, #fff 75%, #000 100%);
-	background-size: 0.25rem 0.25rem;
-	background-position: 0.125rem 0.125rem;
-	background-attachment: fixed;
-
 	ui-month,
 	ui-day,
 	ui-none,
 	ui-issues,
 	ui-about {
-		border: 1px solid #000;
 		margin: 0.5rem;
 	}
 
@@ -97,8 +102,8 @@ ui-content {
 		padding: 0.25rem 1rem;
 
 		font-size: 0.75rem;
-		background: $danger;
-		color: #fff;
+		color: var(--error-contrast-color);
+		background: var(--error-color);
 
 		&:empty {
 			display: none;
@@ -110,42 +115,43 @@ ui-content {
 	}
 
 	ui-month {
+		--backdrop-filter: invert(1) brightness(0.5) saturate(0);
+
 		display: block;
-		padding: 0.5rem 1rem;
+		padding: 1rem 1.5rem;
 		height: 100%;
 		margin-top: 3rem;
 
-		background: #000;
-		color: #fff;
+		font-size: 2rem;
+		text-align: center;
+		backdrop-filter: var(--backdrop-filter);
+		border-radius: 2rem;
+		box-shadow: 0 0 4rem #000, 0 0 1rem #000, 0 0 2rem #000;
 	}
 
 	ui-day {
-		padding-top: 0.5rem;
 		overflow: hidden;
-		
-		background: #fff;
+
+		border: 1px dashed currentColor;
+		border-radius: 1.5rem;
 
 		&[ui-today] {
 			margin: 0.25rem;
-			border-width: calc(0.25rem + 1px);
-
-			ui-event:not(:last-of-type) {
-				border-bottom-width: 2px;
-			}
+			
+			color: var(--primary-contrast-color);
+			background: var(--primary-color);
 		}
 
 		ui-date {
 			display: block;
-			padding: 0.5rem 1rem;
+			padding: 1.5rem;
 			line-height: 1;
 
 			font-weight: bold;
+			border-bottom: 1px dashed currentColor;
 
 			ui-today {
 				margin-right: 0.75rem;
-
-				background: #000;
-				color: #fff;
 			}
 		}
 
@@ -154,16 +160,16 @@ ui-content {
 
 			ui-event {
 				display: block;
-				padding: 1rem;
-
-				background: #fff;
+				padding: 1rem 0.5rem;
+				margin-inline: 1rem;
 
 				&:not(:last-of-type) {
-					border-bottom: 1px dashed #000;
+					border-bottom: 1px dashed currentColor;
 				}
 
 				&[ui-sold-out] {
-					color: #666;
+					color: var(--error-contrast-color);
+					background: var(--error-color);
 
 					img {
 						opacity: 0.5;
@@ -171,7 +177,8 @@ ui-content {
 				}
 
 				&[ui-highlight] {
-					background: yellow;
+					color: var(--primary-contrast-color);
+					background: var(--primary-color);
 				}
 				
 				img {
@@ -224,11 +231,9 @@ ui-content {
 
 					a {
 						display: inline-block;
-						padding: 0.125rem 0.5rem;
 
 						color: inherit;
-						background: #fff;
-						border: 1px solid currentColor;
+						border-bottom: 1px solid currentColor;
 
 						&:not(:last-child) {
 							margin-right: 0.5rem;
@@ -246,15 +251,15 @@ ui-content {
 
 	ui-none {
 		display: block;
-		padding: 3rem 1rem;
-		background: $danger;
-		color: #fff;
+		padding: 3rem;
+		background: linear-gradient(100deg, transparent 5%, var(--error-contrast-color) 5%, var(--error-contrast-color) 95%, transparent 95%);
+		color: var(--error-color);
 	}
 
 	ui-about {
-		padding: 5rem 1rem;
-
-		background: #fff;
+		a {
+			color: inherit;
+		}
 
 		ui-host {
 			display: block;
@@ -265,7 +270,7 @@ ui-content {
 			}
 
 			&[ui-offline] {
-				color: $danger;
+				color: var(--error-color);
 			}
 
 			ui-name {
@@ -278,10 +283,7 @@ ui-content {
 @media (min-width: 500px) {
 	ui-page {
 		position: fixed;
-		top: 0;
-		left: 0;
-		right: 0;
-		bottom: 0;
+		inset: 1rem;
 
 		display: flex;
 		flex-direction: column;
@@ -325,10 +327,12 @@ ui-content {
 					left: 0.5rem;
 					z-index: 100;
 
-					padding: 1rem 0.5rem;
+					padding: 1.75rem 1rem;
 					margin-top: 0.5rem;
-					margin-left: 3rem;
+					margin-left: 8rem;
+					margin-right: 3rem;
 		
+					text-align: left;
 					writing-mode: vertical-rl;
 				}
 
@@ -337,7 +341,6 @@ ui-content {
 					min-height: calc(100% / 3 - 1rem - 1px);
 					max-height: calc(100% - 2rem);
 					flex-shrink: 0;
-					position: relative;
 
 					ui-event-list {
 						max-height: calc(100% - 2rem);
@@ -350,36 +353,17 @@ ui-content {
 							z-index: 1;
 						}
 					}
-
-					&::after,
-					&::before {
-						content: "";
-
-						position: absolute;
-						left: 0;
-						right: 0;
-						bottom: 0;
-						height: 2rem;
-
-						background-image: linear-gradient(90deg, #000 1px, #0000 1px);
-						background-size: 0.5rem;
-						background-position: 0.125rem 0;
-					}
-
-					&::after {
-						height: 1rem;
-						background-position: 0.375rem 0;
-					}
 				}
 		
 				ui-none {
 					width: 600px;
 					flex-shrink: 0;
-					padding: 3rem;
+					padding: 3rem 5rem;
 				}
 		
 				ui-about {
 					width: 800px;
+					height: 100%;
 					flex-shrink: 0;
 				}
 			}

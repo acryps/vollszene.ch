@@ -37,10 +37,10 @@ export class EventComponent extends Component {
 					</ui-name>
 				</ui-host>
 				
-				<ui-ticket-details>
+				{!!(this.event.ticketPrice && this.event.ticketLink) && <ui-ticket-details>
 					{this.event.ticketPrice && this.event.ticketAvailable && <ui-price>{this.event.ticketPrice.toFixed(0)} CHF</ui-price>}
 					{this.event.ticketLink && !this.event.ticketAvailable && <ui-sold-out>sold out</ui-sold-out>}
-				</ui-ticket-details>
+				</ui-ticket-details>}
 			</ui-tagline>
 
 			<ui-name>{this.event.name}</ui-name>
