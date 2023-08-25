@@ -1,6 +1,6 @@
 {
 	"name": "vollszene",
-	"version": "1.0.0",
+	"version": "1.0.1",
 	"scripts": {
 		"build": "cd page; npm run build; cd ..; cd server; npm run build; cd .."
 	},
