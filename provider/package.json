@@ -10,7 +10,10 @@
 		"pgdatabase": "Database Database",
 		"pguser": "Database User",
 		"pgpassword": "Database Password",
-		"+fetchIntervalHours?24": "Hours between event fetching"
+
+		"fetch": {
+			"intervalHours?24": "Hours between event fetching"
+		}
 	},
 	"dependencies": {
 		"@acryps/environment": "^2.0.1",
