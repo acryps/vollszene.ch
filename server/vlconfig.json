@@ -6,13 +6,11 @@
 	},
 	"services": {
 		"serverOutFile": "managed/server.ts",
-		"scan": [
-			"areas"
-		],
+		"scan": ["."],
 		"endpoints": [
 			{
 				"type": "native",
-				"outFile": "../client/managed/services.ts"
+				"outFile": "../page/managed/services.ts"
 			}
 		]
 	}

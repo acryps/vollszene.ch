@@ -1,6 +1,7 @@
-FROM node:12-slim
+FROM node:18-slim
 
-WORKDIR /app
+WORKDIR /usr/src/app
 COPY . .
 
-CMD [ "npm", "start" ]
+WORKDIR /usr/src/app/server
+CMD [ "node", "built/index.js" ]
