@@ -37,7 +37,7 @@ export class EventsComponent extends Component {
 				if (+event.date != +date) {
 					const today = date.toDateString() == new Date().toDateString();
 
-					let dayElement = <ui-day ui-today={today ? '' : null}>
+					let dayElement = <ui-day ui-today={today}>
 						<ui-date>
 							{today && <ui-today>today</ui-today>}
 
@@ -99,7 +99,7 @@ export class EventsComponent extends Component {
 
 					brought to you by acryps &lt;3
 
-					{Application.hosts.map(host => <ui-host ui-offline={host.online ? null : ''}>
+					{Application.hosts.map(host => <ui-host ui-offline={host.online}>
 						{host.location.name} <ui-name>{host.name}</ui-name> updated {host.updatedAt.toISOString()}, {host.online ? 'online' : 'OFFLINE'}
 					</ui-host>)}
 				</ui-about>

@@ -25,7 +25,7 @@ export class EventComponent extends Component {
 			}
 		});
 
-		return <ui-event ui-sold-out={this.event.ticketLink && !this.event.ticketAvailable ? '' : null} ui-highlight={this.event.highlight ? '' : null} ui-id={this.event.id}>
+		return <ui-event ui-sold-out={this.event.ticketLink && !this.event.ticketAvailable} ui-highlight={this.event.highlight} ui-id={this.event.id}>
 			{this.event.imageUrl && (image = <img ui-click={() => open(this.event.imageUrl)} />)}
 
 			<ui-tagline>
