@@ -99,7 +99,7 @@ export class EventsComponent extends Component {
 
 					brought to you by acryps &lt;3
 
-					{Application.hosts.map(host => <ui-host ui-offline={host.online}>
+					{Application.hosts.map(host => <ui-host ui-offline={!host.online}>
 						{host.location.name} <ui-name>{host.name}</ui-name> updated {host.updatedAt.toISOString()}, {host.online ? 'online' : 'OFFLINE'}
 					</ui-host>)}
 				</ui-about>
