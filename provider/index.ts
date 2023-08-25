@@ -8,7 +8,11 @@ DbClient.connectedClient.connect().then(async () => {
 	const database = new DbContext(new RunContext());
 
 	async function fetchEvents() {
-		await Provider.update(database);
+		try {
+			await Provider.update(database);
+		} catch (error) {
+			console.log('Fetch failed', error);
+		}
 
 		setTimeout(() => fetchEvents(), +process.env.FETCH_INTERVAL_HOURS * 1000 * 60 * 60);
 	}
