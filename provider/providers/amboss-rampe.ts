@@ -10,33 +10,22 @@ export default class AmbossRampeProvider extends Provider {
 	async fetch() {
 		const events = [];
 
-		const html = await fetch('http://www.ambossrampe.ch/calendar-2/').then(res => res.text());
-		const page = new JSDOM(html);
+		let page = 1;
+		let sources;
 
-		for (let eventElement of page.window.document.querySelectorAll('.ai1ec-event')) {
-			const event = new Event();
-
-			const nameElement = eventElement.querySelector('.ai1ec-event-title')?.textContent.trim() || eventElement.querySelector('.ai1ec-event-summary .ai1ec-event-description [style]')?.textContent.trim();
-
-			if (nameElement) {
-				event.name = nameElement.replace(/\s+/g, ' ');
-					
-				const dateComponents = eventElement.parentElement.previousSibling.previousSibling.href.split('~').pop().split('/')[0].split('-');
-
-				event.date = new Date(Date.UTC(+dateComponents[2], +dateComponents[1] - 1, +dateComponents[0]));
-				event.link = eventElement.querySelector('.ai1ec-load-event').href;
-				event.imageUrl = eventElement.querySelector('img:not([width="16"])')?.src;
-
-				event.hash = Provider.hashEvent(event);
-
-				for (let link of eventElement.parentElement.querySelectorAll('a')) {
-					await Tickets.findTickets(event, link.href);
-				}
-
-				if (!event.name.startsWith('Sonntag ist Ruhetag')) {
-					events.push(event);
-				}
+		while ((sources = await fetch(`https://ambossrampe.ch/wp-json/wp/v2/mec-events?per_page=100&page=${page}`).then(response => response.json())).length) {
+			for (let source of sources) {
+				const event = new Event();
+				event.hash = `${source.id}`;
+				event.date = new Date(source.date);
+				event.link = source.link;
+				event.name = source.yoast_head_json.og_title;
+				event.imageUrl = source.yoast_head_json.og_image[0]?.url;
+	
+				events.push(event);
 			}
+
+			page++;
 		}
 
 		return events;
