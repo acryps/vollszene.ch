@@ -13,20 +13,37 @@ export default class AmbossRampeProvider extends Provider {
 		let page = 1;
 		let sources;
 
+		const tasks: Promise<void>[] = [];
+
 		while ((sources = await fetch(`https://ambossrampe.ch/wp-json/wp/v2/mec-events?per_page=100&page=${page}`).then(response => response.json())).length) {
 			for (let source of sources) {
 				const event = new Event();
 				event.hash = `${source.id}`;
-				event.date = new Date(source.date);
 				event.link = source.link;
 				event.name = source.yoast_head_json.og_title;
 				event.imageUrl = source.yoast_head_json.og_image[0]?.url;
-	
-				events.push(event);
+
+				tasks.push(fetch(event.link).then(response => response.text()).then(html => {
+					const page = new JSDOM(html);
+				
+					const metadataElement = page.window.document.querySelector('script[type="application/ld+json"]');
+
+					if (metadataElement) {
+						const metadata = JSON.parse(metadataElement.textContent.trim());
+
+						if (metadata && metadata.startDate) {
+							event.date = new Date(metadata.startDate);
+
+							events.push(event);
+						}
+					}
+				}));
 			}
 
 			page++;
 		}
+
+		await Promise.all(tasks);
 
 		return events;
 	}
