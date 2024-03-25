@@ -3,6 +3,7 @@ import { registerDirectives } from '@acryps/page-default-directives';
 import { EventService, HostViewModel, SessionService } from './managed/services';
 import { PageComponent } from './page';
 import { EventsComponent } from './events';
+import { CreateHostComponent } from './create';
 
 export class Application {
 	static router: Router;
@@ -14,6 +15,8 @@ export class Application {
 
 		this.router = new PathRouter(PageComponent
 			.route('/', EventsComponent)
+		
+			.route('/create', CreateHostComponent)
 		);
 
 		registerDirectives(Component, this.router);

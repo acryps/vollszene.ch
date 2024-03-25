@@ -78,7 +78,7 @@ export class EventsComponent extends Component {
 						<option>All Locations</option>
 
 						{this.extractOptions(Application.hosts, host => host.location).map(location => <option ui-value={location}>
-							{location.name}
+							{location?.name}
 						</option>)}
 					</select>
 				</ui-filter>
@@ -94,7 +94,7 @@ export class EventsComponent extends Component {
 					brought to you by <a href="https://acryps.com">acryps</a> from 8004
 
 					{Application.hosts.map(host => <ui-host ui-offline={!host.online}>
-						{host.location.name} <ui-name>{host.name}</ui-name> updated {host.updatedAt.toISOString()}, {host.online ? 'online' : 'OFFLINE'}
+						{host.location?.name} <ui-name>{host.name}</ui-name> updated {host.updatedAt?.toISOString()}, {host.online ? 'online' : 'OFFLINE'}
 					</ui-host>)}
 				</ui-about>
 			</ui-content>
@@ -107,7 +107,9 @@ export class EventsComponent extends Component {
 		for (let event of items) {
 			const res = mapper(event);
 
-			unique[res.id] = res;
+			if (res) { 
+				unique[res.id] = res;
+			}
 		}
 
 		return Object.keys(unique).map(key => unique[key]) as TR[];

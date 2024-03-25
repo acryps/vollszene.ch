@@ -300,6 +300,50 @@ ui-content {
 	}
 }
 
+ui-create-host {
+	display: block;
+	
+	ui-field {
+		display: block;
+	}
+	
+	ui-action {
+		display: inline-block;
+		color: var(--primary-contrast-color);
+		background: var(--primary-color);
+		
+		padding: 1rem;
+	}
+	
+	ui-error {
+		display: block;
+		margin-top: 4rem;
+		
+		color: red;
+	}
+	
+	ui-result {
+		display: block;
+		margin-top: 4rem;
+		
+		ui-event {
+			display: block;
+			padding: 0.25rem;
+			
+			ui-name {
+				font-weight: bold;
+			}
+		}
+		
+		ui-grabber {
+			display: block;
+			
+			font-family: monospaced;
+			font-size: 0.8rem;
+		}
+	}
+}
+
 @media (min-width: 500px) {
 	ui-page {
 		position: fixed;

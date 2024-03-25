@@ -14,7 +14,9 @@ export class EventService extends Service {
 		const yesterday = new Date(new Date().toDateString());
 		yesterday.setUTCHours(-24);
 
-		const query = this.db.event.where(event => event.date.isAfter(yesterday));
+		const query = this.db.event
+			.where(event => event.date.isAfter(yesterday))
+			.where(event => event.host.public);
 
 		if (location) {
 			query.where(event => event.host.locationId == location);
@@ -30,6 +32,7 @@ export class EventService extends Service {
 	async getHosts() {
 		return HostViewModel.from(
 			await this.db.host
+				.where(host => host.public)
 				.orderByAscending(host => host.name)
 		)
 	}

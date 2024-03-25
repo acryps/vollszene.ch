@@ -9,17 +9,24 @@
 		"pghost": "Database Host",
 		"pgdatabase": "Database Database",
 		"pguser": "Database User",
-		"pgpassword": "Database Password"
+		"pgpassword": "Database Password",
+		"openai": {
+			"organization": "OpenAI Organization",
+			"secret": "OpenAI Secret"
+		}
 	},
 	"dependencies": {
-		"@acryps/environment": "^2.0.1",
+		"@acryps/environment": "^2.7.2",
 		"jsdom": "^22.1.0",
 		"node-fetch": "^2.7.0",
+		"openai": "^4.29.2",
+		"puppeteer": "^22.6.0",
 		"vlquery": "^7.0.8",
 		"vlserver": "^4.6.21"
 	},
 	"devDependencies": {
 		"@types/node": "^18.11.15",
+		"@types/puppeteer": "^7.0.4",
 		"nodemon": "^3.0.1",
 		"ts-node": "^10.9.1",
 		"tsc-watch": "^6.0.0",

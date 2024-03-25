@@ -1,7 +1,0 @@
-{
-	"context": {
-		"outFile": "managed/database.ts",
-		"connection": {},
-		"runContext": true
-	}
-}
