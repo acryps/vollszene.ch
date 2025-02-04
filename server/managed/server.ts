@@ -38,16 +38,16 @@ Inject.mappings = {
 export class ManagedServer extends BaseServer {
 	prepareRoutes() {
 		this.expose(
-			"80YThweDRlbTdtbTs2NTc2OXpyeXx0d3",
+			"N4OHQ2YXQ5YWltcTJxMGVsMGZldTJiY2",
 			{
-				"1tdDpvdTFidDJhMDM5Zjl5dWUxeD01MD": {
+				"hmeWtxc2Nudmh0Mmp2eHBuODtzZXJ4d2": {
 					isArray: false,
-					type: "string"
+					type: "number"
 				}
 			},
 			inject => inject.construct(EventService),
 			(controller, params) => controller.getEvents(
-				params["1tdDpvdTFidDJhMDM5Zjl5dWUxeD01MD"]
+				params["hmeWtxc2Nudmh0Mmp2eHBuODtzZXJ4d2"]
 			)
 		);
 

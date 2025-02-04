@@ -132,6 +132,7 @@ ui-content {
 
 			font-weight: bold;
 			border-bottom: 1px dashed currentColor;
+			text-align: center;
 
 			ui-today {
 				margin-right: 0.75rem;
@@ -253,6 +254,15 @@ ui-content {
 		padding: 3rem;
 		background: linear-gradient(100deg, transparent 5%, var(--error-contrast-color) 5%, var(--error-contrast-color) 95%, transparent 95%);
 		color: var(--error-color);
+	}
+
+	ui-more {
+		display: block;
+		padding: 4rem;
+
+		background: var(--primary-contrast-color);
+		color: var(--primary-color);
+		text-align: center;
 	}
 
 	ui-about {

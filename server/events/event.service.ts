@@ -10,17 +10,14 @@ export class EventService extends Service {
 		super();
 	}
 
-	async getEvents(location: string) {
+	async getEvents(page: number) {
 		const yesterday = new Date(new Date().toDateString());
 		yesterday.setUTCHours(-24);
 
 		const query = this.db.event
 			.where(event => event.date.isAfter(yesterday))
-			.where(event => event.host.public);
-
-		if (location) {
-			query.where(event => event.host.locationId == location);
-		}
+			.where(event => event.host.public)
+			.page(page, 50);
 
 		return EventViewModel.from(
 			query
