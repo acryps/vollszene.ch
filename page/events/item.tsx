@@ -14,6 +14,7 @@ export class EventComponent extends Component {
 
 	render() {
 		let image: HTMLImageElement;
+		let description: HTMLElement;
 
 		requestAnimationFrame(() => {
 			if (image) {
@@ -44,6 +45,12 @@ export class EventComponent extends Component {
 			</ui-tagline>
 
 			<ui-name>{this.event.name}</ui-name>
+
+			{description = <ui-description ui-click={() => {
+				description.toggleAttribute('ui-open');
+			}}>
+				{this.event.description}
+			</ui-description>}
 
 			<ui-links>
 				{this.event.link && <a href={this.event.link} target="_blank">

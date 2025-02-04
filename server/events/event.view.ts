@@ -9,6 +9,7 @@ export class EventViewModel extends ViewModel<Event> {
 	date;
 	link;
 	imageUrl;
+	description;
 
 	ticketLink;
 	ticketPrice;

@@ -5,6 +5,7 @@ export class EventViewModel {
 	ticketPrice: number;
 	highlight: boolean;
 	id: string;
+	description: string;
 	name: string;
 	link: string;
 	imageUrl: string;
@@ -18,6 +19,7 @@ export class EventViewModel {
 		raw.ticketPrice === undefined || (item.ticketPrice = raw.ticketPrice === null ? null : +raw.ticketPrice)
 		raw.highlight === undefined || (item.highlight = !!raw.highlight)
 		raw.id === undefined || (item.id = raw.id === null ? null : `${raw.id}`)
+		raw.description === undefined || (item.description = raw.description === null ? null : `${raw.description}`)
 		raw.name === undefined || (item.name = raw.name === null ? null : `${raw.name}`)
 		raw.link === undefined || (item.link = raw.link === null ? null : `${raw.link}`)
 		raw.imageUrl === undefined || (item.imageUrl = raw.imageUrl === null ? null : `${raw.imageUrl}`)
@@ -77,21 +79,23 @@ export class FullHostViewModel {
 }
 
 export class HostRequestViewModel {
-    id: string;
-	attempts: number;
-	grabber: string;
+    attempts: number;
+	id: string;
+	grabberDateTransformer: string;
+	error: string;
 	name: string;
 	address: string;
-	grabberDateTransformer: string;
+	grabber: string;
 
     private static $build(raw) {
         const item = new HostRequestViewModel();
-        raw.id === undefined || (item.id = raw.id === null ? null : `${raw.id}`)
-		raw.attempts === undefined || (item.attempts = raw.attempts === null ? null : +raw.attempts)
-		raw.grabber === undefined || (item.grabber = raw.grabber === null ? null : `${raw.grabber}`)
+        raw.attempts === undefined || (item.attempts = raw.attempts === null ? null : +raw.attempts)
+		raw.id === undefined || (item.id = raw.id === null ? null : `${raw.id}`)
+		raw.grabberDateTransformer === undefined || (item.grabberDateTransformer = raw.grabberDateTransformer === null ? null : `${raw.grabberDateTransformer}`)
+		raw.error === undefined || (item.error = raw.error === null ? null : `${raw.error}`)
 		raw.name === undefined || (item.name = raw.name === null ? null : `${raw.name}`)
 		raw.address === undefined || (item.address = raw.address === null ? null : `${raw.address}`)
-		raw.grabberDateTransformer === undefined || (item.grabberDateTransformer = raw.grabberDateTransformer === null ? null : `${raw.grabberDateTransformer}`)
+		raw.grabber === undefined || (item.grabber = raw.grabber === null ? null : `${raw.grabber}`)
         
         return item;
     }

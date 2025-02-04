@@ -1,7 +1,10 @@
+import { writeFileSync } from "node:fs";
 import { Importer } from "../importer";
 import { DbContext, Host, HostRequest } from "../managed/database";
 import { Downloader } from "./downloader";
 import { Interpreter } from "./interpreter";
+import { join } from "node:path";
+import { createHash } from "node:crypto";
 
 export class HostDeveloper {
 	static async developPending(database: DbContext) {
@@ -34,14 +37,14 @@ export class HostDeveloper {
 			if (!this.request.grabber) {
 				const grabber = await this.generateGrabber(page);
 
-				if (!await this.verifyGrabber()) {
-					return await this.develop();
+				if (!await this.verifyGrabber(grabber)) {
+					throw `Grabber not valid, source: ${grabber}`;
 				}
 
 				const events = await new Downloader(this.request.address).grabRaw(grabber) as any[];
 
 				if (!Array.isArray(events) || events.length == 0) {
-					return await this.develop();
+					throw `No events returned, got: ${JSON.stringify(events)} using: ${grabber}`;
 				}
 
 				this.request.grabber = grabber;
@@ -51,6 +54,10 @@ export class HostDeveloper {
 			if (!this.request.grabberDateTransformer) {
 				const rawEvents = await new Downloader(this.request.address).grabRaw(this.request.grabber) as any[];
 				const dateTransformer = await this.generateDateTransformer(rawEvents.map(event => event.date).filter(event => event));
+
+				if (!await this.verifyDateTransformer(dateTransformer)) {
+					throw 'Date grabber not valid';
+				}
 
 				const events = await new Downloader(this.request.address).grab(this.request.grabber, dateTransformer);
 
@@ -75,9 +82,14 @@ export class HostDeveloper {
 						return true;
 					}
 				}
+
+				throw 'No event contained a valid date';
 			}
 		} catch (error) {
 			console.log(`[developer] failed: ${this.request.name}: ${error}`);
+
+			this.request.error = `${error}`;
+			await this.request.update();
 
 			return await this.develop();
 		}
@@ -85,6 +97,9 @@ export class HostDeveloper {
 
 	async generateGrabber(page: string) {
 		console.log(`[generator] generating grabber for ${this.request.address}`);
+
+		// trim to fit context
+		page = page.substring(0, 100_000);
 
 		return await new Interpreter().develop(`
 			create javascript scripts that parse the given website, returning a javascript object for each event in the website in the form of { id: string, name: string, date: string, link?: string, description?: string, price?: number }.
@@ -94,15 +109,15 @@ export class HostDeveloper {
 			at the end, use a return statement to return the array of events, do not log it to console.
 			do not generate a script which contains any events, generate a parser for this html structure.
 			make the script fault tolerant, by just omitting events that it does not understand
-		`, page.substring(0, 20000));
+		`, page);
 	}
 
-	async verifyGrabber() {
+	async verifyGrabber(source: string) {
 		console.log(`[generator] verify grabber for ${this.request.address}`);
 
 		return await new Interpreter().verify(`
 			does this code extract data from the contents of a website?
-		`);
+		`, source);
 	}
 
 	async generateDateTransformer(dates: string[]) {
@@ -113,11 +128,11 @@ export class HostDeveloper {
 		`, ...dates);
 	}
 
-	async verifyDateTransformer() {
+	async verifyDateTransformer(source: string) {
 		console.log(`[generator] verify grabber for ${this.request.address}`);
 
 		return await new Interpreter().verify(`
 			does this code convert a date in a string format into a real javascript date?
-		`);
+		`, source);
 	}
 }

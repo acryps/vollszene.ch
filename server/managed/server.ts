@@ -121,6 +121,7 @@ ViewModel.mappings = {
 				ticketPrice: this.model.ticketPrice,
 				highlight: this.model.highlight,
 				id: this.model.id,
+				description: this.model.description,
 				name: this.model.name,
 				link: this.model.link,
 				imageUrl: this.model.imageUrl,
@@ -138,6 +139,7 @@ ViewModel.mappings = {
 				ticketPrice: true,
 				highlight: true,
 				id: true,
+				description: true,
 				name: true,
 				link: true,
 				imageUrl: true,
@@ -153,6 +155,7 @@ ViewModel.mappings = {
 			"ticketPrice" in data && (item.ticketPrice = data.ticketPrice === null ? null : +data.ticketPrice);
 			"highlight" in data && (item.highlight = !!data.highlight);
 			"id" in data && (item.id = data.id === null ? null : `${data.id}`);
+			"description" in data && (item.description = data.description === null ? null : `${data.description}`);
 			"name" in data && (item.name = data.name === null ? null : `${data.name}`);
 			"link" in data && (item.link = data.link === null ? null : `${data.link}`);
 			"imageUrl" in data && (item.imageUrl = data.imageUrl === null ? null : `${data.imageUrl}`);
@@ -176,6 +179,7 @@ ViewModel.mappings = {
 			"ticketPrice" in viewModel && (model.ticketPrice = viewModel.ticketPrice === null ? null : +viewModel.ticketPrice);
 			"highlight" in viewModel && (model.highlight = !!viewModel.highlight);
 			"id" in viewModel && (model.id = viewModel.id === null ? null : `${viewModel.id}`);
+			"description" in viewModel && (model.description = viewModel.description === null ? null : `${viewModel.description}`);
 			"name" in viewModel && (model.name = viewModel.name === null ? null : `${viewModel.name}`);
 			"link" in viewModel && (model.link = viewModel.link === null ? null : `${viewModel.link}`);
 			"imageUrl" in viewModel && (model.imageUrl = viewModel.imageUrl === null ? null : `${viewModel.imageUrl}`);
@@ -325,34 +329,37 @@ ViewModel.mappings = {
 	HostRequestViewModel: class ComposedHostRequestViewModel extends HostRequestViewModel {
 		async map() {
 			return {
-				id: this.model.id,
 				attempts: this.model.attempts,
-				grabber: this.model.grabber,
+				id: this.model.id,
+				grabberDateTransformer: this.model.grabberDateTransformer,
+				error: this.model.error,
 				name: this.model.name,
 				address: this.model.address,
-				grabberDateTransformer: this.model.grabberDateTransformer
+				grabber: this.model.grabber
 			}
 		};
 
 		static get items() { 
 			return {
-				id: true,
 				attempts: true,
-				grabber: true,
+				id: true,
+				grabberDateTransformer: true,
+				error: true,
 				name: true,
 				address: true,
-				grabberDateTransformer: true
+				grabber: true
 			};
 		}
 
 		static toViewModel(data) {
 			const item = new HostRequestViewModel(null);
-			"id" in data && (item.id = data.id === null ? null : `${data.id}`);
 			"attempts" in data && (item.attempts = data.attempts === null ? null : +data.attempts);
-			"grabber" in data && (item.grabber = data.grabber === null ? null : `${data.grabber}`);
+			"id" in data && (item.id = data.id === null ? null : `${data.id}`);
+			"grabberDateTransformer" in data && (item.grabberDateTransformer = data.grabberDateTransformer === null ? null : `${data.grabberDateTransformer}`);
+			"error" in data && (item.error = data.error === null ? null : `${data.error}`);
 			"name" in data && (item.name = data.name === null ? null : `${data.name}`);
 			"address" in data && (item.address = data.address === null ? null : `${data.address}`);
-			"grabberDateTransformer" in data && (item.grabberDateTransformer = data.grabberDateTransformer === null ? null : `${data.grabberDateTransformer}`);
+			"grabber" in data && (item.grabber = data.grabber === null ? null : `${data.grabber}`);
 
 			return item;
 		}
@@ -366,12 +373,13 @@ ViewModel.mappings = {
 				model = new HostRequest();
 			}
 			
-			"id" in viewModel && (model.id = viewModel.id === null ? null : `${viewModel.id}`);
 			"attempts" in viewModel && (model.attempts = viewModel.attempts === null ? null : +viewModel.attempts);
-			"grabber" in viewModel && (model.grabber = viewModel.grabber === null ? null : `${viewModel.grabber}`);
+			"id" in viewModel && (model.id = viewModel.id === null ? null : `${viewModel.id}`);
+			"grabberDateTransformer" in viewModel && (model.grabberDateTransformer = viewModel.grabberDateTransformer === null ? null : `${viewModel.grabberDateTransformer}`);
+			"error" in viewModel && (model.error = viewModel.error === null ? null : `${viewModel.error}`);
 			"name" in viewModel && (model.name = viewModel.name === null ? null : `${viewModel.name}`);
 			"address" in viewModel && (model.address = viewModel.address === null ? null : `${viewModel.address}`);
-			"grabberDateTransformer" in viewModel && (model.grabberDateTransformer = viewModel.grabberDateTransformer === null ? null : `${viewModel.grabberDateTransformer}`);
+			"grabber" in viewModel && (model.grabber = viewModel.grabber === null ? null : `${viewModel.grabber}`);
 
 			return model;
 		}

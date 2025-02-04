@@ -5,8 +5,11 @@ export class HostRequestViewModel extends ViewModel<HostRequest> {
 	id;
 	name;
 	address;
+
 	attempts;
+	error;
 
 	grabber;
 	grabberDateTransformer;
+
 }

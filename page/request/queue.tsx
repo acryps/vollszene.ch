@@ -37,6 +37,10 @@ export class RequestQueuePage extends Component {
 					Attempt {request.attempts}
 				</ui-attempts>
 
+				{request.error &&  <ui-error>
+					{request.error}
+				</ui-error>}
+
 				{this.renderGrabber(request.grabber)}
 				{this.renderGrabber(request.grabberDateTransformer)}
 			</ui-request>)}

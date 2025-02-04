@@ -9,5 +9,7 @@ CREATE TABLE host_request (
 	grabber_date_transformer TEXT,
 
 	requested TIMESTAMP,
-	completed TIMESTAMP
+	completed TIMESTAMP,
+
+	error TEXT
 );

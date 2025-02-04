@@ -54,9 +54,28 @@ export class Downloader {
 		console.log(`[downloader] extracting html from ${this.source}`);
 
 		const page = await this.load();
-		const body = await page.evaluate(() => document.body.innerHTML);
 
+		// remove unused elements
+		// required to fit into context
+		for (let query of [
+			'svg',
+			'script',
+			'style',
+			'img'
+		]) {
+			await page.evaluate(query => {
+				for (let element of document.querySelectorAll(query)) {
+					element.remove();
+				}
+			}, query);
+		}
+
+		let body = await page.evaluate(() => document.body.innerHTML);
 		page.close();
+
+		while (body.match(/[\n\s]{2}/)) {
+			body = body.replace(/[\n\s]+/g, ' ');
+		}
 
 		return body;
 	}
@@ -84,48 +103,50 @@ export class Downloader {
 			const events: Event[] = [];
 
 			for (let source of sourceEvents) {
-				const event = new Event();
+				try {
+					const event = new Event();
 
-				// required properties
-				if (source.name) {
-					event.name = `${source.name}`;
-				} else {
-					throw new Error('Grabber did not return a name for the event');
-				}
-
-				if (!source.date) {
-					throw new Error('Grabber did not return a date for the event');
-				}
-
-				const date = eval(`(() => { ${dateTransformer}; return parseDate(${JSON.stringify(source.date)}) })()`);
-
-				console.log(`! ${source.date} ${date}`);
-
-				if (date) {
-					if (!(date instanceof Date)) {
-						throw new Error(`Grabber did not return a valid date for '${source.date}'`);
+					// required properties
+					if (source.name) {
+						event.name = `${source.name}`;
+					} else {
+						throw new Error('Grabber did not return a name for the event');
 					}
 
-					event.date = date;
-
-					if (!source.id) {
-						throw new Error('Grabber did not return an id for the event');
+					if (!source.date) {
+						throw new Error('Grabber did not return a date for the event');
 					}
 
-					event.hash = createHash('sha1').update(`${source.id}${date.toISOString()}`).digest('base64');
+					const date = eval(`(() => { ${dateTransformer}; return parseDate(${JSON.stringify(source.date)}) })()`);
 
-					if (events.find(existing => existing.hash == event.hash)) {
-						throw new Error('Grabber did not return unique ids for the events');
+					if (date) {
+						if (!(date instanceof Date)) {
+							throw new Error(`Grabber did not return a valid date for '${source.date}'`);
+						}
+
+						event.date = date;
+
+						if (!source.id) {
+							throw new Error('Grabber did not return an id for the event');
+						}
+
+						event.hash = createHash('sha1').update(`${source.id}${date.toISOString()}`).digest('base64');
+
+						if (events.find(existing => existing.hash == event.hash)) {
+							throw new Error('Grabber did not return unique ids for the events');
+						}
+
+						// optional values
+						event.link = source.link && `${source.link}`;
+						event.description = source.description && `${source.description}`;
+						event.ticketPrice = source.price && +source.price;
+
+						console.log(` >> #${event.hash} '${event.name}'`);
+
+						events.push(event);
 					}
-
-					// optional values
-					event.link = source.link && `${source.link}`;
-					event.description = source.description && `${source.description}`;
-					event.ticketPrice = source.price && +source.price;
-
-					console.log(` >> #${event.hash} '${event.name}'`);
-
-					events.push(event);
+				} catch (error) {
+					console.warn(`!! ${JSON.stringify(source)}: ${error}`);
 				}
 			}
 

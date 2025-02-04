@@ -218,35 +218,38 @@ export class HostRequestQueryProxy extends QueryProxy {
 	get attempts(): Partial<QueryNumber> { throw new Error("Invalid use of QueryModels. QueryModels cannot be used during runtime"); }
 	get requested(): Partial<QueryTimeStamp> { throw new Error("Invalid use of QueryModels. QueryModels cannot be used during runtime"); }
 	get completed(): Partial<QueryTimeStamp> { throw new Error("Invalid use of QueryModels. QueryModels cannot be used during runtime"); }
-	get grabber(): Partial<QueryString> { throw new Error("Invalid use of QueryModels. QueryModels cannot be used during runtime"); }
+	get grabberDateTransformer(): Partial<QueryString> { throw new Error("Invalid use of QueryModels. QueryModels cannot be used during runtime"); }
+	get error(): Partial<QueryString> { throw new Error("Invalid use of QueryModels. QueryModels cannot be used during runtime"); }
 	get name(): Partial<QueryString> { throw new Error("Invalid use of QueryModels. QueryModels cannot be used during runtime"); }
 	get address(): Partial<QueryString> { throw new Error("Invalid use of QueryModels. QueryModels cannot be used during runtime"); }
-	get grabberDateTransformer(): Partial<QueryString> { throw new Error("Invalid use of QueryModels. QueryModels cannot be used during runtime"); }
+	get grabber(): Partial<QueryString> { throw new Error("Invalid use of QueryModels. QueryModels cannot be used during runtime"); }
 }
 
 export class HostRequest extends Entity<HostRequestQueryProxy> {
-	declare id: string;
 	attempts: number;
 	requested: Date;
 	completed: Date;
-	grabber: string;
+	declare id: string;
+	grabberDateTransformer: string;
+	error: string;
 	name: string;
 	address: string;
-	grabberDateTransformer: string;
+	grabber: string;
 	
 
 	$$meta = {
 		source: "host_request",
 
 		columns: {
-			id: { type: "uuid", name: "id" },
 			attempts: { type: "int4", name: "attempts" },
 			requested: { type: "timestamp", name: "requested" },
 			completed: { type: "timestamp", name: "completed" },
-			grabber: { type: "text", name: "grabber" },
+			id: { type: "uuid", name: "id" },
+			grabberDateTransformer: { type: "text", name: "grabber_date_transformer" },
+			error: { type: "text", name: "error" },
 			name: { type: "text", name: "name" },
 			address: { type: "text", name: "address" },
-			grabberDateTransformer: { type: "text", name: "grabber_date_transformer" }
+			grabber: { type: "text", name: "grabber" }
 		},
 
 		get set(): DbSet<HostRequest, HostRequestQueryProxy> { 
