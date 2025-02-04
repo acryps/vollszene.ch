@@ -214,18 +214,61 @@ export class Host extends Entity<HostQueryProxy> {
 					
 }
 			
+export class HostRequestQueryProxy extends QueryProxy {
+	get attempts(): Partial<QueryNumber> { throw new Error("Invalid use of QueryModels. QueryModels cannot be used during runtime"); }
+	get requested(): Partial<QueryTimeStamp> { throw new Error("Invalid use of QueryModels. QueryModels cannot be used during runtime"); }
+	get completed(): Partial<QueryTimeStamp> { throw new Error("Invalid use of QueryModels. QueryModels cannot be used during runtime"); }
+	get grabber(): Partial<QueryString> { throw new Error("Invalid use of QueryModels. QueryModels cannot be used during runtime"); }
+	get name(): Partial<QueryString> { throw new Error("Invalid use of QueryModels. QueryModels cannot be used during runtime"); }
+	get address(): Partial<QueryString> { throw new Error("Invalid use of QueryModels. QueryModels cannot be used during runtime"); }
+	get grabberDateTransformer(): Partial<QueryString> { throw new Error("Invalid use of QueryModels. QueryModels cannot be used during runtime"); }
+}
+
+export class HostRequest extends Entity<HostRequestQueryProxy> {
+	declare id: string;
+	attempts: number;
+	requested: Date;
+	completed: Date;
+	grabber: string;
+	name: string;
+	address: string;
+	grabberDateTransformer: string;
+	
+
+	$$meta = {
+		source: "host_request",
+
+		columns: {
+			id: { type: "uuid", name: "id" },
+			attempts: { type: "int4", name: "attempts" },
+			requested: { type: "timestamp", name: "requested" },
+			completed: { type: "timestamp", name: "completed" },
+			grabber: { type: "text", name: "grabber" },
+			name: { type: "text", name: "name" },
+			address: { type: "text", name: "address" },
+			grabberDateTransformer: { type: "text", name: "grabber_date_transformer" }
+		},
+
+		get set(): DbSet<HostRequest, HostRequestQueryProxy> { 
+			return new DbSet<HostRequest, HostRequestQueryProxy>(HostRequest, null);
+		}
+	};
+}
+			
 
 export class DbContext {
 	session: DbSet<Session, SessionQueryProxy>;
 	location: DbSet<Location, LocationQueryProxy>;
 	event: DbSet<Event, EventQueryProxy>;
 	host: DbSet<Host, HostQueryProxy>;
+	hostRequest: DbSet<HostRequest, HostRequestQueryProxy>;
 
 	constructor(private runContext: RunContext) {
 		this.session = new DbSet<Session, SessionQueryProxy>(Session, this.runContext);
 		this.location = new DbSet<Location, LocationQueryProxy>(Location, this.runContext);
 		this.event = new DbSet<Event, EventQueryProxy>(Event, this.runContext);
 		this.host = new DbSet<Host, HostQueryProxy>(Host, this.runContext);
+		this.hostRequest = new DbSet<HostRequest, HostRequestQueryProxy>(HostRequest, this.runContext);
 	}
 
 	findSet(modelType) {

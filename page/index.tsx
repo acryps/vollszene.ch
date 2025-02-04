@@ -2,8 +2,9 @@ import { Component, PathRouter, Router } from '@acryps/page';
 import { registerDirectives } from '@acryps/page-default-directives';
 import { EventService, HostViewModel, SessionService } from './managed/services';
 import { PageComponent } from './page';
-import { EventsComponent } from './events';
-import { CreateHostComponent } from './create';
+import { EventsPage } from './events';
+import { RequestQueuePage } from './request/queue';
+import { RequestHostPage } from './request';
 
 export class Application {
 	static router: Router;
@@ -14,9 +15,10 @@ export class Application {
 		new SessionService().createSession((localStorage.session = localStorage.session || Math.random().toString(36).substring(2)), innerWidth, innerHeight);
 
 		this.router = new PathRouter(PageComponent
-			.route('/', EventsComponent)
-		
-			.route('/create', CreateHostComponent)
+			.route('/', EventsPage)
+
+			.route('/request', RequestHostPage)
+			.route('/queue', RequestQueuePage)
 		);
 
 		registerDirectives(Component, this.router);

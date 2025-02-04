@@ -11,8 +11,10 @@
 		"pguser": "Database User",
 		"pgpassword": "Database Password",
 		"openai": {
-			"organization": "OpenAI Organization",
 			"secret": "OpenAI Secret"
+		},
+		"browser": {
+			"applicationPath": "Browser Application Location"
 		}
 	},
 	"dependencies": {
@@ -20,7 +22,7 @@
 		"jsdom": "^22.1.0",
 		"node-fetch": "^2.7.0",
 		"openai": "^4.29.2",
-		"puppeteer": "^21.5.2",
+		"puppeteer-core": "^24.1.1",
 		"vlquery": "^7.0.8",
 		"vlserver": "^4.6.21"
 	},

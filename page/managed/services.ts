@@ -76,6 +76,27 @@ export class FullHostViewModel {
     }
 }
 
+export class HostRequestViewModel {
+    id: string;
+	attempts: number;
+	grabber: string;
+	name: string;
+	address: string;
+	grabberDateTransformer: string;
+
+    private static $build(raw) {
+        const item = new HostRequestViewModel();
+        raw.id === undefined || (item.id = raw.id === null ? null : `${raw.id}`)
+		raw.attempts === undefined || (item.attempts = raw.attempts === null ? null : +raw.attempts)
+		raw.grabber === undefined || (item.grabber = raw.grabber === null ? null : `${raw.grabber}`)
+		raw.name === undefined || (item.name = raw.name === null ? null : `${raw.name}`)
+		raw.address === undefined || (item.address = raw.address === null ? null : `${raw.address}`)
+		raw.grabberDateTransformer === undefined || (item.grabberDateTransformer = raw.grabberDateTransformer === null ? null : `${raw.grabberDateTransformer}`)
+        
+        return item;
+    }
+}
+
 export class Service {
     static baseUrl = "";
 
@@ -129,34 +150,12 @@ export class EventService {
 }
 
 export class HostService {
-    async create(name: string, address: string, grabbingAddress: string): Promise<FullHostViewModel> {
+    async create(name: string, address: string): Promise<void> {
         const $data = new FormData();
-        $data.append("sza3N3bXVja3hhajk1NHppYWZmZTN4dW", JSON.stringify(name))
-		$data.append("x4bmhicjd4cGlpdHBxMXJ3Mms2bGlwZm", JSON.stringify(address))
-		$data.append("lzNG01dHFrcDcyYXluZml4OGFwaDZyaj", JSON.stringify(grabbingAddress))
+        $data.append("dtdX9leWNsbXNwbGU2en5qbWBpZ2U4N3", JSON.stringify(name))
+		$data.append("BpZXw4ZDA2ZXJ2NWR5aTtkbGEwaTlzYX", JSON.stringify(address))
 
-        return await fetch(Service.toURL("A5dmduM3dkOHN5MGtvcWNkOWgydHVhcT"), {
-            method: "post",
-            credentials: "include",
-            body: $data
-        }).then(res => res.json()).then(r => {
-            if ("data" in r) {
-                const d = r.data;
-
-                return d === null ? null : FullHostViewModel["$build"](d);
-            } else if ("aborted" in r) {
-                throw new Error("request aborted by server");
-            } else if ("error" in r) {
-                throw new Error(r.error);
-            }
-        });
-    }
-
-	async release(id: string): Promise<void> {
-        const $data = new FormData();
-        $data.append("F6NHYzcjFzZHhwdHpzeTg5dGVpc3hwbn", JSON.stringify(id))
-
-        return await fetch(Service.toURL("JuZ2Uyamo2NTYyajB2Njsxc2F5aHV6MX"), {
+        return await fetch(Service.toURL("h0a3ZncTE4NGU0cHV6cWY3NnduYTl6cn"), {
             method: "post",
             credentials: "include",
             body: $data
@@ -167,6 +166,27 @@ export class HostService {
 
             if ("aborted" in r) {
                 throw new Error("request aborted by server");
+            }
+        });
+    }
+
+	async queue(): Promise<Array<HostRequestViewModel>> {
+        const $data = new FormData();
+        
+
+        return await fetch(Service.toURL("QyZjQwNDB3NWkzbD11eGM1NTBpNXdpNn"), {
+            method: "post",
+            credentials: "include",
+            body: $data
+        }).then(res => res.json()).then(r => {
+            if ("data" in r) {
+                const d = r.data;
+
+                return d.map(d => d === null ? null : HostRequestViewModel["$build"](d));
+            } else if ("aborted" in r) {
+                throw new Error("request aborted by server");
+            } else if ("error" in r) {
+                throw new Error(r.error);
             }
         });
     }

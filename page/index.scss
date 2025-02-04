@@ -68,43 +68,6 @@ ui-navigation {
 	}
 }
 
-ui-filters {
-	display: block;
-	border-bottom: 1px solid #000;
-	margin-bottom: 1rem;
-
-	overflow-x: auto;
-	overflow-y: hidden;
-
-	ui-filter {
-		position: relative;
-		line-height: 1;
-		margin-left: 1rem;
-
-		&[ui-active] {
-			select {
-				color: var(--primary-contrast-color);
-				background: var(--primary-color);
-			}
-		}
-
-		select {
-			padding: 0.75rem 1rem;
-			appearance: none;
-			-webkit-appearance: none;
-
-			outline: none;
-			font: inherit;
-			color: inherit;
-			border: none;
-			
-			color: var(--page-color);
-			background: var(--page-contrast-color);
-			border-radius: 1.5rem;
-		}
-	}
-}
-
 ui-content {
 	display: flex;
 	flex-direction: column;
@@ -157,7 +120,7 @@ ui-content {
 
 		&[ui-today] {
 			margin: 0.25rem;
-			
+
 			color: var(--primary-contrast-color);
 			background: var(--primary-color);
 		}
@@ -200,7 +163,7 @@ ui-content {
 					color: var(--primary-contrast-color);
 					background: var(--primary-color);
 				}
-				
+
 				img {
 					float: left;
 
@@ -300,46 +263,134 @@ ui-content {
 	}
 }
 
-ui-create-host {
+ui-request {
 	display: block;
-	
-	ui-field {
-		display: block;
+	padding: 1rem;
+
+	ui-action {
+		padding: 0.75rem 1rem;
+
+		color: var(--page-color);
+		background: var(--page-contrast-color);
+		border-radius: 1.5rem;
 	}
-	
+}
+
+ui-request-host {
+	display: block;
+	padding: 1rem;
+
+	ui-title {
+		display: block;
+		margin-bottom: 1rem;
+
+		font-size: 2rem;
+	}
+
+	ui-description {
+		display: block;
+		margin-bottom: 1rem;
+	}
+
+	ui-field {
+		display: flex;
+		flex-direction: column;
+		margin-bottom: 1.5rem;
+
+		label {
+			display: block;
+			margin-bottom: 0.5rem;
+		}
+
+		ui-hint {
+			display: block;
+			margin-bottom: 0.5rem;
+
+			font-size: 0.8rem;
+		}
+
+		input {
+			padding: 0.5rem 0.75rem;
+			border: none;
+
+			background: #222;
+			color: #fff;
+			font-family: monospace;
+		}
+	}
+
 	ui-action {
 		display: inline-block;
 		color: var(--primary-contrast-color);
 		background: var(--primary-color);
-		
+
 		padding: 1rem;
 	}
-	
+
 	ui-error {
 		display: block;
 		margin-top: 4rem;
-		
+
 		color: red;
 	}
-	
+
 	ui-result {
 		display: block;
 		margin-top: 4rem;
-		
+
 		ui-event {
 			display: block;
 			padding: 0.25rem;
-			
+
 			ui-name {
 				font-weight: bold;
 			}
 		}
-		
+
 		ui-grabber {
 			display: block;
-			
+
 			font-family: monospaced;
 			font-size: 0.8rem;
+		}
+	}
+}
+
+ui-queue {
+	display: block;
+
+	ui-request {
+		display: block;
+		margin-bottom: 2rem;
+
+		ui-header {
+			display: flex;
+			justify-content: space-between;
+			margin-bottom: 0.5rem;
+
+			ui-address {
+				font-family: monospace;
+			}
+		}
+
+		ui-attempts {
+			display: block;
+			margin-bottom: 0.5rem;
+
+			font-size: 0.8rem;
+		}
+
+		ui-grabber {
+			display: block;
+			height: 5em;
+			overflow: hidden;
+
+			line-height: 1;
+			font-size: 0.8rem;
+			font-family: monospace;
+			white-space: pre-wrap;
+
+			border: 1px dashed currentColor;
 		}
 	}
 }
@@ -382,10 +433,10 @@ ui-create-host {
 					padding: 1rem 0.25rem;
 					align-items: flex-start;
 					height: 100%;
-		
+
 					writing-mode: vertical-rl;
 				}
-		
+
 				ui-month {
 					position: sticky;
 					left: 0.5rem;
@@ -395,7 +446,7 @@ ui-create-host {
 					margin-top: 0.5rem;
 					margin-left: 8rem;
 					margin-right: 3rem;
-		
+
 					text-align: left;
 					writing-mode: vertical-rl;
 				}
@@ -418,13 +469,13 @@ ui-create-host {
 						}
 					}
 				}
-		
+
 				ui-none {
 					width: 600px;
 					flex-shrink: 0;
 					padding: 3rem 5rem;
 				}
-		
+
 				ui-about {
 					width: 800px;
 					height: 100%;

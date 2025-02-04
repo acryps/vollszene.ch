@@ -5,13 +5,14 @@ import { EventViewModel } from "././../events/event.view";
 import { HostViewModel } from "././../events/host.view";
 import { EventService } from "././../events/event.service";
 import { Host } from "././database";
-import { GrabberGenerator } from "././../host/grabber-generator";
-import { Downloader } from "././../host/downloader";
-import { FullHostViewModel } from "././../host/host.view";
+import { HostRequest } from "././database";
+import { HostDeveloper } from "././../host/developer";
+import { HostRequestViewModel } from "././../host/requiest.view";
 import { HostService } from "././../host/host.service";
 import { Session } from "././database";
 import { SessionService } from "././../session.service";
 import { LocationViewModel } from "./../events/location.view";
+import { FullHostViewModel } from "./../host/host.view";
 import { Event } from "./../managed/database";
 import { Location } from "./../managed/database";
 
@@ -60,38 +61,29 @@ export class ManagedServer extends BaseServer {
 		);
 
 		this.expose(
-			"A5dmduM3dkOHN5MGtvcWNkOWgydHVhcT",
+			"h0a3ZncTE4NGU0cHV6cWY3NnduYTl6cn",
 			{
-				"sza3N3bXVja3hhajk1NHppYWZmZTN4dW": {
+				"dtdX9leWNsbXNwbGU2en5qbWBpZ2U4N3": {
 					isArray: false,
 					type: "string"
-				},"x4bmhicjd4cGlpdHBxMXJ3Mms2bGlwZm": {
-					isArray: false,
-					type: "string"
-				},"lzNG01dHFrcDcyYXluZml4OGFwaDZyaj": {
+				},"BpZXw4ZDA2ZXJ2NWR5aTtkbGEwaTlzYX": {
 					isArray: false,
 					type: "string"
 				}
 			},
 			inject => inject.construct(HostService),
 			(controller, params) => controller.create(
-				params["sza3N3bXVja3hhajk1NHppYWZmZTN4dW"],
-				params["x4bmhicjd4cGlpdHBxMXJ3Mms2bGlwZm"],
-				params["lzNG01dHFrcDcyYXluZml4OGFwaDZyaj"]
+				params["dtdX9leWNsbXNwbGU2en5qbWBpZ2U4N3"],
+				params["BpZXw4ZDA2ZXJ2NWR5aTtkbGEwaTlzYX"]
 			)
 		);
 
 		this.expose(
-			"JuZ2Uyamo2NTYyajB2Njsxc2F5aHV6MX",
-			{
-				"F6NHYzcjFzZHhwdHpzeTg5dGVpc3hwbn": {
-					isArray: false,
-					type: "string"
-				}
-			},
+			"QyZjQwNDB3NWkzbD11eGM1NTBpNXdpNn",
+			{},
 			inject => inject.construct(HostService),
-			(controller, params) => controller.release(
-				params["F6NHYzcjFzZHhwdHpzeTg5dGVpc3hwbn"]
+			(controller, params) => controller.queue(
+				
 			)
 		);
 
@@ -326,6 +318,60 @@ ViewModel.mappings = {
 			"id" in viewModel && (model.id = viewModel.id === null ? null : `${viewModel.id}`);
 			"grabberDateTransformer" in viewModel && (model.grabberDateTransformer = viewModel.grabberDateTransformer === null ? null : `${viewModel.grabberDateTransformer}`);
 			"grabber" in viewModel && (model.grabber = viewModel.grabber === null ? null : `${viewModel.grabber}`);
+
+			return model;
+		}
+	},
+	HostRequestViewModel: class ComposedHostRequestViewModel extends HostRequestViewModel {
+		async map() {
+			return {
+				id: this.model.id,
+				attempts: this.model.attempts,
+				grabber: this.model.grabber,
+				name: this.model.name,
+				address: this.model.address,
+				grabberDateTransformer: this.model.grabberDateTransformer
+			}
+		};
+
+		static get items() { 
+			return {
+				id: true,
+				attempts: true,
+				grabber: true,
+				name: true,
+				address: true,
+				grabberDateTransformer: true
+			};
+		}
+
+		static toViewModel(data) {
+			const item = new HostRequestViewModel(null);
+			"id" in data && (item.id = data.id === null ? null : `${data.id}`);
+			"attempts" in data && (item.attempts = data.attempts === null ? null : +data.attempts);
+			"grabber" in data && (item.grabber = data.grabber === null ? null : `${data.grabber}`);
+			"name" in data && (item.name = data.name === null ? null : `${data.name}`);
+			"address" in data && (item.address = data.address === null ? null : `${data.address}`);
+			"grabberDateTransformer" in data && (item.grabberDateTransformer = data.grabberDateTransformer === null ? null : `${data.grabberDateTransformer}`);
+
+			return item;
+		}
+
+		static async toModel(viewModel: HostRequestViewModel) {
+			let model: HostRequest;
+			
+			if (viewModel.id) {
+				model = await ViewModel.globalFetchingContext.findSet(HostRequest).find(viewModel.id)
+			} else {
+				model = new HostRequest();
+			}
+			
+			"id" in viewModel && (model.id = viewModel.id === null ? null : `${viewModel.id}`);
+			"attempts" in viewModel && (model.attempts = viewModel.attempts === null ? null : +viewModel.attempts);
+			"grabber" in viewModel && (model.grabber = viewModel.grabber === null ? null : `${viewModel.grabber}`);
+			"name" in viewModel && (model.name = viewModel.name === null ? null : `${viewModel.name}`);
+			"address" in viewModel && (model.address = viewModel.address === null ? null : `${viewModel.address}`);
+			"grabberDateTransformer" in viewModel && (model.grabberDateTransformer = viewModel.grabberDateTransformer === null ? null : `${viewModel.grabberDateTransformer}`);
 
 			return model;
 		}

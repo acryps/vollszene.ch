@@ -1,8 +1,7 @@
 import { Service } from "vlserver";
-import { DbContext, Host } from "../managed/database";
-import { GrabberGenerator } from "./grabber-generator";
-import { Downloader } from "./downloader";
-import { FullHostViewModel } from "./host.view";
+import { DbContext, Host, HostRequest } from "../managed/database";
+import { HostDeveloper } from "./developer";
+import { HostRequestViewModel } from "./requiest.view";
 
 export class HostService extends Service {
 	constructor(
@@ -10,43 +9,24 @@ export class HostService extends Service {
 	) {
 		super();
 	}
-	
-	async create(name: string, address: string, grabbingAddress: string) {
-		const host = new Host();
-		host.name = name;
-		host.address = address;
-		host.grabbingAddress = grabbingAddress;
-		
-		// the host is not public yet
-		host.public = false;
-		
-		// generate a grabber
-		host.grabber = await new GrabberGenerator(grabbingAddress).generate();
-		
-		// generate a date transformer
-		const rawEvents = await new Downloader(grabbingAddress).grabRaw(host.grabber) as any[];
-		
-		host.grabberDateTransformer = await new GrabberGenerator(grabbingAddress).generateDateTransformer(rawEvents.map(event => event.date).filter(event => event));
-		
-		// test the grabber
-		const events = await new Downloader(grabbingAddress).grab(host.grabber, host.grabberDateTransformer);
-		
-		await host.create();
-		
-		for (let event of events) {
-			event.host = host;
-			
-			await event.create();
-		}
-		
-		return new FullHostViewModel(host);
+
+	async create(name: string, address: string) {
+		const request = new HostRequest();
+		request.name = name;
+		request.address = address;
+		request.attempts = 0;
+		request.requested = new Date();
+
+		await request.create();
+
+		new HostDeveloper(request).develop();
 	}
-	
-	async release(id: string) {
-		const host = await this.database.host.find(id);
-		host.public = true;
-		host.updatedAt = new Date();
-		
-		await host.update();
+
+	async queue() {
+		return HostRequestViewModel.from(
+			this.database.hostRequest
+				.where(request => request.completed == null)
+				.orderByAscending(request => request.name)
+		)
 	}
 }

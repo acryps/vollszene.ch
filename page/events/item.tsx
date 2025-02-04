@@ -1,9 +1,9 @@
 import { Component } from "@acryps/page";
-import { EventsComponent } from ".";
+import { EventsPage } from ".";
 import { EventViewModel } from "../managed/services";
 
 export class EventComponent extends Component {
-	declare parent: EventsComponent;
+	declare parent: EventsPage;
 	declare rootNode: HTMLElement;
 
 	constructor(
@@ -36,7 +36,7 @@ export class EventComponent extends Component {
 						{this.event.host.name}
 					</ui-name>
 				</ui-host>
-				
+
 				{!!(this.event.ticketPrice && this.event.ticketLink) && <ui-ticket-details>
 					{this.event.ticketPrice && this.event.ticketAvailable && <ui-price>{this.event.ticketPrice.toFixed(0)} CHF</ui-price>}
 					{this.event.ticketLink && !this.event.ticketAvailable && <ui-sold-out>sold out</ui-sold-out>}
@@ -55,5 +55,5 @@ export class EventComponent extends Component {
 				</a>}
 			</ui-links>
 		</ui-event>;
-	}	
+	}
 }

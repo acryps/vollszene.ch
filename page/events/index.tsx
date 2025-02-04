@@ -4,7 +4,7 @@ import { EventService, EventViewModel, LocationViewModel } from "../managed/serv
 import { EventComponent } from "./item";
 import { Application } from "..";
 
-export class EventsComponent extends Component {
+export class EventsPage extends Component {
 	declare parent: PageComponent;
 	events: EventViewModel[];
 
@@ -72,18 +72,12 @@ export class EventsComponent extends Component {
 		}
 
 		return <ui-events>
-			<ui-filters>
-				<ui-filter ui-active={!!this.filters.location}>
-					<select $ui-value={this.filters.location} ui-change={() => (this.saveFilters(), this.reload())}>
-						<option>All Locations</option>
+			<ui-request>
+				<ui-action ui-href='/request'>
+					Request missing Venue
+				</ui-action>
+			</ui-request>
 
-						{this.extractOptions(Application.hosts, host => host.location).map(location => <option ui-value={location}>
-							{location?.name}
-						</option>)}
-					</select>
-				</ui-filter>
-			</ui-filters>
-			
 			<ui-content>
 				{days}
 
@@ -107,7 +101,7 @@ export class EventsComponent extends Component {
 		for (let event of items) {
 			const res = mapper(event);
 
-			if (res) { 
+			if (res) {
 				unique[res.id] = res;
 			}
 		}

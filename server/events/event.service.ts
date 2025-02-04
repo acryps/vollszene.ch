@@ -21,9 +21,9 @@ export class EventService extends Service {
 		if (location) {
 			query.where(event => event.host.locationId == location);
 		}
-		
+
 		return EventViewModel.from(
-			await query
+			query
 				.orderByAscending(event => event.date)
 				.orderByAscending(event => event.name)
 		);
@@ -31,7 +31,7 @@ export class EventService extends Service {
 
 	async getHosts() {
 		return HostViewModel.from(
-			await this.db.host
+			this.db.host
 				.where(host => host.public)
 				.orderByAscending(host => host.name)
 		)
