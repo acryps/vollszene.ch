@@ -28,7 +28,6 @@
 	},
 	"devDependencies": {
 		"@types/node": "^18.11.15",
-		"@types/puppeteer": "^7.0.4",
 		"nodemon": "^3.0.1",
 		"ts-node": "^10.9.1",
 		"tsc-watch": "^6.0.0",
