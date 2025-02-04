@@ -19,7 +19,7 @@ export class HostService extends Service {
 
 		await request.create();
 
-		new HostDeveloper(request).develop();
+		new HostDeveloper(this.database, request).develop();
 	}
 
 	async queue() {

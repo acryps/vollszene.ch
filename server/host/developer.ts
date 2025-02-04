@@ -1,3 +1,4 @@
+import { Importer } from "../importer";
 import { DbContext, Host, HostRequest } from "../managed/database";
 import { Downloader } from "./downloader";
 import { Interpreter } from "./interpreter";
@@ -9,11 +10,12 @@ export class HostDeveloper {
 			.toArray();
 
 		for (let request of requests) {
-			new HostDeveloper(request).develop();
+			new HostDeveloper(database, request).develop();
 		}
 	}
 
 	constructor(
+		private database: DbContext,
 		private request: HostRequest
 	) {}
 
@@ -67,6 +69,8 @@ export class HostDeveloper {
 						host.name = this.request.name;
 
 						await host.create();
+
+						new Importer(this.database).importHost(host);
 
 						return true;
 					}

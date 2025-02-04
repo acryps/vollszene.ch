@@ -18,7 +18,7 @@ export class Importer {
 		await Promise.all(tasks);
 	}
 
-	private async importHost(host: Host) {
+	async importHost(host: Host) {
 		console.log(`[import] importing '${host.name}'`);
 
 		try {
