@@ -150,11 +150,10 @@ export class Downloader {
 
 						// use link and date combination
 						// this should stay stable, more or less
-						const hashSource = `${source.link}${date.toISOString().substring(0, 10)}`;
+						const hashSource = `${source.link}${+date}`;
 						event.hash = createHash('sha1').update(hashSource).digest('base64');
 
 						console.log(hashSource, event.hash);
-
 
 						if (events.find(existing => existing.hash == event.hash)) {
 							throw new Error('Grabber did not return unique ids for the events');
