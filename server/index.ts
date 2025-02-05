@@ -28,11 +28,15 @@ DbClient.connectedClient.connect().then(async () => {
 	const importer = new Importer(database);
 
 	setTimeout(() => {
-		importer.import();
-
 		HostDeveloper.developPending(database);
 
-		setInterval(() => importer.import(), 1000 * 60 * 60 * 4);
+		importer.import();
+
+		setInterval(() => {
+			importer.import();
+
+			HostDeveloper.developPending(database);
+		}, 1000 * 60 * 60 * 4);
 	}, 1000 * 6 * Math.random());
 
 	app.start(+process.env.PORT! || 8019);

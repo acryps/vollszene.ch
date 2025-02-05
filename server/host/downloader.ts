@@ -3,24 +3,18 @@ import { Event } from '../managed/database';
 import { createHash } from "crypto";
 import { writeFileSync } from "fs";
 import { join } from "path";
+import { BrowserManager } from "./browser";
 
 export class Downloader {
-	private static browser: Browser;
+	private static browserManager = new BrowserManager();
 
 	constructor(
 		private source: string
 	) {}
 
 	private async load() {
-		if (!Downloader.browser) {
-			Downloader.browser = await launch({
-				executablePath: process.env.BROWSER_APPLICATION_PATH,
-				args: ['--no-sandbox', '--disable-setuid-sandbox']
-			});
-		}
-
 		// create new tab
-		const page = await Downloader.browser.newPage();
+		const page = await Downloader.browserManager.getPage();
 
 		// pretend not to be a bot :)
 		await page.evaluateOnNewDocument(() => {
@@ -142,7 +136,7 @@ export class Downloader {
 					const date = eval(`(() => { ${dateTransformer}; return parseDate(${JSON.stringify(source.date)}) })()`);
 
 					if (date) {
-						if (!date.match(/[0-9]{4}-[0-9]{2}-[0-9]{2}/)) {
+						if (typeof date != 'string' || !date.match(/[0-9]{4}-[0-9]{2}-[0-9]{2}/)) {
 							throw new Error(`Grabber did not return a valid date for '${source.date}': ${date}`);
 						}
 

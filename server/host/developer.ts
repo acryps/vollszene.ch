@@ -125,7 +125,8 @@ export class HostDeveloper {
 		return await new Interpreter().develop(`
 			create a javascript function called parseDate(string) which can parse dates like the ones i provide here into a string of format YYYY-MM-DD.
 			make the script fault tolerant, by just returning null for the dates that it does not understand.
-			only return the function, no explanation comments or examples
+			only return the function, no explanation comments or examples.
+			the returned date must be a string, it cannot be a date object.
 		`, ...dates);
 	}
 
@@ -133,7 +134,7 @@ export class HostDeveloper {
 		console.log(`[generator] verify grabber for ${this.request.address}`);
 
 		return await new Interpreter().verify(`
-			does this code convert a date from some weird string format into a string in the format of "YYYY-MM-DD"?
+			does this function convert a date from some string format into a string in the format of "YYYY-MM-DD"?
 		`, source);
 	}
 }

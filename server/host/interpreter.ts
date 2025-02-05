@@ -10,22 +10,26 @@ export class Interpreter {
 	});
 
 	async verify(prompt: string, ...data: string[]) {
+		const messages = [
+			{
+				role: 'system',
+				content: prompt,
+			},
+			{
+				role: 'system',
+				content: 'Respond YES if true, NO if not'
+			},
+			...data.map(item => ({
+				role: 'user',
+				content: item
+			})) as ChatCompletionUserMessageParam[]
+		];
+
+		console.log('****', messages);
+
 		let generator = await this.openai.chat.completions.create({
 			stream: true,
-			messages: [
-				{
-					role: 'system',
-					content: prompt,
-				},
-				{
-					role: 'system',
-					content: 'Respond YES if the question is true, respond NO if not'
-				},
-				...data.map(item => ({
-					role: 'user',
-					content: item
-				})) as ChatCompletionUserMessageParam[]
-			],
+			messages: messages as any,
 			model: this.model
 		});
 
@@ -36,6 +40,8 @@ export class Interpreter {
 		}
 
 		response = response.trim();
+
+		console.log('**!**!', response);
 
 		if (response == 'YES') {
 			return true;
