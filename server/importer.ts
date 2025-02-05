@@ -26,9 +26,16 @@ export class Importer {
 			const existingEvents = await host.events.toArray();
 
 			for (let event of events) {
-				if (!existingEvents.find(existing => existing.hash == event.hash)) {
-					event.host = host;
+				event.host = host;
 
+				const existing = existingEvents.find(existing => existing.hash == event.hash);
+
+				if (existing) {
+					existing.name = event.name;
+					existing.description = event.description;
+
+					existing.update();
+				} else {
 					event.create();
 				}
 			}

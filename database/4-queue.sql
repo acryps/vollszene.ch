@@ -11,5 +11,7 @@ CREATE TABLE host_request (
 	requested TIMESTAMP,
 	completed TIMESTAMP,
 
-	error TEXT
+	error TEXT,
+
+	server_blocked BOOLEAN
 );

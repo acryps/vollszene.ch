@@ -17,7 +17,7 @@ export class EventService extends Service {
 		const query = this.db.event
 			.where(event => event.date.isAfter(yesterday))
 			.where(event => event.host.public)
-			.page(page, 50);
+			.page(page, 250);
 
 		return EventViewModel.from(
 			query

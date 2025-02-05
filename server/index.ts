@@ -33,7 +33,7 @@ DbClient.connectedClient.connect().then(async () => {
 		HostDeveloper.developPending(database);
 
 		setInterval(() => importer.import(), 1000 * 60 * 60 * 4);
-	}, 1000 * 60 * Math.random());
+	}, 1000 * 6 * Math.random());
 
 	app.start(+process.env.PORT! || 8019);
 });
