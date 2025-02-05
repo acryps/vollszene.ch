@@ -12,7 +12,6 @@ COPY . .
 RUN npm install
 RUN cd server ; npm install ; cd ..
 RUN cd page ; npm install ; cd ..
-RUN cd provider ; npm install ; cd ..
 
 # build application
 RUN npm run build

@@ -68,12 +68,17 @@ export class HostDeveloper {
 
 						await this.request.update();
 
-						const host = new Host();
+						let host = await this.database.host.first(host => host.grabbingAddress.valueOf() == this.request.address);
+
+						if (!host) {
+							host = new Host();
+							host.name = this.request.name;
+						}
+
 						host.grabber = this.request.grabber;
 						host.grabbingAddress = this.request.address;
 						host.grabberDateTransformer = this.request.grabberDateTransformer;
 						host.public = true; // for now
-						host.name = this.request.name;
 
 						await host.create();
 
@@ -102,12 +107,12 @@ export class HostDeveloper {
 		page = page.substring(0, 100_000);
 
 		return await new Interpreter().develop(`
-			create javascript scripts that parse the given website, returning a javascript object for each event in the website in the form of { id: string, name: string, date: string, link?: string, description?: string, price?: number }.
+			create javascript scripts that parse the given website, returning a javascript object for each event in the website in the form of { name: string, date: string, link?: string, description?: string, price?: number, image: string }.
 			only return the code.
 			the scripts runs in an eval on a puppeteer browser.
-			the id should be an unique identifier of this event - if none is available, it can also just be the link to the event.
 			at the end, use a return statement to return the array of events, do not log it to console.
 			do not generate a script which contains any events, generate a parser for this html structure.
+			for the image, inset the link of the image, if there is a srcset, make sure to just return one image source link.
 			make the script fault tolerant, by just omitting events that it does not understand
 		`, page);
 	}
