@@ -81,7 +81,6 @@ export class Downloader {
 				'svg',
 				'script',
 				'style',
-				'img',
 				'link'
 			]) {
 				for (let element of copy.querySelectorAll(query)) {
