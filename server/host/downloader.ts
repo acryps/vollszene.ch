@@ -91,8 +91,6 @@ export class Downloader {
 			body = body.replace(/[\n\s]+/g, ' ');
 		}
 
-		writeFileSync(join('.grabs', `${this.source.toLowerCase().replace(/[^0-9a-z]+/g, '_')}.html`), body);
-
 		return body;
 	}
 
