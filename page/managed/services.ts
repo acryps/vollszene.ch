@@ -1,10 +1,10 @@
 export class EventViewModel {
     host: HostViewModel;
+	id: string;
 	date: Date;
 	ticketAvailable: boolean;
 	ticketPrice: number;
 	highlight: boolean;
-	id: string;
 	description: string;
 	name: string;
 	link: string;
@@ -14,11 +14,11 @@ export class EventViewModel {
     private static $build(raw) {
         const item = new EventViewModel();
         raw.host === undefined || (item.host = raw.host ? HostViewModel["$build"](raw.host) : null)
+		raw.id === undefined || (item.id = raw.id === null ? null : `${raw.id}`)
 		raw.date === undefined || (item.date = raw.date ? new Date(raw.date) : null)
 		raw.ticketAvailable === undefined || (item.ticketAvailable = !!raw.ticketAvailable)
 		raw.ticketPrice === undefined || (item.ticketPrice = raw.ticketPrice === null ? null : +raw.ticketPrice)
 		raw.highlight === undefined || (item.highlight = !!raw.highlight)
-		raw.id === undefined || (item.id = raw.id === null ? null : `${raw.id}`)
 		raw.description === undefined || (item.description = raw.description === null ? null : `${raw.description}`)
 		raw.name === undefined || (item.name = raw.name === null ? null : `${raw.name}`)
 		raw.link === undefined || (item.link = raw.link === null ? null : `${raw.link}`)

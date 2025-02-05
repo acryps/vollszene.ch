@@ -15,3 +15,6 @@ CREATE TABLE host_request (
 
 	server_blocked BOOLEAN
 );
+
+ALTER TABLE event ADD imported TIMESTAMP;
+ALTER TABLE event ADD importer TEXT;

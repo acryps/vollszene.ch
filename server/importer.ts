@@ -1,3 +1,4 @@
+import { hostname } from "os";
 import { Downloader } from "./host/downloader";
 import { DbContext, Host } from "./managed/database";
 
@@ -36,6 +37,9 @@ export class Importer {
 
 					existing.update();
 				} else {
+					event.importer = hostname();
+					event.imported = new Date();
+
 					event.create();
 				}
 			}
