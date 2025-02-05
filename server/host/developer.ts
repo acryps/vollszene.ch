@@ -56,39 +56,35 @@ export class HostDeveloper {
 				const dateTransformer = await this.generateDateTransformer(rawEvents.map(event => event.date).filter(event => event));
 
 				if (!await this.verifyDateTransformer(dateTransformer)) {
-					throw 'Date grabber not valid';
+					throw `Date grabber not valid, source: ${dateTransformer}`;
 				}
 
 				const events = await new Downloader(this.request.address).grab(this.request.grabber, dateTransformer);
 
-				for (let event of events) {
-					if (!isNaN(+event.date)) {
-						this.request.grabberDateTransformer = dateTransformer;
-						this.request.completed = new Date();
+				this.request.grabberDateTransformer = dateTransformer;
+				this.request.completed = new Date();
 
-						await this.request.update();
+				await this.request.update();
 
-						let host = await this.database.host.first(host => host.grabbingAddress.valueOf() == this.request.address);
+				let host = await this.database.host.first(host => host.grabbingAddress.valueOf() == this.request.address);
 
-						if (!host) {
-							host = new Host();
-							host.name = this.request.name;
-						}
+				if (!host) {
+					host = new Host();
+					host.name = this.request.name;
 
-						host.grabber = this.request.grabber;
-						host.grabbingAddress = this.request.address;
-						host.grabberDateTransformer = this.request.grabberDateTransformer;
-						host.public = true; // for now
-
-						await host.create();
-
-						new Importer(this.database).importHost(host);
-
-						return true;
-					}
+					await host.create();
 				}
 
-				throw 'No event contained a valid date';
+				host.grabber = this.request.grabber;
+				host.grabbingAddress = this.request.address;
+				host.grabberDateTransformer = this.request.grabberDateTransformer;
+				host.public = true; // for now
+
+				await host.update();
+
+				new Importer(this.database).importHost(host);
+
+				return true;
 			}
 		} catch (error) {
 			console.log(`[developer] failed: ${this.request.name}: ${error}`);
@@ -127,7 +123,7 @@ export class HostDeveloper {
 
 	async generateDateTransformer(dates: string[]) {
 		return await new Interpreter().develop(`
-			create a javascript function called parseDate(string) which can parse dates like the ones i provide here into javascript Date objects.
+			create a javascript function called parseDate(string) which can parse dates like the ones i provide here into a string of format YYYY-MM-DD.
 			make the script fault tolerant, by just returning null for the dates that it does not understand.
 			only return the function, no explanation comments or examples
 		`, ...dates);
@@ -137,7 +133,7 @@ export class HostDeveloper {
 		console.log(`[generator] verify grabber for ${this.request.address}`);
 
 		return await new Interpreter().verify(`
-			does this code convert a date in a string format into a real javascript date?
+			does this code convert a date from some weird string format into a string in the format of "YYYY-MM-DD"?
 		`, source);
 	}
 }

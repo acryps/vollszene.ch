@@ -142,15 +142,15 @@ export class Downloader {
 					const date = eval(`(() => { ${dateTransformer}; return parseDate(${JSON.stringify(source.date)}) })()`);
 
 					if (date) {
-						if (!(date instanceof Date)) {
-							throw new Error(`Grabber did not return a valid date for '${source.date}'`);
+						if (!date.match(/[0-9]{4}-[0-9]{2}-[0-9]{2}/)) {
+							throw new Error(`Grabber did not return a valid date for '${source.date}': ${date}`);
 						}
 
-						event.date = date;
+						event.date = new Date(date);
 
 						// use link and date combination
 						// this should stay stable, more or less
-						const hashSource = `${source.link}${+date}`;
+						const hashSource = `${source.link}${date}`;
 						event.hash = createHash('sha1').update(hashSource).digest('base64');
 
 						console.log(hashSource, event.hash);
