@@ -134,7 +134,7 @@ export class Downloader {
 					const date = eval(`(() => { ${dateTransformer}; return parseDate(${JSON.stringify(source.date)}) })()`);
 
 					if (date) {
-						if (typeof date != 'string' || !date.match(/[0-9]{4}-[0-9]{2}-[0-9]{2}/)) {
+						if (typeof date != 'string' || !date.match(/[0-9]{4}-[0-9]{2}-[0-9]{2}/) || isNaN(new Date(date).getTime())) {
 							throw new Error(`Grabber did not return a valid date for '${source.date}': ${date}`);
 						}
 

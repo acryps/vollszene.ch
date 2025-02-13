@@ -25,8 +25,6 @@ export class Interpreter {
 			})) as ChatCompletionUserMessageParam[]
 		];
 
-		console.log('****', messages);
-
 		let generator = await this.openai.chat.completions.create({
 			stream: true,
 			messages: messages as any,
